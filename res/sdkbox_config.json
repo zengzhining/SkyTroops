@@ -1,0 +1,117 @@
+{
+    "android": {
+        "GoogleAnalytics": {
+            "trackingCode": "UA-86337536-1"
+        }, 
+        "Vungle": {
+            "id": "573773b60fc58d1156000081", 
+            "ads": {
+                "reward": {
+                    "sound": false, 
+                    "backbutton": false, 
+                    "incentivized": true
+                }, 
+                "video": {
+                    "sound": true, 
+                    "backbutton": true
+                }
+            }
+        }, 
+        "AdMob": {
+            "test": false, 
+            "ads": {
+                "gameover": {
+                    "type": "interstitial", 
+                    "id": "ca-app-pub-5499568013368923/5233996690"
+                }, 
+                "admob": {
+                    "width": 300, 
+                    "type": "banner", 
+                    "id": "ca-app-pub-5499568013368923/2420131091", 
+                    "alignment": "bottom", 
+                    "height": 50
+                }
+            }
+        }, 
+        "Review": {
+            "LaunchLimit": 3, 
+            "DayForReminding": 1, 
+            "tryPromptWhenInit": true, 
+            "DayLimit": 0, 
+            "LaunchForReminding": 2, 
+            "UserEventLimit": 0
+        }, 
+        "AdColony": {
+            "debug": false, 
+            "id": "appe8fe18e4fd9942d198", 
+            "ads": {
+                "restart": {
+                    "v4vc": false, 
+                    "zone": "vz733aa194231a4ec38e"
+                }
+            }
+        }
+    }, 
+    "ios": {
+        "GoogleAnalytics": {
+            "track_init_screen": false, 
+            "trackingCode": "UA-62417901-1"
+        }, 
+        "Vungle": {
+            "debug": true, 
+            "id": "5535dc14a104ddf07600001c", 
+            "ads": {
+                "reward": {
+                    "sound": false, 
+                    "backbutton": false, 
+                    "incentivized": true
+                }, 
+                "video": {
+                    "sound": true, 
+                    "backbutton": true
+                }
+            }
+        }, 
+        "AdMob": {
+            "test": true, 
+            "ads": {
+                "gameover": {
+                    "type": "interstitial", 
+                    "id": "ca-app-pub-5499568013368923/7629059893"
+                }, 
+                "admob": {
+                    "width": 300, 
+                    "type": "banner", 
+                    "id": "ca-app-pub-5499568013368923/4675593491", 
+                    "alignment": "bottom", 
+                    "height": 50
+                }
+            }
+        }, 
+        "Review": {
+            "LaunchLimit": 3, 
+            "DayForReminding": 1, 
+            "tryPromptWhenInit": true, 
+            "AppID": "587767923", 
+            "DayLimit": 0, 
+            "LaunchForReminding": 2, 
+            "UserEventLimit": 0
+        }, 
+        "AdColony": {
+            "debug": true, 
+            "id": "appbdee68ae27024084bb334a", 
+            "ads": {
+                "v4vc": {
+                    "v4vc": true, 
+                    "pre_popup": true, 
+                    "zone": "vzf8e4e97704c4445c87504e", 
+                    "post_popup": true
+                }, 
+                "video": {
+                    "v4vc": false, 
+                    "zone": "vzf8fb4670a60e4a139d01b5"
+                }
+            }
+        }
+    }
+}

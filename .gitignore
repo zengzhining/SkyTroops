@@ -1,0 +1,12 @@
+simulator
+runtime
+frameworks
+*.dll
+pp.exe
+pp.ilk
+*.pdb
+win32.zip
+zh-Hans.lproj
+Icon.icns
+ConsoleWindow.nib
+Base.lproj
