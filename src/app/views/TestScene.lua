@@ -106,6 +106,13 @@ function TestScene:ctor()
 	-- end
 
 	--使用shader
+
+	local bg = display.newSprite("png/01Background.png")
+
+	bg:setScaleX(display.width/bg:getContentSize().width)
+	bg:pos(display.center)
+	self:add(bg)
+
 	local plane = display.newSprite("png/RedPlane.png")
 	plane:pos(display.center)
 	Effect.greySprite(plane)
@@ -114,12 +121,51 @@ function TestScene:ctor()
 	local plane2 = display.newSprite("png/RedPlane.png")
 	plane2:pos(display.cx, display.cy + 200)
 	self:add(plane2)
+	-- Effect.colorTo(plane,3)
+	-- Effect.greyTo(plane2,2)
+	-- Effect.blurSprite(bg)
 
-	Effect.colorTo(plane,3)
-	Effect.greyTo(plane2,2)
 
-	--Actions
-	-- local act = GoAct:new()
+	--renderTexture
+	local rx = cc.RenderTexture:create(display.width, display.height)
+	rx:begin()
+	bg:visit()
+	plane:visit()
+	plane2:visit()
+	rx:endToLua()
+
+	plane:removeSelf()
+	plane2:removeSelf()
+	bg:removeSelf()
+
+
+	local sp = display.newSprite(rx:getSprite():getTexture())
+	Effect.blurSprite(sp)
+	-- Effect.bloomSprite(sp)
+	sp:pos(display.center)
+	self:add(sp)
+
+	-- sp:removeSelf()
+
+	local nextRx = cc.RenderTexture:create(display.width, display.height)
+	nextRx:begin()
+	sp:visit()
+	nextRx:endToLua()
+
+	local mSp = display.newSprite(nextRx:getSprite():getTexture())
+	mSp:setFlippedY(true)
+	mSp:pos(display.center)
+	Effect.bloomSprite(mSp)
+	
+	self:add(mSp)
+
+	-- local mTexture = 
+
+
+
+
+	
+
 
 
 end
