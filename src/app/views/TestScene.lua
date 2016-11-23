@@ -105,7 +105,19 @@ function TestScene:ctor()
 	-- end
 
 	--使用shader
-	
+	-- local plane = display.newSprite("png/RedPlane.png")
+	-- plane:pos(display.center)
+	-- self:add(plane)
+
+	-- local plane2 = display.newSprite("png/RedPlane.png")
+	-- plane2:pos(display.cx, display.cy + 200)
+	-- self:add(plane2)
+
+	-- local shader = cc.GLProgram:createWithFilenames("shaders/P_stand.vert", "shaders/Red.frag")
+	-- local state = cc.GLProgramState:getOrCreateWithGLProgram(shader)
+	-- plane:setGLProgramState(state)
+
+
 
 
 
