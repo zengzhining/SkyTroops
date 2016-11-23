@@ -645,3 +645,9 @@ cc.BLACK = cc.c3b(0,0,0)
 cc.WHITE = cc.c3b(255,255,255)
 cc.YELLOW = cc.c3b(255,255,0)
 
+cc.shaders = 
+{
+    SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositionTextureColor_noMVP",
+    SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor",
+}
+
