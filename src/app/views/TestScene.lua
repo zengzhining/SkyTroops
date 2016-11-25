@@ -107,20 +107,24 @@ function TestScene:ctor()
 
 	--使用shader
 
+	local bgLayer = display.newLayer()
+	self:add(bgLayer)
 	local bg = display.newSprite("png/01Background.png")
 
 	bg:setScaleX(display.width/bg:getContentSize().width)
 	bg:pos(display.center)
-	self:add(bg)
+	bgLayer:add(bg)
 
 	local plane = display.newSprite("png/RedPlane.png")
 	plane:pos(display.center)
 	Effect.greySprite(plane)
-	self:add(plane)
+	bgLayer:add(plane)
 
 	local plane2 = display.newSprite("png/RedPlane.png")
 	plane2:pos(display.cx, display.cy + 200)
-	self:add(plane2)
+	bgLayer:add(plane2)
+
+	plane2:runAction(cc.MoveBy:create(10, cc.p(0, 500)))
 	-- Effect.colorTo(plane,3)
 	-- Effect.greyTo(plane2,2)
 	-- Effect.blurSprite(bg)
@@ -128,36 +132,58 @@ function TestScene:ctor()
 
 	--renderTexture
 	local rx = cc.RenderTexture:create(display.width, display.height)
+	rx:retain()
 	rx:begin()
-	bg:visit()
-	plane:visit()
-	plane2:visit()
+	-- bg:visit()
+	-- plane:visit()
+	-- plane2:visit()
+	bgLayer:visit()
 	rx:endToLua()
 
-	plane:removeSelf()
-	plane2:removeSelf()
-	bg:removeSelf()
+	bgLayer:onTouch(function ( event )
 
+	end)
 
+	--可以通过设置相机mask让其不参与绘制
+	bgLayer:setCameraMask(cc.CameraFlag.USER1)
+
+	-- plane:removeSelf()
+	-- plane2:removeSelf()
+	-- bg:removeSelf()
+
+	local shaderLayer = display.newLayer()
+	self:add(shaderLayer)
 	local sp = display.newSprite(rx:getSprite():getTexture())
-	Effect.blurSprite(sp)
+	-- Effect.blurSprite(sp)
+	Effect.testSprite(sp)
 	-- Effect.bloomSprite(sp)
+	sp:setFlippedY(true)
 	sp:pos(display.center)
-	self:add(sp)
+
+	shaderLayer:onUpdate(function ( dt )
+		rx:beginWithClear(1, 1, 1, 1)
+		-- bg:visit()
+		-- plane:visit()
+		-- plane2:visit()
+		bgLayer:visit()
+		rx:endToLua()
+	end)
+	
+	shaderLayer:add(sp)
 
 	-- sp:removeSelf()
 
-	local nextRx = cc.RenderTexture:create(display.width, display.height)
-	nextRx:begin()
-	sp:visit()
-	nextRx:endToLua()
+	-- local nextRx = cc.RenderTexture:create(display.width, display.height)
+	-- nextRx:begin()
+	-- sp:visit()
+	-- nextRx:endToLua()
 
-	local mSp = display.newSprite(nextRx:getSprite():getTexture())
-	mSp:setFlippedY(true)
-	mSp:pos(display.center)
-	Effect.bloomSprite(mSp)
+	-- local mSp = display.newSprite(nextRx:getSprite():getTexture())
+	-- mSp:setFlippedY(true)
+	-- mSp:pos(display.center)
+	-- Effect.bloomSprite(mSp)
 	
-	self:add(mSp)
+	-- self:add(mSp)
 
 	-- local mTexture = 
 

@@ -88,4 +88,10 @@ function blurSprite(obj)
 	obj:setGLProgramState(state)
 end
 
+--测试
+function testSprite(obj)
+	local state = createGLState("shaders/P_stand.vert", "shaders/test.frag")
+	obj:setGLProgramState(state)
+end
+
 
