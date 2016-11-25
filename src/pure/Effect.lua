@@ -88,6 +88,21 @@ function blurSprite(obj)
 	obj:setGLProgramState(state)
 end
 
+--全屏特效，一个圆圈放大进入场景
+function circleIn(obj)
+	local state = createGLState("shaders/P_stand.vert", "shaders/circle.frag")
+	state:setUniformInt("flag", 1)
+	obj:setGLProgramState(state)
+end
+
+--全屏特效，一个圆圈收缩推出场景
+function circleOut(obj)
+	local state = createGLState("shaders/P_stand.vert", "shaders/circle.frag")
+	state:setUniformInt("flag", 0)
+	obj:setGLProgramState(state)
+end
+
+
 --测试
 function testSprite(obj)
 	local state = createGLState("shaders/P_stand.vert", "shaders/test.frag")

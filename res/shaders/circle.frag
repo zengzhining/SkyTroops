@@ -4,7 +4,7 @@ precision mediump float;
 
 varying vec2 v_texCoord;
 
-uniform float uNumber;
+uniform int flag;
 
 void main(void)
 {
@@ -18,10 +18,20 @@ void main(void)
 
 
 	vec4 col =texture2D(CC_Texture0, pos);
-
-	if (pow(pos.y-0.5, 2.)  + pow(pos.x-(0.5), 2.)  > pow(CC_Time[1], 2.) )
+	if (flag == 1)
 	{
-		col = vec4(0.0,0.0,1.0,0.0);
+		if (pow(pos.y-0.5, 2.)  + pow(pos.x-(0.5), 2.)  > pow(CC_Time[1], 2.) )
+		{
+			col = vec4(0.0,0.0,1.0,0.0);
+		}
+	}
+	
+	if (flag == 0)
+	{
+		if (pow(pos.y-0.5, 2.)  + pow(pos.x-(0.5), 2.)  > 0.5-0.5*CC_Time[1] )
+		{
+			col = vec4(0.0,0.0,1.0,0.0);
+		}
 	}
 
     vec4 finalColor = col * vec4(brightness,brightness,brightness,1.0);
