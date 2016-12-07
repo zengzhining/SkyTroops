@@ -20,8 +20,8 @@ end
 
 function Bullet:getCollisionRect()
 	local rect = self:getBoundingBox()
-	local finalWidth  = rect.width* 0.8
-	local finalHeight = rect.height * 0.9
+	local finalWidth  = rect.width* 0.3
+	local finalHeight = rect.height * 0.5
 	local newRect = cc.rect( rect.x  , rect.y, finalWidth, finalHeight )
 	return newRect
 end

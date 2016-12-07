@@ -46,11 +46,9 @@ function PlaneFactory:createBullet( id_ )
 	if not id_ then id_ = 1 end
 	local bullet
 	if id_ == 1 then
-		bullet = Bullet.new("#BlueBullet03.png")
-		bullet:setAnimationFormat("BlueBullet%02d.png")
+		bullet = Bullet.new("#01Bullets.png")
 	elseif id_ == 2 then 
-		bullet = Bullet.new("#RedBullet03.png")
-		bullet:setAnimationFormat("RedBullet%02d.png")
+		bullet = Bullet.new("#02Bullets.png")
 	end
 	return bullet
 end

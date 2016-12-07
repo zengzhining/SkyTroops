@@ -3,6 +3,7 @@ local TestScene = class("TestScene", cc.load("mvc").ViewBase)
 
 function TestScene:ctor()
 	display.loadSpriteFrames("Planes.plist", "Planes.png")
+	display.loadSpriteFrames("Object.plist", "Object.png")
 	local layer = display.newLayer()
 	layer:onAccelerate(function(x,y,z,timeStap)
 		print("x,y,z,timeStap~~~~~~~~",x, y, z, timeStap)
@@ -251,6 +252,9 @@ function TestScene:ctor()
 	armyPlane:pos(display.cx, display.cy * 1.5)
 	layer:add(armyPlane)
 
+	local bullet = PlaneFactory:getInstance():createBullet(id_)
+	bullet:pos(display.cx * 1.5, display.cy * 1.5)
+	layer:add(bullet)
 
 	mainPlane:attachVirtualJoy(controlLayer)
 
