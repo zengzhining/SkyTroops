@@ -10,6 +10,10 @@ local UP_ACC = -0.4
 local DOWN_ACC = -0.8
 local RELIVE_TIME = 3
 
+
+--限制不能移动的范围
+local LIMIT_RECT = cc.rect(70,display.cy*0.5 + 50, display.width-150, display.height-150)
+
 local allTime = 0
 
 local isFireBullet = false
@@ -35,6 +39,12 @@ function HeroPlane:ctor( fileName )
 
 	--能量
 	self.power_ = MAX_POWER
+
+	--虚拟摇杆
+	self.virtualJoy_ = nil
+
+	--限制是否在屏幕内
+	self.limitInScreen_ = true
 end
 
 function HeroPlane:getMaxPower(  )
@@ -72,6 +82,18 @@ function HeroPlane:onTouch( event )
 	if event.name == "began" then
 		self:fireBullet()
 	end
+end
+
+function HeroPlane:attachVirtualJoy( joy )
+	self.virtualJoy_ = joy
+end
+
+function HeroPlane:getVirtualJoy()
+	return self.virtualJoy_
+end
+
+function HeroPlane:hasVirtualJoy()
+	return self.virtualJoy_ ~= nil
 end
 
 function HeroPlane:fireBullet()
@@ -116,6 +138,38 @@ function HeroPlane:updateLogic(dt)
 			self:addPower(1)
 		end
 	end
+
+
+	--如果有虚拟摇杆处理虚拟摇杆逻辑
+	local joy = self:getVirtualJoy()
+	if joy then 
+		local strength = joy:getStrength()
+		local speed = cc.pMul(strength, 5)
+		self:setSpeed(speed)
+	end
+end
+
+--复写方法
+function HeroPlane:step(dt)
+	self:updateLogic(dt)
+
+	local gameSpeed = GameData:getInstance():getGameSpeed()
+	local posx, posy = self:getPosition()
+	local pos = cc.p(posx, posy)
+	if self.limitInScreen_ then 
+		local nextPos = cc.p(pos.x + self.speed_.x * gameSpeed, pos.y + self.speed_.y * gameSpeed)
+		local isInScreen = cc.rectContainsPoint(LIMIT_RECT,nextPos)
+		if isInScreen then
+			self:pos(nextPos)
+		else
+			
+		end
+	else
+		self:posByY(self.speed_.y * gameSpeed)
+		self:posByX(self.speed_.x * gameSpeed)
+
+	end
+
 end
 
 --复活

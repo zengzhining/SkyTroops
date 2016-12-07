@@ -3,6 +3,9 @@ local HeroPlane = require("app/Obj/HeroPlane")
 local ArmyPlane = require("app/Obj/ArmyPlane")
 local Bullet = require("app/Obj/Bullet")
 
+--虚拟摇杆
+local VirtualJoy = require("app/Obj/VirtualJoy")
+
 function PlaneFactory:ctor(  )
 	
 end
@@ -23,11 +26,11 @@ end
 function PlaneFactory:createRole( id_ )
 	local plane = nil
 	if id_ == 1 then 
-		plane = HeroPlane.new("#FriendPlane01.png")
+		plane = HeroPlane.new("#PlaneBlue1.png")
 		plane:setMoveTime(0.3)
 		plane:setBulletFireNum(2)
 	elseif id_ == 2 then 
-		plane = HeroPlane.new("#GreenPlane.png")
+		plane = HeroPlane.new("#PlaneBlue2.png")
 		plane:setMoveTime(0.5)
 		plane:setBulletFireNum(4)
 	end
@@ -50,8 +53,13 @@ function PlaneFactory:createBullet( id_ )
 		bullet:setAnimationFormat("RedBullet%02d.png")
 	end
 	return bullet
-
 end
+
+function PlaneFactory:createJoy( bgFile, joyFile )
+	local joy = VirtualJoy.new(bgFile, joyFile)
+	return joy
+end
+
 --单例
 local plane_factory_instance = nil
 function PlaneFactory:getInstance()
