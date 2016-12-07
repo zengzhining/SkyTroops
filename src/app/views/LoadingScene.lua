@@ -92,6 +92,7 @@ function LoadingScene:update(dt)
 		self.title_:setString("Loading..")
 		--加载资源
 		display.loadSpriteFrames("Plane.plist", "Plane.png")
+		display.loadSpriteFrames("Planes.plist", "Planes.png")
 	elseif self.time_ >= LOADING_DT then
 		self.title_:setString("Loading.")
 

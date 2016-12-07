@@ -4,7 +4,7 @@ end)
 
 function VirtualJoy:ctor( bgFile, controlFile )
 	local bg = display.newSprite(bgFile)
-	bg:pos(display.cx, display.cy * 0.5)
+	bg:pos(display.cx, display.cy * 0.2)
 	self:add(bg)
 	local size = bg:getContentSize()
 

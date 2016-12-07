@@ -13,9 +13,9 @@ end
 function PlaneFactory:createPlane( id_ )
 	local plane = nil
 	if id_ == 1 then 
-		plane = ArmyPlane.new("#RedPlane.png")	
+		plane = ArmyPlane.new("#Enemy01.png")	
 	elseif id_ == 2 then
-		plane = ArmyPlane.new("#GreyPlane.png")
+		plane = ArmyPlane.new("#Enemy02.png")
 		plane:setGameAi(1)
 	end
 	plane:setId(id_)

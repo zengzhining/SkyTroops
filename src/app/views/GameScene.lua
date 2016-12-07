@@ -47,9 +47,9 @@ function GameScene:onCreate()
 	self.powerBar_ = powerBar
 	uiLayer:add(powerLayer)
 
-	self:initControl()
 
 	self:initObj()
+	self:initControl()
 
 	local bg = __G__createBg( "Layer/BackGround.csb" )
 	bg:setSpeed(self:getBgSpeed())
@@ -62,6 +62,7 @@ function GameScene:initData()
 
 	--测试默认载入plist
 	if DEBUG == 2 then 
+		display.loadSpriteFrames("Planes.plist", "Planes.png")
 		display.loadSpriteFrames("Plane.plist", "Plane.png")
 	end
 
@@ -431,39 +432,10 @@ function GameScene:updateRank()
 end
 
 function GameScene:initControl()
-	local fileName = "Layer/ControlLayer.csb"
-	local controlLayer = display.newCSNode(fileName)
+	local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
 	self:addChild(controlLayer, 2, TAG_CONTROL_LAYER)
 
-	local left = controlLayer:getChildByName("Left")
-	local right = controlLayer:getChildByName("Right")
-	local fire = controlLayer:getChildByName("Fire")
-
-	left:onTouch(function ( event )
-		if event.name == "began" then 
-			if self.role_ and self.role_.onLeft then 
-				self.role_:onLeft( self.role_:getViewRect().width * 0.6 )
-			end
-		end
-	end)
-
-	right:onTouch(function ( event )
-		if event.name == "began" then 
-			if self.role_ and self.role_.onRight then 
-				self.role_:onRight( self.role_:getViewRect().width * 0.6 )
-			end
-		end
-	end)
-
-	fire:onTouch(function ( event )
-		if event.name == "began" then 
-			if self.role_ and self.role_.fireBullet then 
-				self.role_:fireBullet()
-			end
-		end
-	end)
-
-
+	self.role_:attachVirtualJoy(controlLayer)
 end
 
 function GameScene:initObj()
@@ -473,7 +445,7 @@ function GameScene:initObj()
 	local id = GameData:getInstance():getRoleId()
 	local plane = PlaneFactory:getInstance():createRole(id)
 	local width = plane:getViewRect().width
-	plane:pos(display.cx - width * 0.6, display.height /4 )
+	plane:pos(display.cx, display.height /2 )
 	gameLayer:addChild(plane)
 	self.role_ = plane
 

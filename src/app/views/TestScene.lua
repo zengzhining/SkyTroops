@@ -238,12 +238,19 @@ function TestScene:ctor()
 	-- 	end
 	-- end)
 	
+
+	--virtual joy
 	local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
 	self:add(controlLayer)
 
 	local mainPlane = PlaneFactory:getInstance():createRole(1)
 	mainPlane:pos(display.center)
 	layer:add(mainPlane)
+
+	local armyPlane = PlaneFactory:getInstance():createPlane(1)
+	armyPlane:pos(display.cx, display.cy * 1.5)
+	layer:add(armyPlane)
+
 
 	mainPlane:attachVirtualJoy(controlLayer)
 
