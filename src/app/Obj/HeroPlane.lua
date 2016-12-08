@@ -245,7 +245,7 @@ function HeroPlane:playDeadAnimation( fileFormat_ )
 	local ani = display.getAnimationCache("PlaneDeadAnimation")
 	if not ani then 
 		local frames = display.newFrames( fileFormat_, 1, 4, false )
-		ani = display.newAnimation(frames, 0.2)
+		ani = display.newAnimation(frames, 0.3)
 		display.setAnimationCache( "PlaneDeadAnimation", ani )
 	end
 

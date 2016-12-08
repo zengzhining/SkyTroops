@@ -69,7 +69,7 @@ function GameScene:initData()
 	if DEBUG == 2 then 
 		display.loadSpriteFrames("Planes.plist", "Planes.png")
 		display.loadSpriteFrames("Object.plist", "Object.png")
-		display.loadSpriteFrames("Plane.plist", "Plane.png")
+		display.loadSpriteFrames("Animation.plist", "Animation.png")
 	end
 
 	armySet = {}
