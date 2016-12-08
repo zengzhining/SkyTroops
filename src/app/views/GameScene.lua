@@ -3,10 +3,12 @@ local GameScene = class("GameScene", cc.load("mvc").ViewBase)
 local TAG_UI = 101
 local TAG_CUT = 100
 local TAG_GAME_LAYER = 102
+local TAG_RENDER_LAYER = 107
 local TAG_BG = 103
 local TAG_FRONT = 106  --前景，云神马的
 local TAG_CONTINUE_LAYER = 104
 local TAG_CONTROL_LAYER = 105
+local TAG_RENDER_CAMERA = 106 --渲染用的摄像机
 
 local armySet = {}
 local bulletSet = {}
@@ -60,7 +62,49 @@ function GameScene:onCreate()
 	frontBg:setSpeed(-5)
 	self:add(frontBg,10, TAG_FRONT )
 
+	self:initCamera()
+	--init camera
+	-- local camera = cc.Camera:createOrthographic(display.width, display.height,-11,1000)
+	-- camera:setCameraFlag(cc.CameraFlag.USER1)
+
+	-- self:addChild(camera,0,TAG_RENDER_CAMERA)
+	self:initRenderTexture()
+
 	self:onCreateArmy()
+end
+
+function GameScene:initRenderTexture()
+	local rx = display.newRenderTexture(display.width,display.height)
+
+	rx:pos(display.center)
+	Effect.greyTo(rx:getSprite(), 10)
+	self:add(rx,0,TAG_RENDER_LAYER)
+end
+
+function GameScene:updateRenderLayer()
+	local rx = self:getChildByTag(TAG_RENDER_LAYER)
+	if not rx then return end
+	local tbl = { TAG_BG, TAG_GAME_LAYER, TAG_FRONT }
+	rx:beginWithClear(1, 1, 1, 1)
+	for c,tag in pairs(tbl) do
+		local item = self:getChildByTag(tag)
+		if item then 
+			item:visit()
+		end
+	end
+	rx:endToLua()
+end
+
+function GameScene:initCamera()
+	local tbl = {TAG_GAME_LAYER,TAG_BG, TAG_FRONT}
+	for c, tag in pairs(tbl) do
+		local item = self:getChildByTag(tag)
+		if item then 
+			self:setObjCamera(item)
+		end
+
+	end
+
 end
 
 function GameScene:initData()
@@ -163,6 +207,7 @@ function GameScene:step( dt )
 
 	--更新能量条
 	self:updatePowerBar()
+	self:updateRenderLayer()
 end
 
 function GameScene:updatePowerBar(  )
@@ -257,8 +302,8 @@ function GameScene:onPlayerDead( target )
 	self.cutBtn_:setTouchEnabled(false)
 	-- self.gameLayer_:removeKeypad()
 	-- self.gameLayer_:removeAccelerate()
-	self.gameLayer_:pauseAllInput()
 	self:unUpdate()
+	self.gameLayer_:pauseAllInput()
 	__G__MusicFadeOut(self, 1)
 	--根据排名来确定是否有续命选项
 	local rank = GameData:getInstance():getRank()
@@ -479,6 +524,7 @@ function GameScene:onFireBullet( id_ )
 	bullet:onFire()
 	bullet:setSpeed(cc.p(0, 10))
 	gameLayer:addChild(bullet)
+	self:setObjCamera(bullet)
 	table.insert(bulletSet, bullet)
 end
 
@@ -499,6 +545,10 @@ function GameScene:onAllArmyGone()
 	self:onCreateArmy()
 end
 
+function GameScene:setObjCamera( obj )
+	obj:setCameraMask(cc.CameraFlag.USER1)
+end
+
 function GameScene:onCreateArmy(  )
 	--读取plist数据创建敌人
 	local armyData = self:getArmyData()
@@ -515,6 +565,8 @@ function GameScene:onCreateArmy(  )
 		army:setDirX(dir)
 		army:pos(armyPos)
 		self.gameLayer_ :addChild(army)
+		self:setObjCamera(army)
+
 		table.insert(armySet, army)
 	end
 	--调整一下游戏背景速度
