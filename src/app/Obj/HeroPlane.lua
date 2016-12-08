@@ -14,6 +14,11 @@ local RELIVE_TIME = 3
 --限制不能移动的范围
 local LIMIT_RECT = cc.rect(70,display.cy*0.5 + 50, display.width-150, display.height-150)
 
+local LIMIT_LEFT_X = 70
+local LIMIT_RIGHT_X = display.width-150
+local LIMIT_UP_Y = display.height-150
+local LIMIT_DOWN_Y = display.cy*0.5 + 50
+
 local allTime = 0
 
 local isFireBullet = false
@@ -158,12 +163,14 @@ function HeroPlane:step(dt)
 	local pos = cc.p(posx, posy)
 	if self.limitInScreen_ then 
 		local nextPos = cc.p(pos.x + self.speed_.x * gameSpeed, pos.y + self.speed_.y * gameSpeed)
-		local isInScreen = cc.rectContainsPoint(LIMIT_RECT,nextPos)
-		if isInScreen then
-			self:pos(nextPos)
-		else
-			
+		if nextPos.x > LIMIT_RIGHT_X or nextPos.x < LIMIT_LEFT_X  then
+			nextPos.x = posx
 		end
+
+		if nextPos.y > LIMIT_UP_Y or nextPos.y < LIMIT_DOWN_Y  then
+			nextPos.y = posy
+		end
+		self:pos(nextPos)
 	else
 		self:posByY(self.speed_.y * gameSpeed)
 		self:posByX(self.speed_.x * gameSpeed)
