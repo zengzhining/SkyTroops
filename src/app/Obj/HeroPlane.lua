@@ -109,7 +109,6 @@ function HeroPlane:fireBullet()
 		if self:isCanFireBullet() then
 			scene:onFireBullet(self:getBulletId())
 			self:setLastFireTime(os.clock())
-			self:minitesPower(1)
 			isFireBullet = true
 		end
 	end
@@ -134,14 +133,9 @@ function HeroPlane:updateLogic(dt)
 	allTime = allTime + dt
 
 	--每秒加一个能量
-	if allTime > 1 then 
+	if allTime > 0.3 then 
 		allTime = 0
-		--发射子弹不能加能量
-		if isFireBullet then
-			isFireBullet = false
-		else
-			self:addPower(1)
-		end
+		self:fireBullet()
 	end
 
 
@@ -223,12 +217,15 @@ function HeroPlane:onKeyPad( event )
 	end
 
 	if code == cc.KeyCode.KEY_SPACE then 
-		speed = GameData:getInstance():getGameSpeed()
-		if speed > 1.0 then 
-			GameData:getInstance():setGameSpeed(1.0)
-		else
-			GameData:getInstance():setGameSpeed(2.0)
-		end
+		-- speed = GameData:getInstance():getGameSpeed()
+		-- if speed > 1.0 then 
+		-- 	GameData:getInstance():setGameSpeed(1.0)
+		-- else
+		-- 	GameData:getInstance():setGameSpeed(2.0)
+		-- end
+
+		self:fireBullet()
+
 	end
 end
 

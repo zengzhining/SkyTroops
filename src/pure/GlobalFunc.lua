@@ -105,6 +105,19 @@ __G__createBg = function (fileName)
 	return layer
 end
 
+__G__createPngBg = function ( fileName )
+	local layer = display.newLayer()
+	layer:enableNodeEvents()
+
+	local bg = display.newSprite(fileName)
+	bg:pos(display.center)
+	bg:setScale(display.width/bg:getContentSize().width)
+	layer:add(bg)
+
+
+	return layer
+end
+
 --死亡之后弹窗是否继续
 __G__createContinueLayer = function ( fileName )
 	local layer = display.newLayer(cc.c4b(255, 255, 255, 150))

@@ -4,6 +4,7 @@ local TAG_UI = 101
 local TAG_CUT = 100
 local TAG_GAME_LAYER = 102
 local TAG_BG = 103
+local TAG_FRONT = 106  --前景，云神马的
 local TAG_CONTINUE_LAYER = 104
 local TAG_CONTROL_LAYER = 105
 
@@ -51,9 +52,12 @@ function GameScene:onCreate()
 	self:initObj()
 	self:initControl()
 
-	local bg = __G__createBg( "Layer/BackGround.csb" )
-	bg:setSpeed(self:getBgSpeed())
+	-- local bg = __G__createBg( "Layer/BackGround.csb" )
+	local bg = __G__createPngBg( "bg/01Background.png" )
 	self:add(bg, -2, TAG_BG)
+
+	local frontBg =  __G__createPngBg( "bg/WhiteCloud.png" )
+	self:add(frontBg,10, TAG_FRONT )
 
 	self:onCreateArmy()
 end
@@ -63,6 +67,7 @@ function GameScene:initData()
 	--测试默认载入plist
 	if DEBUG == 2 then 
 		display.loadSpriteFrames("Planes.plist", "Planes.png")
+		display.loadSpriteFrames("Object.plist", "Object.png")
 		display.loadSpriteFrames("Plane.plist", "Plane.png")
 	end
 

@@ -238,7 +238,17 @@ function TestScene:ctor()
 	-- 		btn:pos(btn.originPos_)
 	-- 	end
 	-- end)
-	
+	local bg = display.newSprite("bg/01Background.png")
+	bg:pos(display.center)
+	bg:setScale( display.width/bg:getContentSize().width )
+	layer:add(bg)
+	bg:runAction(cc.MoveBy:create(100, cc.p( 0,display.height )))
+
+	local cloud =display.newSprite("bg/WhiteCloud.png")
+	cloud:pos(display.center)
+	cloud:setScale( display.width/cloud:getContentSize().width )
+	layer:add(cloud,1000)
+	cloud:runAction(cc.MoveBy:create(100, cc.p( 0,-display.height )))
 
 	--virtual joy
 	local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
