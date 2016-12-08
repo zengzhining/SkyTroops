@@ -9,10 +9,7 @@ function TestScene:ctor()
 		print("x,y,z,timeStap~~~~~~~~",x, y, z, timeStap)
 	end)
 
-	--test keycode
-	layer:onKeypad(function( event )
-		
-	end)
+	
 
 	
 
@@ -238,17 +235,8 @@ function TestScene:ctor()
 	-- 		btn:pos(btn.originPos_)
 	-- 	end
 	-- end)
-	local bg = display.newSprite("bg/01Background.png")
-	bg:pos(display.center)
-	bg:setScale( display.width/bg:getContentSize().width )
-	layer:add(bg)
-	bg:runAction(cc.MoveBy:create(100, cc.p( 0,display.height )))
-
-	local cloud =display.newSprite("bg/WhiteCloud.png")
-	cloud:pos(display.center)
-	cloud:setScale( display.width/cloud:getContentSize().width )
-	layer:add(cloud,1000)
-	cloud:runAction(cc.MoveBy:create(100, cc.p( 0,-display.height )))
+	local bgLayer = __G__createPngBg("bg/01Background.png")
+	self:add(bgLayer, -2)
 
 	--virtual joy
 	local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
@@ -269,9 +257,23 @@ function TestScene:ctor()
 	mainPlane:attachVirtualJoy(controlLayer)
 
 	
+	--test keycode
+	layer:onKeypad(function( event )
+		local keycode = event.keycode
+		if keycode == cc.KeyCode.KEY_W then 
+			self:cameraMove(1)
+		elseif keycode == cc.KeyCode.KEY_S then 
+			self:cameraMove(-1)
+		end
+	end)
 
+end
 
-
+function TestScene:cameraMove(speed)
+	local camera = display.getDefaultCamera()
+	-- camera:posByY(speed * display.cy)
+	local act = cc.MoveBy:create(0.2, cc.p( 0, speed * display.cy ))
+	camera:runAction(act)
 end
 
 return TestScene

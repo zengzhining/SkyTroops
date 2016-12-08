@@ -106,13 +106,47 @@ __G__createBg = function (fileName)
 end
 
 __G__createPngBg = function ( fileName )
+	local TAG_UP = 101
+	local TAG_DOWN = 102
+
 	local layer = display.newLayer()
 	layer:enableNodeEvents()
 
+	function layer:onEnter()
+		layer:unUpdate()
+		layer:onUpdate(handler(layer, layer.update))
+		self.speed_ = -50
+	end
+
+	function layer:setSpeed(speed)
+		self.speed_ = speed
+	end
+
 	local bg = display.newSprite(fileName)
-	bg:pos(display.center)
+	bg:setAnchorPoint(cc.p(0.5,1))
 	bg:setScale(display.width/bg:getContentSize().width)
-	layer:add(bg)
+	bg:pos(display.cx, bg:getBoundingBox().height)
+	layer:add(bg,0, TAG_UP)
+
+	local downBg = display.newSprite(fileName)
+	downBg:setAnchorPoint(cc.p(0.5,1))
+	downBg:pos(display.cx, 2 * bg:getBoundingBox().height)
+	downBg:setScale(display.width/downBg:getContentSize().width)
+	layer:add(downBg,0, TAG_DOWN)
+
+
+	function layer:update(dt)
+		local upBg = self:getChildByTag(TAG_UP)
+		local downBg = self:getChildByTag(TAG_DOWN)
+		local tbl = { upBg, downBg }
+		for c, bg in pairs( tbl ) do
+			local nextBg = bg:getTag() == TAG_UP and downBg or upBg
+			if bg:getPositionY() <= 0 then
+				bg:posY(bg:getBoundingBox().height + nextBg:getPositionY())
+			end
+			bg:posByY(self.speed_)
+		end
+	end
 
 
 	return layer
