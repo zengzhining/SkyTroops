@@ -63,11 +63,6 @@ function GameScene:onCreate()
 	self:add(frontBg,10, TAG_FRONT )
 
 	self:initCamera()
-	--init camera
-	-- local camera = cc.Camera:createOrthographic(display.width, display.height,-11,1000)
-	-- camera:setCameraFlag(cc.CameraFlag.USER1)
-
-	-- self:addChild(camera,0,TAG_RENDER_CAMERA)
 	self:initRenderTexture()
 
 	self:onCreateArmy()
@@ -75,9 +70,8 @@ end
 
 function GameScene:initRenderTexture()
 	local rx = display.newRenderTexture(display.width,display.height)
-
 	rx:pos(display.center)
-	Effect.greyTo(rx:getSprite(), 10)
+	-- Effect.greySprite(rx:getSprite())
 	self:add(rx,0,TAG_RENDER_LAYER)
 end
 
@@ -302,9 +296,9 @@ function GameScene:onPlayerDead( target )
 	self.cutBtn_:setTouchEnabled(false)
 	-- self.gameLayer_:removeKeypad()
 	-- self.gameLayer_:removeAccelerate()
-	self:unUpdate()
+	-- self:unUpdate()
 	self.gameLayer_:pauseAllInput()
-	__G__MusicFadeOut(self, 1)
+	__G__MusicFadeOut(self.cutBtn_, 1)
 	--根据排名来确定是否有续命选项
 	local rank = GameData:getInstance():getRank()
 	if rank <= 50 then 
@@ -324,7 +318,7 @@ function GameScene:onPlayerDead( target )
 			self:onContinueCancel()
 		end
 	end, 1.5 )
-	device.vibrate( 0.2 )
+	-- device.vibrate( 0.2 )
 end
 
 function GameScene:isNeedPause()
@@ -365,6 +359,7 @@ function GameScene:onContinueCancel()
 	GameData:getInstance():save()
 
 	__G__actDelay(self,function (  )
+		self:unUpdate()
 		self:getApp():enterScene("ResultScene")
 	end, 1.0)
 end
