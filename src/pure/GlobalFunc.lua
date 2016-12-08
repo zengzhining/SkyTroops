@@ -2,7 +2,7 @@
 --全局函数
 
 __G__createCutLayer = function ( fileName )
-	local layer = display.newLayer(cc.c4b(255, 255, 255, 150))
+	local layer = display.newLayer(cc.c4b(255, 255, 255, 0))
 
 	local node = display.newCSNode(fileName)
 	layer:addChild(node)

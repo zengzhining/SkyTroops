@@ -23,6 +23,9 @@ local commboTimes = 0
 
 local ContinueTimes = 2  -- 只能有两次继续游戏机会
 
+local scheduler = cc.Director:getInstance():getScheduler()
+
+local schduleFunc = nil
 function GameScene:onCreate()
 	self:initData()
 	--addSpriteFrames
@@ -31,7 +34,7 @@ function GameScene:onCreate()
 	local uiLayer = display.newCSNode(fileName)	
 
 	self:initUI(uiLayer)
-	self:addChild(uiLayer, -1, TAG_UI )
+	self:addChild(uiLayer, 1, TAG_UI )
 
 	--hit num
 	for i = 1 ,3 do
@@ -75,7 +78,7 @@ function GameScene:initRenderTexture()
 	self:add(rx,0,TAG_RENDER_LAYER)
 end
 
-function GameScene:updateRenderLayer()
+function GameScene:updateRenderLayer(dt)
 	local rx = self:getChildByTag(TAG_RENDER_LAYER)
 	if not rx then return end
 	local tbl = { TAG_BG, TAG_GAME_LAYER, TAG_FRONT }
@@ -120,6 +123,8 @@ function GameScene:initData()
 
 	--默认进入后台就暂停游戏,播放广告例外
 	self.isNeedPause_ = true
+
+	schduleFunc = nil
 end
 
 function GameScene:step( dt )
@@ -131,8 +136,9 @@ function GameScene:step( dt )
 		local rect = army:getCollisionRect()
 		local iscollision = cc.rectIntersectsRect(roleRect, rect) 
 		local isRelive = self.role_:isRelive()
+		local isDead = self.role_:isDead()
 		--碰撞检测成功判断下角色是否处于复活状态
-		if iscollision and (not isRelive) then 
+		if iscollision and (not isRelive) and (not isDead) then 
 			self.role_:onCollision( army )
 			army:onCollision( self.role_ )
 		end
@@ -297,7 +303,7 @@ function GameScene:onPlayerDead( target )
 	-- self.gameLayer_:removeKeypad()
 	-- self.gameLayer_:removeAccelerate()
 	-- self:unUpdate()
-	self.gameLayer_:pauseAllInput()
+	-- self.gameLayer_:pauseAllInput()
 	__G__MusicFadeOut(self.cutBtn_, 1)
 	--根据排名来确定是否有续命选项
 	local rank = GameData:getInstance():getRank()
@@ -318,7 +324,12 @@ function GameScene:onPlayerDead( target )
 			self:onContinueCancel()
 		end
 	end, 1.5 )
-	-- device.vibrate( 0.2 )
+
+	local rx = self:getChildByTag(TAG_RENDER_LAYER)
+	if rx then
+		Effect.greyTo(rx:getSprite(), 1.5)
+	end
+	device.vibrate( 0.2 )
 end
 
 function GameScene:isNeedPause()
@@ -334,7 +345,12 @@ function GameScene:onContinue()
 			if self.role_ then 
 				self.role_:setVisible(true)
 				self.role_:relive()
-				self:onUpdate(handler(self, self.step))
+
+				local rx = self:getChildByTag(TAG_RENDER_LAYER)
+				if rx then 
+					Effect.colorSprite(rx:getSprite())
+				end
+				-- self:onUpdate(handler(self, self.step))
 			end
 			ContinueTimes = ContinueTimes - 1
 			self.isNeedPause_ = true
@@ -360,6 +376,7 @@ function GameScene:onContinueCancel()
 
 	__G__actDelay(self,function (  )
 		self:unUpdate()
+		self:unUpdateRenderTexture()
 		self:getApp():enterScene("ResultScene")
 	end, 1.0)
 end
@@ -595,6 +612,11 @@ function GameScene:onCut(  )
 		local layer = __G__createCutLayer( "Layer/ResumeLayer.csb" )
 		self:addChild(layer, 100, TAG_CUT)
 		display.pause()
+
+		local rx = self:getChildByTag(TAG_RENDER_LAYER)
+		if rx then
+			Effect.blurSprite(rx:getSprite())
+		end
 	end
 end
 
@@ -605,13 +627,20 @@ function GameScene:onResume()
 	self.gameLayer_:setTouchEnabled(true)
 	self:removeChildByTag(TAG_CUT, true)
 	self.cutBtn_:setTouchEnabled(true)
+
+	local rx = self:getChildByTag(TAG_RENDER_LAYER)
+	if rx then
+		Effect.colorSprite(rx:getSprite())
+	end
 end
 
 function GameScene:onRestart()
-	__G__MenuCancelSound()
 	display.resume()
+	__G__MenuCancelSound()
 	GameData:getInstance():reset()
+	self:unUpdateRenderTexture()
 	self:getApp():enterLoading("SelectScene")
+
 end
 
 
@@ -629,6 +658,14 @@ function GameScene:onEnter()
 	self:unUpdate()
 
 	self:onUpdate(handler(self, self.step))
+
+	self:unUpdateRenderTexture()
+	schduleFunc = scheduler:scheduleScriptFunc(handler(self,self.updateRenderLayer), 0, false  )
+
+	local rx = self:getChildByTag(TAG_RENDER_LAYER)
+	if rx then
+		Effect.circleIn(rx:getSprite())
+	end
 end
 
 function GameScene:onExit()
@@ -641,8 +678,14 @@ function GameScene:onExit()
 		end
 	end
 
+	self:unUpdateRenderTexture()
+end
 
-
+function GameScene:unUpdateRenderTexture()
+	if schduleFunc then
+		scheduler:unscheduleScriptEntry(schduleFunc)
+		schduleFunc = nil
+	end
 end
 
 return GameScene
