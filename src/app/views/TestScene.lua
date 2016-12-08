@@ -236,8 +236,12 @@ function TestScene:ctor()
 	-- 	end
 	-- end)
 	local bgLayer = __G__createPngBg("bg/01Background.png")
+	bgLayer:setSpeed(-1)
 	self:add(bgLayer, -2)
 
+	local frontBg =  __G__createPngBg( "bg/WhiteCloud.png" )
+	frontBg:setSpeed(-3)
+	self:add(frontBg,10)
 	--virtual joy
 	local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
 	self:add(controlLayer)

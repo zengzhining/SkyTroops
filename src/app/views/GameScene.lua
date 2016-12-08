@@ -52,11 +52,12 @@ function GameScene:onCreate()
 	self:initObj()
 	self:initControl()
 
-	-- local bg = __G__createBg( "Layer/BackGround.csb" )
 	local bg = __G__createPngBg( "bg/01Background.png" )
+	bg:setSpeed(-1)
 	self:add(bg, -2, TAG_BG)
 
 	local frontBg =  __G__createPngBg( "bg/WhiteCloud.png" )
+	frontBg:setSpeed(-5)
 	self:add(frontBg,10, TAG_FRONT )
 
 	self:onCreateArmy()

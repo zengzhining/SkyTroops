@@ -111,11 +111,12 @@ __G__createPngBg = function ( fileName )
 
 	local layer = display.newLayer()
 	layer:enableNodeEvents()
+	
+	layer.speed_ = 0
 
 	function layer:onEnter()
 		layer:unUpdate()
 		layer:onUpdate(handler(layer, layer.update))
-		self.speed_ = -50
 	end
 
 	function layer:setSpeed(speed)

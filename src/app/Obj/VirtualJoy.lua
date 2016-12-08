@@ -49,7 +49,11 @@ function VirtualJoy:ctor( bgFile, controlFile )
 			btn:pos(finalPos)
 
 			local deltaPoint = cc.pSub(finalPos,btn.originPos_)
-			local strength = cc.pNormalize(deltaPoint)
+			local strength = cc.p(deltaPoint.x/radius, deltaPoint.y/radius)
+
+			if not isInCircle then
+				strength = cc.pNormalize(deltaPoint)
+			end
 			self:setStrength(strength)
 		end
 

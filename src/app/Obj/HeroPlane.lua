@@ -143,7 +143,8 @@ function HeroPlane:updateLogic(dt)
 	local joy = self:getVirtualJoy()
 	if joy then 
 		local strength = joy:getStrength()
-		local speed = cc.pMul(strength, 5)
+		local length = cc.pGetLength(strength)
+		local speed = cc.pMul(strength, length > 0.5 and 5 or 3)
 		self:setSpeed(speed)
 	end
 end
