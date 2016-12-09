@@ -125,6 +125,8 @@ function GameScene:initData()
 	self.isNeedPause_ = true
 
 	schduleFunc = nil
+
+	self.gameLayer_ = nil
 end
 
 function GameScene:step( dt )
@@ -523,6 +525,7 @@ function GameScene:initObj()
         end
     end
 	gameLayer:onKeypad( keyCallback )
+
 end
 
 --主角发射炮弹的回调函数
