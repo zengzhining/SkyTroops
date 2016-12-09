@@ -7,27 +7,23 @@ local TAG_BG = 101
 function ResultScene:onCreate(  )
 	-- body
 	local root = self:getResourceNode()
-	local Retry = root:getChildByName("Retry")
-	Retry:onTouch(function ( event )
-		if event.name == "ended" then
+	local Retry = root:getChildByName("Restart")
+	Retry:onClick(function (  )
 			__G__MenuCancelSound()
 			local scene = root:getParent()
 			if scene and scene.onRetry then 
 				scene:onRetry()
 			end		
-		end
-	end, false, true)
+	end)
 
-	local exit = root:getChildByName("Exit")
-	exit:onTouch(function ( event )
-		if event.name == "ended" then
-			__G__MenuCancelSound()
-			local scene = root:getParent()
-			if scene and scene.onGameExit then 
-				scene:onGameExit()
-			end		
-		end
-	end,  false, true)
+	local exit = root:getChildByName("Menu")
+	exit:onClick(function (  )
+		__G__MenuCancelSound()
+		local scene = root:getParent()
+		if scene and scene.onMenu then 
+			scene:onMenu()
+		end		
+	end)
 
 	local rankLb = root:getChildByName("Rank")
 	rankLb:setString(tostring(GameData:getInstance():getRank()))
@@ -35,26 +31,27 @@ function ResultScene:onCreate(  )
 	local scoreLb = root:getChildByName("Score")
 	scoreLb:setString(tostring(GameData:getInstance():getScore()))
 
-	local bg = __G__createBg( "Layer/BackGround.csb" )
-	self:addChild(bg, -1,TAG_BG)
-
 end
 
 function ResultScene:onRetry(  )
 	local callback = function ()
 		__G__actDelay(self, function()
-				self:getApp():enterLoading("GameScene" )
+				self:getApp():enterLoading("SelectScene" )
 		end, 0.2)
 	end
 
 	--重置游戏数据
 	GameData:getInstance():reset()
 
+	__G__MenuCancelSound()
 	callback()
 end
 
-function ResultScene:onGameExit()
-	display.exit()
+function ResultScene:onMenu()
+	__G__MenuCancelSound()
+	__G__actDelay(self, function()
+			self:getApp():enterLoading("MainMenu")
+	end, 0.2)
 end
 
 function ResultScene:onEnter()
