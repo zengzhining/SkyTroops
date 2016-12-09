@@ -25,7 +25,6 @@ local ContinueTimes = 2  -- 只能有两次继续游戏机会
 
 local scheduler = cc.Director:getInstance():getScheduler()
 
-local schduleFunc = nil
 function GameScene:onCreate()
 	self:initData()
 	--addSpriteFrames
@@ -65,17 +64,7 @@ function GameScene:onCreate()
 	frontBg:setSpeed(-5)
 	self:add(frontBg,10, TAG_FRONT )
 
-	self:initCamera()
-	self:initRenderTexture()
-
 	self:onCreateArmy()
-end
-
-function GameScene:initRenderTexture()
-	local rx = display.newRenderTexture(display.width,display.height)
-	rx:pos(display.center)
-	-- Effect.greySprite(rx:getSprite())
-	self:add(rx,0,TAG_RENDER_LAYER)
 end
 
 function GameScene:updateRenderLayer(dt)
@@ -90,18 +79,6 @@ function GameScene:updateRenderLayer(dt)
 		end
 	end
 	rx:endToLua()
-end
-
-function GameScene:initCamera()
-	local tbl = {TAG_GAME_LAYER,TAG_BG, TAG_FRONT}
-	for c, tag in pairs(tbl) do
-		local item = self:getChildByTag(tag)
-		if item then 
-			self:setObjCamera(item)
-		end
-
-	end
-
 end
 
 function GameScene:initData()
@@ -123,8 +100,6 @@ function GameScene:initData()
 
 	--默认进入后台就暂停游戏,播放广告例外
 	self.isNeedPause_ = true
-
-	schduleFunc = nil
 
 	self.gameLayer_ = nil
 end
@@ -379,7 +354,6 @@ function GameScene:onContinueCancel()
 
 	__G__actDelay(self,function (  )
 		self:unUpdate()
-		self:unUpdateRenderTexture()
 		self:getApp():enterScene("ResultScene")
 	end, 1.0)
 end
@@ -539,7 +513,6 @@ function GameScene:onFireBullet( id_ )
 	bullet:onFire()
 	bullet:setSpeed(cc.p(0, 10))
 	gameLayer:addChild(bullet)
-	self:setObjCamera(bullet)
 	table.insert(bulletSet, bullet)
 end
 
@@ -560,10 +533,6 @@ function GameScene:onAllArmyGone()
 	self:onCreateArmy()
 end
 
-function GameScene:setObjCamera( obj )
-	obj:setCameraMask(cc.CameraFlag.USER1)
-end
-
 function GameScene:onCreateArmy(  )
 	--读取plist数据创建敌人
 	local armyData = self:getArmyData()
@@ -580,8 +549,6 @@ function GameScene:onCreateArmy(  )
 		army:setDirX(dir)
 		army:pos(armyPos)
 		self.gameLayer_ :addChild(army)
-		self:setObjCamera(army)
-
 		table.insert(armySet, army)
 	end
 	--调整一下游戏背景速度
@@ -642,7 +609,6 @@ function GameScene:onRestart()
 	display.resume()
 	__G__MenuCancelSound()
 	GameData:getInstance():reset()
-	self:unUpdateRenderTexture()
 	self:getApp():enterLoading("SelectScene")
 
 end
@@ -663,9 +629,6 @@ function GameScene:onEnter()
 
 	self:onUpdate(handler(self, self.step))
 
-	self:unUpdateRenderTexture()
-	schduleFunc = scheduler:scheduleScriptFunc(handler(self,self.updateRenderLayer), 0, false  )
-
 	local rx = self:getChildByTag(TAG_RENDER_LAYER)
 	if rx then
 		Effect.fadeIn(rx:getSprite())
@@ -682,14 +645,7 @@ function GameScene:onExit()
 		end
 	end
 
-	self:unUpdateRenderTexture()
 end
 
-function GameScene:unUpdateRenderTexture()
-	if schduleFunc then
-		scheduler:unscheduleScriptEntry(schduleFunc)
-		schduleFunc = nil
-	end
-end
 
 return GameScene

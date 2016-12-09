@@ -62,8 +62,6 @@ end
 function HeroPlane:addGasAni()
 	local rect = self:getViewRect()
 	self:addAnimation("PlaneCloudGas%02d.png",1,4, -1, { pos_ = cc.p( rect.width*0.5, rect.height * 0.3 ),z_ = 0, tag_ = TAG_GAS})
-	local gas = self:getChildByTag(TAG_GAS)
-	gas:setCameraMask(cc.CameraFlag.USER1)
 end
 
 function HeroPlane:getMaxPower(  )
