@@ -3,12 +3,10 @@ local GameScene = class("GameScene", cc.load("mvc").ViewBase)
 local TAG_UI = 101
 local TAG_CUT = 100
 local TAG_GAME_LAYER = 102
-local TAG_RENDER_LAYER = 107
 local TAG_BG = 103
 local TAG_FRONT = 106  --前景，云神马的
 local TAG_CONTINUE_LAYER = 104
 local TAG_CONTROL_LAYER = 105
-local TAG_RENDER_CAMERA = 106 --渲染用的摄像机
 
 local armySet = {}
 local bulletSet = {}
@@ -65,20 +63,6 @@ function GameScene:onCreate()
 	self:add(frontBg,10, TAG_FRONT )
 
 	self:onCreateArmy()
-end
-
-function GameScene:updateRenderLayer(dt)
-	local rx = self:getChildByTag(TAG_RENDER_LAYER)
-	if not rx then return end
-	local tbl = { TAG_BG, TAG_GAME_LAYER, TAG_FRONT }
-	rx:beginWithClear(1, 1, 1, 1)
-	for c,tag in pairs(tbl) do
-		local item = self:getChildByTag(tag)
-		if item then 
-			item:visit()
-		end
-	end
-	rx:endToLua()
 end
 
 function GameScene:initData()
@@ -295,10 +279,6 @@ function GameScene:onPlayerDead( target )
 			if not self:getChildByTag(TAG_CONTINUE_LAYER) then
 				local layer = __G__createContinueLayer("Layer/ContinueLayer.csb")
 				self:addChild(layer, 100, TAG_CONTINUE_LAYER)
-				local rx = self:getChildByTag(TAG_RENDER_LAYER)
-				if rx then
-					Effect.greySprite(rx:getSprite())
-				end
 			end
 		else
 			--直接进入结算关卡,相当于按下取消
@@ -324,10 +304,7 @@ function GameScene:onContinue()
 				self.role_:setVisible(true)
 				self.role_:relive()
 
-				local rx = self:getChildByTag(TAG_RENDER_LAYER)
-				if rx then 
-					Effect.colorSprite(rx:getSprite())
-				end
+				
 				-- self:onUpdate(handler(self, self.step))
 			end
 			ContinueTimes = ContinueTimes - 1
@@ -577,10 +554,6 @@ end
 function GameScene:onCut(  )
 	if not self:getChildByTag(TAG_CUT) then 
 		__G__MenuClickSound()
-		local rx = self:getChildByTag(TAG_RENDER_LAYER)
-		if rx then
-			Effect.bloomSprite(rx:getSprite())			
-		end
 
 		self.gameLayer_:setTouchEnabled(false)	
 		self.cutBtn_:setTouchEnabled(false)
@@ -599,10 +572,6 @@ function GameScene:onResume()
 	self:removeChildByTag(TAG_CUT, true)
 	self.cutBtn_:setTouchEnabled(true)
 
-	local rx = self:getChildByTag(TAG_RENDER_LAYER)
-	if rx then
-		Effect.colorSprite(rx:getSprite())
-	end
 end
 
 function GameScene:onRestart()
@@ -629,10 +598,6 @@ function GameScene:onEnter()
 
 	self:onUpdate(handler(self, self.step))
 
-	local rx = self:getChildByTag(TAG_RENDER_LAYER)
-	if rx then
-		Effect.fadeIn(rx:getSprite())
-	end
 end
 
 function GameScene:onExit()
