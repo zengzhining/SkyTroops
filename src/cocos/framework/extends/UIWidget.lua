@@ -41,3 +41,24 @@ function Widget:onTouch(callback)
     end)
     return self
 end
+
+local Button = ccui.Button
+
+function Button:onClick(callback)
+    self:addTouchEventListener(function(sender, state)
+        local event = {x = 0, y = 0}
+        if state == 0 then
+            event.name = "began"
+            return true
+        elseif state == 1 then
+            event.name = "moved"
+        elseif state == 2 then
+            event.name = "ended"
+            callback(sender)
+        else
+            event.name = "cancelled"
+        end
+        event.target = sender
+    end)
+    return self
+end

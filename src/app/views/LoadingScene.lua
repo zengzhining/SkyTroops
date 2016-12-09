@@ -45,7 +45,7 @@ function LoadingScene:showTips(  )
 	local tipsTbl = gameio.getVectorPlistFromFile("gameTips.plist")
 
 	local str = tipsTbl[math.random(1,#tipsTbl)]
-	local tips = display.newTTF("Pixel.ttf", 72, str)
+	local tips = display.newTTF("fonts/Pixel.ttf", 72, str)
 	tips:setOpacity(0)
 	tips:setScale(0.5)
 	tips:pos(display.cx, display.cy * 1.5)
