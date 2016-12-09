@@ -52,6 +52,17 @@ function HeroPlane:ctor( fileName )
 	self.limitInScreen_ = true
 end
 
+function HeroPlane:onEnter()
+	HeroPlane.super.onEnter(self)
+	--播放喷气动画
+	self:addGasAni()
+end
+
+function HeroPlane:addGasAni()
+	local rect = self:getViewRect()
+	self:addAnimation("PlaneCloudGas%02d.png",1,4, -1, { pos_ = cc.p( rect.width*0.5, rect.height * 0.3 ),z_ = 0 })
+end
+
 function HeroPlane:getMaxPower(  )
 	return MAX_POWER
 end
@@ -194,6 +205,7 @@ end
 function HeroPlane:isRelive()
 	return self.isRelive_
 end
+
 
 function HeroPlane:accelerateEvent( x,y,z,timeStap )
 	if x < LEFT_ACC then

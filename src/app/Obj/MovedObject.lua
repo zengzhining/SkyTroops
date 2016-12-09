@@ -23,7 +23,7 @@ function MovedObject:debugDraw()
 end
 
 function MovedObject:initData()
-	self.speed_= cc.p( 0, 5 )
+	self.speed_= cc.p( 0, 0 )
 	self.aniFormat_ = nil
 end
 
@@ -78,19 +78,43 @@ function MovedObject:restoreOriginSprite()
 	self:setSpriteFrame(frame)
 end
 
-function MovedObject:playAnimation( formatFile )
+function MovedObject:addAnimation(formatFile , fromIdx, length, repeatTime, objParams)
+	local obj = MovedObject.new()
+	local size = self:getViewRect()
+
+	local finalPos = cc.p(size.width*0.5, size.height*0.5)
+	if objParams and objParams.pos_ then 
+		finalPos = objParams.pos_
+	end
+
+	local z = 0
+	if objParams and objParams.z_ then 
+		z = objParams.z_
+	end
+
+	obj:pos(finalPos)
+	self:add(obj,z)
+	obj:playAnimation(formatFile , fromIdx, length, repeatTime)
+end
+
+function MovedObject:playAnimation( formatFile , fromIdx, length, repeatTime )
+	if not repeatTime then repeatTime = 1 end 
 	local name = string.format(formatFile,1)
 	local ani = display.getAnimationCache(name)
 	if not ani then 
-		local frames = display.newFrames( formatFile, 1, 3, true )
+		local frames = display.newFrames( formatFile, fromIdx, length, true )
 		ani = display.newAnimation(frames, 0.15)
 		display.setAnimationCache( name, ani )
 	end
 
-	local act = cc.Sequence:create(cc.Animate:create( ani ), cc.CallFunc:create(function(target)
-			-- target:debugDraw()
-			end) )
-			
+	local act = nil
+
+	if repeatTime >= 1 then 
+		act =  cc.Repeat:create(cc.Animate:create( ani ), repeatTime) 
+	else
+		act = cc.RepeatForever:create(cc.Animate:create( ani ))
+	end
+				
 	self:runAction(act)
 end
 

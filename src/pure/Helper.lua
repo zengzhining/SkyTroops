@@ -38,4 +38,3 @@ function showClickParticle( layer, point )
 end
 
 
-

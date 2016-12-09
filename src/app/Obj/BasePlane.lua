@@ -20,6 +20,11 @@ function BasePlane:initData()
 	self.lastFireTime_ = 0
 end
 
+function BasePlane:onEnter()
+	BasePlane.super.onEnter(self)
+	
+end
+
 function BasePlane:resetHp()
 	self.hp_ = 1
 end
