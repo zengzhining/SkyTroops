@@ -43,7 +43,7 @@ __G__createCutLayer = function ( fileName )
 end
 
 __G__createOverLayer = function ( fileName )
-	local layer = display.newLayer(cc.c4b(255, 255, 255, 100))
+	local layer = display.newLayer(cc.c4b(255, 255, 255, 0))
 
 	local node = display.newCSNode(fileName)
 	layer:addChild(node)
@@ -155,7 +155,7 @@ end
 
 --死亡之后弹窗是否继续
 __G__createContinueLayer = function ( fileName )
-	local layer = display.newLayer(cc.c4b(255, 255, 255, 150))
+	local layer = display.newLayer(cc.c4b(255, 255, 255, 0))
 	local node = display.newCSNode(fileName)
 	node:pos(0, display.cy * 0.5)
 	layer:addChild(node)
