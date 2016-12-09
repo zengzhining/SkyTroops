@@ -7,37 +7,29 @@ __G__createCutLayer = function ( fileName )
 	local node = display.newCSNode(fileName)
 	layer:addChild(node)
 
-	local resume = node:getChildByName("Resume")
-	resume:onTouch(function ( event )
-		if event.name == "ended" then
-			local scene = layer:getParent()
-			if scene and scene.onResume then 
-				scene:onResume()
-			end		
-		end
-	end, false, true)
+	local resume = node:getChildByName("Close")
+	resume:onClick(function (  )
+		local scene = layer:getParent()
+		if scene and scene.onResume then 
+			scene:onResume()
+		end		
+	end)
 
 	local restart = node:getChildByName("Restart")
-	restart:onTouch(function ( event )
-		if event.name == "ended" then
-			local scene = layer:getParent()
-			if scene and scene.onRestart then 
-				scene:onRestart()
-			end		
-		end
-	end,  false, true)
+	restart:onClick(function (  )
+		local scene = layer:getParent()
+		if scene and scene.onRestart then 
+			scene:onRestart()
+		end		
+	end)
 
-	local exit = node:getChildByName("Exit")
-	exit:onTouch(function ( event )
-		if event.name == "ended" then
-			local scene = layer:getParent()
-			if scene and scene.onCutExit then 
-				scene:onCutExit()
-			end		
-		end
-	end,  false, true)
-
-
+	local exit = node:getChildByName("Menu")
+	exit:onClick(function (  )
+		local scene = layer:getParent()
+		if scene and scene.onMenu then 
+			scene:onMenu()
+		end		
+	end)
 
 	return layer
 end
@@ -157,40 +149,42 @@ end
 __G__createContinueLayer = function ( fileName )
 	local layer = display.newLayer(cc.c4b(255, 255, 255, 0))
 	local node = display.newCSNode(fileName)
-	node:pos(0, display.cy * 0.5)
+	-- node:pos(0, display.cy * 0.5)
 	layer:addChild(node)
 
-	local Sure = node:getChildByName("Sure")
-	Sure:onTouch(function ( event )
-		if event.name == "ended" then
-			__G__MenuCancelSound()
-
-			local scene = layer:getParent()
-			if scene and scene.onContinue then 
-				scene:onContinue()
-			end
-			layer:removeSelf()		
+	local Sure = node:getChildByName("Continue")
+	Sure:onClick(function (  )
+		__G__MenuCancelSound()
+		local scene = layer:getParent()
+		if scene and scene.onContinue then 
+			scene:onContinue()
 		end
-	end, false, true)
+		layer:removeSelf()		
+	end)
 
-	local Cancel = node:getChildByName("Cancel")
-	Cancel:onTouch(function ( event )
-		if event.name == "ended" then
-			__G__MenuCancelSound()
-			local scene = layer:getParent()
-			if scene and scene.onContinueCancel then 
-				scene:onContinueCancel()
-			end	
-			layer:removeSelf()	
-		end
-	end,  false, true)
+	local Cancel = node:getChildByName("Close")
+	Cancel:onClick(function ( )
+		__G__MenuCancelSound()
+		local scene = layer:getParent()
+		if scene and scene.onContinueCancel then 
+			scene:onContinueCancel()
+		end	
+		layer:removeSelf()	
+	end)
+
+	local exit = node:getChildByName("Menu")
+	exit:onClick(function (  )
+		local scene = layer:getParent()
+		if scene and scene.onMenu then 
+			scene:onMenu()
+		end		
+	end)
 
 	local Time = node:getChildByName("Time")
 	local time = 15
 	local allTime = 0
 	layer:onUpdate(function ( dt )
 		allTime = allTime + dt
-
 		if allTime >= 1 then
 			allTime = 0
 			time = time - 1

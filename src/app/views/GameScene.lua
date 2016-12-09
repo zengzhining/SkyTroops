@@ -27,29 +27,11 @@ function GameScene:onCreate()
 	self:initData()
 	--addSpriteFrames
 	-- body
-	local fileName = "Layer/GameCut.csb"
+	local fileName = "Layer/HUD.csb"
 	local uiLayer = display.newCSNode(fileName)	
 
 	self:initUI(uiLayer)
 	self:addChild(uiLayer, 1, TAG_UI )
-
-	--hit num
-	for i = 1 ,3 do
-		local point = display.newDrawNode()
-		point:drawSolidCircle(cc.p(0 ,0), 10, math.pi * 2, 50, 1.0, 1.0, cc.c4f(1,0,0,0.8))
-		point:pos( (i-0.5)*30 , display.height-100)
-		point:hide()
-		uiLayer:add(point)
-		table.insert(pointSet, point)
-	end
-
-	--能量条
-	local powerLayer = display.newCSNode("Layer/powerLayer.csb")
-	powerLayer:pos(0, display.cy * 0.5)
-	local powerBar = powerLayer:getChildByName("powerBar")
-	self.powerBar_ = powerBar
-	uiLayer:add(powerLayer)
-
 
 	self:initObj()
 	self:initControl()
@@ -86,6 +68,10 @@ function GameScene:initData()
 	self.isNeedPause_ = true
 
 	self.gameLayer_ = nil
+
+	self.cutBtn_ = nil
+	self.scoreLb_ = nil
+	self.rankLb_ = nil
 end
 
 function GameScene:step( dt )
@@ -165,18 +151,6 @@ function GameScene:step( dt )
 			-- self:onCreateArmy()
 		end
 	end
-
-	--更新能量条
-	self:updatePowerBar()
-	self:updateRenderLayer()
-end
-
-function GameScene:updatePowerBar(  )
-	if self.role_ then
-		local MAX_POWER = self.role_:getMaxPower()
-		local power = self.role_:getPower()
-		self.powerBar_:setPercent(power * 100/MAX_POWER)
-	end
 end
 
 --子弹击中敌人的回调，这里可以处理连击
@@ -191,14 +165,14 @@ function GameScene:onBulletHitArmy( bullet_, army_ )
 			commboTimes = 0
 			hitSameArmyNum = 0
 			lastHitArmyId = id 
-			self:updateCommbo()
+			-- self:updateCommbo()
 		end
 	else
 		hitSameArmyNum = hitSameArmyNum + 1
 		lastHitArmyId = id 
 	end
 
-	self:updateSameHit()
+	-- self:updateSameHit()
 
 	--一般保持在三个连击
 	if hitSameArmyNum >= 3 then 
@@ -208,7 +182,7 @@ function GameScene:onBulletHitArmy( bullet_, army_ )
 			self.role_:resetPower()
 		end
 		hitSameArmyNum = 0
-		self:updateCommbo()
+		-- self:updateCommbo()
 	end
 
 end
@@ -261,10 +235,6 @@ function GameScene:onPlayerDead( target )
 	end
 	__G__ExplosionSound()
 	self.cutBtn_:setTouchEnabled(false)
-	-- self.gameLayer_:removeKeypad()
-	-- self.gameLayer_:removeAccelerate()
-	-- self:unUpdate()
-	-- self.gameLayer_:pauseAllInput()
 	__G__MusicFadeOut(self.cutBtn_, 1)
 	--根据排名来确定是否有续命选项
 	local rank = GameData:getInstance():getRank()
@@ -376,30 +346,15 @@ end
 
 function GameScene:initUI( ui_ )
 	local cutBtn = ui_:getChildByName("CutButton")
-	cutBtn:onTouch(function ( event )
-		if event.name == "ended" then 
-			self:onCut()
-		end
-	end,  false, true)
+	cutBtn:onClick(function (  )
+		self:onCut()
+	end)
 
 	self.cutBtn_ = cutBtn
 	local scoreLb = ui_:getChildByName("Score")
 	self.scoreLb_ = scoreLb
 	local rankLb = ui_:getChildByName("Rank")
 	self.rankLb_ = rankLb
-
-	local commboLb = ui_:getChildByName("commboNum")
-	commboLb:hide()
-	self.commboLb_ = commboLb
-	local commboTitle = ui_:getChildByName("comboTitle")
-	commboTitle:hide()
-	self.commboTitle_ = commboTitle
-	local plusTitle = ui_:getChildByName("plusScore")
-	plusTitle:hide()
-	local x,y = plusTitle:getPosition()
-	plusTitle.originPos_ = cc.p(x,y)
-	self.plusTitle_ = plusTitle
-
 	--直接更新
 	self:flashScore()
 	
@@ -415,18 +370,6 @@ function GameScene:updateScore( changeScore )
 	__G__actDelay(self, function (  )
 		self:flashScore()
 	end, 0.4)
-
-	if changeScore then 
-		local str = string.format("+%d", changeScore)
-		self.plusTitle_:setString(str)
-		local act = cc.Sequence:create( cc.Show:create(), cc.FadeIn:create(0.1), cc.Spawn:create( cc.ScaleTo:create(0.5, 1.2), cc.MoveBy:create(0.5, cc.p(0, 10)),cc.FadeOut:create(0.5) ),cc.Hide:create() )
-		self.plusTitle_:setScale(1)
-		if self.plusTitle_.originPos_ then 
-			local pos = self.plusTitle_.originPos_
-			self.plusTitle_:setPosition(pos)
-		end
-		self.plusTitle_:runAction(act)
-	end
 end
 
 function GameScene:updateCommbo()
@@ -583,7 +526,7 @@ function GameScene:onRestart()
 end
 
 
-function GameScene:onCutExit()
+function GameScene:onMenu()
 	__G__MenuCancelSound()
 	display.exit()
 end
