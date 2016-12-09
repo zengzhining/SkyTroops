@@ -10,6 +10,7 @@ local UP_ACC = -0.4
 local DOWN_ACC = -0.8
 local RELIVE_TIME = 3
 
+local TAG_GAS = 101
 
 --限制不能移动的范围
 local LIMIT_RECT = cc.rect(70,display.cy*0.5 + 50, display.width-150, display.height-150)
@@ -60,7 +61,9 @@ end
 
 function HeroPlane:addGasAni()
 	local rect = self:getViewRect()
-	self:addAnimation("PlaneCloudGas%02d.png",1,4, -1, { pos_ = cc.p( rect.width*0.5, rect.height * 0.3 ),z_ = 0 })
+	self:addAnimation("PlaneCloudGas%02d.png",1,4, -1, { pos_ = cc.p( rect.width*0.5, rect.height * 0.3 ),z_ = 0, tag_ = TAG_GAS})
+	local gas = self:getChildByTag(TAG_GAS)
+	gas:setCameraMask(cc.CameraFlag.USER1)
 end
 
 function HeroPlane:getMaxPower(  )

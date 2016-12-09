@@ -318,6 +318,10 @@ function GameScene:onPlayerDead( target )
 			if not self:getChildByTag(TAG_CONTINUE_LAYER) then
 				local layer = __G__createContinueLayer("Layer/ContinueLayer.csb")
 				self:addChild(layer, 100, TAG_CONTINUE_LAYER)
+				local rx = self:getChildByTag(TAG_RENDER_LAYER)
+				if rx then
+					Effect.greySprite(rx:getSprite())
+				end
 			end
 		else
 			--直接进入结算关卡,相当于按下取消
@@ -325,10 +329,7 @@ function GameScene:onPlayerDead( target )
 		end
 	end, 1.5 )
 
-	local rx = self:getChildByTag(TAG_RENDER_LAYER)
-	if rx then
-		Effect.greySprite(rx:getSprite())
-	end
+	--死亡震动
 	-- device.vibrate( 0.2 )
 end
 
@@ -664,7 +665,7 @@ function GameScene:onEnter()
 
 	local rx = self:getChildByTag(TAG_RENDER_LAYER)
 	if rx then
-		Effect.circleIn(rx:getSprite())
+		Effect.fadeIn(rx:getSprite())
 	end
 end
 

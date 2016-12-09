@@ -102,6 +102,20 @@ function circleOut(obj)
 	obj:setGLProgramState(state)
 end
 
+--淡入
+function fadeIn(obj, time)
+	if not time then time = 1 end
+	obj:setOpacity(0)
+	local act = cc.FadeIn:create(time)
+	obj:runAction(act)
+end
+
+--淡出
+function fadeOut(obj, time)
+	if not time then time = 1 end
+	local act = cc.FadeOut:create(time)
+	obj:runAction(act)
+end
 
 --测试
 function testSprite(obj)

@@ -92,8 +92,13 @@ function MovedObject:addAnimation(formatFile , fromIdx, length, repeatTime, objP
 		z = objParams.z_
 	end
 
+	local tag = 0
+	if objParams and objParams.tag_ then 
+		tag = objParams.tag_
+	end
+
 	obj:pos(finalPos)
-	self:add(obj,z)
+	self:add(obj,z,tag)
 	obj:playAnimation(formatFile , fromIdx, length, repeatTime)
 end
 
