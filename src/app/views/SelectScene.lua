@@ -8,15 +8,13 @@ local TAG_ROLE_2 = 102
 function SelectScene:onCreate()
 
 	if DEBUG == 2 then
-		display.loadSpriteFrames("Plane.plist", "Plane.png")
+		display.loadSpriteFrames("Planes.plist", "Planes.png")
+		display.loadSpriteFrames("Object.plist", "Object.png")
+		display.loadSpriteFrames("Animation.plist", "Animation.png")
 	end
 
 	self.roleId_ = 1
 	local root = self:getResourceNode()
-
-	--title
-	local title = root:getChildByName("Des")
-	self.title_ = title
 	--button
 	local startBtn = root:getChildByName("Go")
 	startBtn:onTouch(function ( event )
@@ -34,20 +32,16 @@ function SelectScene:onCreate()
 	--left
 	local leftBtn = root:getChildByName("Left")
 	self.leftBtn_ = leftBtn
-	leftBtn:onTouch(function ( event )
-		if event.name == "ended" then
-			__G__MenuCancelSound()
-			self:onLeft()
-		end
+	leftBtn:onClick(function ( sender )
+		__G__MenuCancelSound()
+		self:onLeft()
 	end)
 
 	local rightBtn = root:getChildByName("Right")
 	self.rightBtn_ = rightBtn
-	rightBtn:onTouch(function ( event )
-		if event.name == "ended" then
-			__G__MenuCancelSound()
-			self:onRight()
-		end
+	rightBtn:onClick(function ( sender )
+		__G__MenuCancelSound()
+		self:onRight()
 	end)
 
 	if self.roleId_ == 1 then 
@@ -55,8 +49,6 @@ function SelectScene:onCreate()
 	elseif self.roleId_ == 2 then 
 		rightBtn:hide()
 	end
-
-	self:updateTitle(self.roleId_)
 
 	self:createRole(1)
 	self:createRole(2)
@@ -84,9 +76,6 @@ function SelectScene:updateRole()
 		role1:hide()
 		role2:show()
 	end
-	-- local role = PlaneFactory:getInstance():createRole(self.roleId_)
-	-- role:pos(display.cx, display.cy)
-	-- self:addChild(role,100, TAG_ROLE)
 end
 
 function SelectScene:onLeft(  )
@@ -94,7 +83,6 @@ function SelectScene:onLeft(  )
 	self.roleId_ = 1
 	self.leftBtn_:hide()
 	self.rightBtn_:show()
-	self:updateTitle(self.roleId_)
 	self:updateRole()
 end
 
@@ -103,19 +91,10 @@ function SelectScene:onRight(  )
 	self.roleId_ = 2
 	self.rightBtn_:hide()
 	self.leftBtn_:show()
-	self:updateTitle(self.roleId_)
 	self:updateRole()
 end
 
-function SelectScene:updateTitle( id )
-	local str = nil
-	if id == 1 then 
-		str = "Faster,Less Bullet"
-	elseif id == 2 then 
-		str = "Slower, More Bullet"
-	end
-	self.title_:setString(str)
-end
+
 function SelectScene:onEnter()
 
 end
