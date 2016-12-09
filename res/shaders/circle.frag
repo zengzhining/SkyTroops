@@ -15,14 +15,12 @@ void main(void)
 	// float brightness = 0.;
 	float brightness = 1.0;
 
-
-
 	vec4 col =texture2D(CC_Texture0, pos);
 	if (flag == 1)
 	{
 		if (pow(pos.y-0.5, 2.)  + pow(pos.x-(0.5), 2.)  > pow(CC_Time[1], 2.) )
 		{
-			col = vec4(0.0,0.0,1.0,0.0);
+			col = vec4(0.0,0.0,0.0,0.0);
 		}
 	}
 	

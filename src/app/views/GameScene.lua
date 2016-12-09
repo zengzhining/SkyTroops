@@ -327,9 +327,9 @@ function GameScene:onPlayerDead( target )
 
 	local rx = self:getChildByTag(TAG_RENDER_LAYER)
 	if rx then
-		Effect.greyTo(rx:getSprite(), 1.5)
+		Effect.greySprite(rx:getSprite())
 	end
-	device.vibrate( 0.2 )
+	-- device.vibrate( 0.2 )
 end
 
 function GameScene:isNeedPause()
@@ -425,7 +425,6 @@ function GameScene:initUI( ui_ )
 	cutBtn:onTouch(function ( event )
 		if event.name == "ended" then 
 			self:onCut()
-			return false
 		end
 	end,  false, true)
 
@@ -607,16 +606,17 @@ end
 function GameScene:onCut(  )
 	if not self:getChildByTag(TAG_CUT) then 
 		__G__MenuClickSound()
+		local rx = self:getChildByTag(TAG_RENDER_LAYER)
+		if rx then
+			Effect.bloomSprite(rx:getSprite())			
+		end
+
 		self.gameLayer_:setTouchEnabled(false)	
 		self.cutBtn_:setTouchEnabled(false)
 		local layer = __G__createCutLayer( "Layer/ResumeLayer.csb" )
 		self:addChild(layer, 100, TAG_CUT)
 		display.pause()
 
-		local rx = self:getChildByTag(TAG_RENDER_LAYER)
-		if rx then
-			Effect.blurSprite(rx:getSprite())
-		end
 	end
 end
 
