@@ -236,42 +236,47 @@ function TestScene:ctor()
 	-- 		btn:pos(btn.originPos_)
 	-- 	end
 	-- end)
-	local bgLayer = __G__createPngBg("bg/01Background.png")
-	bgLayer:setSpeed(-1)
-	self:add(bgLayer, -2)
+	-- local bgLayer = __G__createPngBg("bg/01Background.png")
+	-- bgLayer:setSpeed(-1)
+	-- self:add(bgLayer, -2)
 
-	local frontBg =  __G__createPngBg( "bg/WhiteCloud.png" )
-	frontBg:setSpeed(-3)
-	self:add(frontBg,10)
+	-- local frontBg =  __G__createPngBg( "bg/WhiteCloud.png" )
+	-- frontBg:setSpeed(-3)
+	-- self:add(frontBg,10)
 	--virtual joy
-	local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
-	self:add(controlLayer)
+	-- local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
+	-- self:add(controlLayer)
 
-	local mainPlane = PlaneFactory:getInstance():createRole(1)
-	mainPlane:pos(display.center)
-	layer:add(mainPlane)
+	-- local mainPlane = PlaneFactory:getInstance():createRole(1)
+	-- mainPlane:pos(display.center)
+	-- layer:add(mainPlane)
 
-	local armyPlane = PlaneFactory:getInstance():createPlane(1)
-	armyPlane:pos(display.cx, display.cy * 1.5)
-	layer:add(armyPlane)
-	armyPlane:playDeadAnimation("PlaneExplose%02d.png")
+	-- local armyPlane = PlaneFactory:getInstance():createPlane(1)
+	-- armyPlane:pos(display.cx, display.cy * 1.5)
+	-- layer:add(armyPlane)
+	-- armyPlane:playDeadAnimation("PlaneExplose%02d.png")
 
-	local bullet = PlaneFactory:getInstance():createBullet(id_)
-	bullet:pos(display.cx * 1.5, display.cy * 1.5)
-	layer:add(bullet)
+	-- local bullet = PlaneFactory:getInstance():createBullet(id_)
+	-- bullet:pos(display.cx * 1.5, display.cy * 1.5)
+	-- layer:add(bullet)
 
-	mainPlane:attachVirtualJoy(controlLayer)
+	-- mainPlane:attachVirtualJoy(controlLayer)
 
 	
 	--test keycode
-	layer:onKeypad(function( event )
-		local keycode = event.keycode
-		if keycode == cc.KeyCode.KEY_W then 
-			self:cameraMove(1)
-		elseif keycode == cc.KeyCode.KEY_S then 
-			self:cameraMove(-1)
-		end
-	end)
+	-- layer:onKeypad(function( event )
+	-- 	local keycode = event.keycode
+	-- 	if keycode == cc.KeyCode.KEY_W then 
+	-- 		self:cameraMove(1)
+	-- 	elseif keycode == cc.KeyCode.KEY_S then 
+	-- 		self:cameraMove(-1)
+	-- 	end
+	-- end)
+
+	--label fnt
+	-- local lb = display.newBMF("fonts/myFont.fnt", "Test")
+	-- lb:pos(display.center)
+	-- layer:add(lb)
 
 end
 
