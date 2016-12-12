@@ -68,6 +68,9 @@ function GameScene:initData()
 	self.cutBtn_ = nil
 	self.scoreLb_ = nil
 	self.rankLb_ = nil
+
+	--炸弹个数
+	self.bombLb_ = nil
 end
 
 function GameScene:step( dt )
@@ -339,7 +342,29 @@ function GameScene:initUI( ui_ )
 	self.rankLb_ = rankLb
 	--直接更新
 	self:flashScore()
-	
+
+	local bombBtn = ui_:getChildByName("Boom1")
+	bombBtn:onClick(function (  )
+		self:onBomb()
+	end)
+
+	local bombLb = bombBtn:getChildByName("boomNum")
+	self.bombLb_ = bombLb
+	self:flashBomb()
+end
+
+function GameScene:onBomb()
+	local bombNum = GameData:getInstance():getBomb()
+	if bombNum > 0 then
+		GameData:getInstance():minBomb(1)
+		self:flashBomb()
+	end
+end
+
+--更新炸弹个数
+function GameScene:flashBomb()
+	local num = GameData:getInstance():getBomb()
+	self.bombLb_:setString(num)
 end
 
 function GameScene:flashScore()

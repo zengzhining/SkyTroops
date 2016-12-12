@@ -6,6 +6,8 @@ local BG_SPEED = 10
 local DEFAULT_ROLE = 1
 local DEFAULT_LEVEL = 2
 
+local DEFAULT_BOMB = 5 --默认炸弹个数
+
 function GameData:ctor()
 	self:initData()
 
@@ -59,6 +61,9 @@ function GameData:initData()
 	--排行榜数据
 	self.rankInfo_ = nil
 
+	--炸弹个数
+	self.bombNum_ = DEFAULT_BOMB
+
 	--敌人配置
 	self.armyConfig_ = self.armyConfig_ or {}
 
@@ -106,6 +111,25 @@ end
 function GameData:getMaxLevel()
 	return MAX_LEVEL
 end
+
+----------------bomb---------------------------
+function GameData:setBomb(num)
+	self.bombNum_ = num
+end
+
+function GameData:getBomb()
+	return self.bombNum_
+end
+
+function GameData:addBomb(num)
+	self.bombNum_ = self.bombNum_ + num
+end
+
+function GameData:minBomb(num)
+	self.bombNum_ = self.bombNum_ - num
+end
+
+----------------bomb---------------------------
 
 --从排行榜中取得分数
 function GameData:getRankFromScore( score )
