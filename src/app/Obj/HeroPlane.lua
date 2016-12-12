@@ -50,6 +50,8 @@ function HeroPlane:ctor( fileName )
 
 	--限制是否在屏幕内
 	self.limitInScreen_ = true
+
+	self.level_ = 1
 end
 
 function HeroPlane:onEnter()
@@ -198,6 +200,46 @@ end
 function HeroPlane:isRelive()
 	return self.isRelive_
 end
+
+--角色升级
+function HeroPlane:levelUp()
+	self:addLevel(1)
+	self:updateAvatar()
+end
+
+--更新角色服装
+function HeroPlane:updateAvatar()
+	local level = self:getLevel()
+	local id = self:getId()
+	--先看有没有图片模式
+	local pattern = self:getFileFormat()
+	if pattern then 
+		local str = string.format(pattern, level)
+		local frame = display.newSpriteFrame(str)
+		self:setSpriteFrame(frame)
+		return 
+	end	
+
+	pattern = self:getAnimationFormat()
+	if pattern then 
+		local str = string.format(pattern, level)
+		self:playAnimation(str,1,4,-1)
+		return 
+	end
+end
+
+function HeroPlane:addLevel( num )
+	self.level_ = self.level_ + num
+end
+
+function HeroPlane:getLevel()
+	return self.level_
+end
+
+function HeroPlane:resetLevel()
+	self.level_ = 1
+end
+
 
 
 function HeroPlane:accelerateEvent( x,y,z,timeStap )

@@ -24,7 +24,8 @@ end
 
 function MovedObject:initData()
 	self.speed_= cc.p( 0, 0 )
-	self.aniFormat_ = nil
+	self.aniFormat_ = nil --动画模式，用来切换等级时候显示动画的对象使用
+	self.fileFormat_ = nil -- 图片模式，用来切换等级时候的图片
 end
 
 function MovedObject:setSpeed(speed)
@@ -69,8 +70,20 @@ function MovedObject:onExit()
 	self:unUpdate()
 end
 
+function MovedObject:setFileFormat( formatFile )
+	self.fileFormat_ = formatFile
+end
+
+function MovedObject:getFileFormat()
+	return self.fileFormat_
+end
+
 function MovedObject:setAnimationFormat(formatFile)
 	self.aniFormat_ = formatFile
+end
+
+function MovedObject:getAnimationFormat()
+	return self.aniFormat_
 end
 
 function MovedObject:restoreOriginSprite()

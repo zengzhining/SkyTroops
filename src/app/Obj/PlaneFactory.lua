@@ -31,15 +31,34 @@ end
 
 function PlaneFactory:createRole( id_ )
 	local plane = nil
+	local pattern = nil
 	if id_ == 1 then 
 		plane = HeroPlane.new("#PlaneBlue1.png")
-		plane:setMoveTime(0.3)
-		plane:setBulletFireNum(2)
+		pattern = "#PlaneBlue%d.png"
 	elseif id_ == 2 then 
-		plane = HeroPlane.new("#PlaneBlue2.png")
-		plane:setMoveTime(0.5)
-		plane:setBulletFireNum(4)
+		plane = HeroPlane.new("#PlaneGreen1.png")
+		pattern = "#PlaneGreen%d.png"
+	elseif id == 3 then
+		plane = HeroPlane.new("#PlaneGrey1.png")
+		pattern = "#PlaneGrey%d.png"
+	elseif id_ == 4 then
+		plane = HeroPlane.new("#PlaneOrage1_01.png")
+		pattern = "PlaneOrage%d_%%02d.png"
+	elseif id_ == 5 then 
+		plane = HeroPlane.new("#PlaneYellow1_01.png")
+		pattern = "PlaneYellow%d_%%02d.png"
+	elseif id_ == 6 then
+		plane = HeroPlane.new("#PlanePink1_01.png")
+		pattern = "PlanePink%d_%%02d.png"
 	end
+	if id_ >= 4 and id_ <= 6 then
+		plane:setAnimationFormat(pattern)
+	else
+		plane:setFileFormat(pattern)
+	end
+	plane:updateAvatar()
+	plane:setMoveTime(0.3)
+	plane:setBulletFireNum(2)
 	plane:setId(id_)
 	plane:setBulletId(id_)
 	--设置子弹冷却时间
