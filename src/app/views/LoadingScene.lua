@@ -2,7 +2,7 @@ local LoadingScene = class("LoadingScene", cc.load("mvc").ViewBase)
 
 LoadingScene.RESOURCE_FILENAME = "Layer/Loading.csb"
 
-local LOADING_DT = 1
+local LOADING_DT = 0.1
 
 local musicTbl = { 
 	"sfx/main.mp3",
