@@ -70,6 +70,8 @@ function GameData:initData()
 	--关卡数
 	self.level_ = self.level_ or DEFAULT_LEVEL
 
+	--全局的主角
+	self.role_ = nil
 	self:load()
 end
 --读取和存储游戏数据
@@ -158,6 +160,14 @@ end
 
 function GameData:getRoleId()
 	return self.roleId_
+end
+
+function GameData:setRole( role )
+	self.role_ = role
+end
+
+function GameData:getRole()
+	return self.role_
 end
 
 function GameData:setGameSpeed(speed_)

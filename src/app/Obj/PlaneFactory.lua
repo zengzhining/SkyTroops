@@ -11,11 +11,10 @@ function PlaneFactory:ctor(  )
 end
 
 function PlaneFactory:createEnemy( id_ )
+	id_ = 3
 	local army = self:createPlane(id_)
-	if id_ == 1 then 
-	elseif id_ == 2 then
-		army:setGameAi(1)
-	end
+
+	army:setGameAi(id_)
 	army:setScore( 2 )
 
 	return army

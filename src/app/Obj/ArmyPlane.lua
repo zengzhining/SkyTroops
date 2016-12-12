@@ -1,4 +1,5 @@
 local BasePlane = require "app/Obj/BasePlane"
+local Strategy = require "app/Obj/Strategy"
 local ArmyPlane = class("ArmyPlane", BasePlane)
 
 --角色id
@@ -11,7 +12,8 @@ local AI_HEIGHT = display.height * 2 /3
 
 function ArmyPlane:ctor(  )
 	self.super.ctor(self)
-	self:flipY(true)
+	-- self:flipY(true)
+	self:setRotation(180)
 
 	self.id_ = GREY_PLANE -- id默认1
 	self.isHurtRole_ = false
@@ -21,11 +23,7 @@ function ArmyPlane:ctor(  )
 	--是否被超越
 	self.hasBeyound_ = false
 
-	--是否到达屏幕一半以下
-	self.hasUnderHalfDisplayHeight_ = false
-
-	--设置游戏AI,--默认0不作为
-	self.gameAiId_ = 0
+	self.aiStrategy_ = nil
 end
 
 function ArmyPlane:onCollision( other )
@@ -60,7 +58,7 @@ function ArmyPlane:playDeadAnimation(fileFormat_)
 end
 
 function ArmyPlane:setGameAi( typeId_ )
-	self.gameAiId_ = typeId_
+	self.aiStrategy_ = Strategy.new(typeId_)
 end
 
 function ArmyPlane:onLeft(x)
@@ -85,20 +83,41 @@ function ArmyPlane:onHalfDisplayHeight()
 
 end
 
-function ArmyPlane:aiMove( aiId )
+function ArmyPlane:aiMove(dt)
 	--人物死亡时候没有Ai
 	if self:isDead() then return end
-	if aiId == 1 then
-		if self:getPositionY() <= AI_HEIGHT and (self.hasUnderHalfDisplayHeight_ == false) then 
-			if self.dir_.x == 1 then 
-				self:onLeft(self:getViewRect().width * 0.6)
-			elseif self.dir_.x == -1 then 
-				self:onRight(self:getViewRect().width * 0.6)
-			end
-		end
 
-		if self:getPositionY() <= AI_HEIGHT then 
-			self.hasUnderHalfDisplayHeight_ = true
+	--ai只有进入到游戏场景高度才开始运行
+	local posx,posy = self:getPosition()
+	if posy > display.height then return end 
+	local strategy = self.aiStrategy_
+	local aiId = strategy:getAiId()
+	if aiId == 1 then 
+		--匀速直线，默认就是
+	elseif aiId == 2 then
+		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
+			self:addSpeed(cc.p(0, -5))
+			strategy:useAi()
+		end
+	elseif aiId == 3 then 
+		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
+			local role = GameData:getInstance():getRole()
+			local speed = self:getSpeed()
+			local posx, posy = self:getPosition()
+			local rolePosX, rolePosY = role:getPosition()
+			local delPos = cc.pSub(cc.p(rolePosX, rolePosY),cc.p(posx,posy) )
+			local speedX = speed.y * delPos.x/delPos.y
+			--当角色比较上的时候
+			if delPos.y > 0 then 
+				return 
+			end
+			self:addSpeed(cc.p(speedX, 0))
+			local angle = cc.pToAngleSelf(delPos)/math.pi * 180
+			if delPos.x < 0 then 
+				angle = -angle -90
+			end
+			self:runAction(cc.RotateBy:create(0.2, angle))
+			strategy:useAi()
 		end
 	end
 end
@@ -106,7 +125,7 @@ end
 function ArmyPlane:step(dt)
 	ArmyPlane.super.step(self,dt)
 
-	self:aiMove(self.gameAiId_)
+	self:aiMove(dt)
 	
 end
 

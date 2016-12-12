@@ -429,6 +429,7 @@ function GameScene:initObj()
 	plane:pos(display.cx, display.height /2 )
 	gameLayer:addChild(plane)
 	self.role_ = plane
+	GameData:getInstance():setRole(plane)
 
 	--按键事件
 	local keyCallback = function ( event )
@@ -441,7 +442,6 @@ function GameScene:initObj()
         end
     end
 	gameLayer:onKeypad( keyCallback )
-
 end
 
 --主角发射炮弹的回调函数

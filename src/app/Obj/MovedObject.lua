@@ -32,6 +32,18 @@ function MovedObject:setSpeed(speed)
 	self.speed_ = speed
 end
 
+function MovedObject:getSpeed()
+	return self.speed_
+end
+
+function MovedObject:addSpeed(speed)
+	self.speed_ = cc.pAdd(self.speed_, speed)
+end
+
+function MovedObject:minSpeed( speed )
+	self.speed_ = cc.pSub(self.speed_,speed)
+end
+
 --更新逻辑,每帧调用一次
 function MovedObject:updateLogic( time  )
 	-- body
