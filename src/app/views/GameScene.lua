@@ -77,8 +77,16 @@ function GameScene:step( dt )
 	--遍历处理
 	local roleRect = self.role_:getCollisionRect()
 	local rolePosY = self.role_:getPositionY()
+
+	local armyInScreen = {}
+	for k,army in pairs(armySet) do
+		if army:getPositionY() >= 0 and army:getPositionY()<= display.height then
+			army.key_ = k
+			table.insert(armyInScreen, army)
+		end
+	end
 	--遍历敌人
-	for k, army in pairs(armySet) do
+	for k, army in pairs(armyInScreen) do
 		local rect = army:getCollisionRect()
 		local iscollision = cc.rectIntersectsRect(roleRect, rect) 
 		local isRelive = self.role_:isRelive()
@@ -102,18 +110,13 @@ function GameScene:step( dt )
 		local isOutOfWindow = ( armyPosY <= (-display.cy * 0.5) and true or false )
 		if isOutOfWindow then 
 			army:removeSelf()
-			table.remove(armySet, k)
+			table.remove(armySet, army.key_)
+			table.remove(armyInScreen, k)
 			break
 		end
 	end
 
-	local armyInScreen = {}
-	for k,army in pairs(armySet) do
-		if army:getPositionY() >= 0 and army:getPositionY()<= display.height then
-			army.key_ = k
-			table.insert(armyInScreen, army)
-		end
-	end
+	
 	--遍历子弹处理子弹碰撞逻辑
 	for i, bullet in pairs(bulletSet) do
 		local bulletRect = bullet:getCollisionRect()
@@ -356,6 +359,18 @@ end
 function GameScene:onBomb()
 	local bombNum = GameData:getInstance():getBomb()
 	if bombNum > 0 then
+		local armyInScreen = {}
+		for k,army in pairs(armySet) do
+			if army:getPositionY() >= 0 and army:getPositionY()<= display.height then
+				army.key_ = k
+				table.insert(armyInScreen, army)
+			end
+		end
+
+		for c,army in pairs(armyInScreen) do
+			army:onCollisionBullet()
+			table.remove(armySet, army.key_)
+		end
 		GameData:getInstance():minBomb(1)
 		self:flashBomb()
 	end
@@ -436,7 +451,7 @@ function GameScene:onFireBullet( id_ )
 	local bullet = PlaneFactory:getInstance():createBullet(id_)
 	local gameLayer = self.gameLayer_
 	local roleX,roleY = role:getPosition()
-	bullet:pos(roleX, roleY + role:getViewRect().height *0.5 + bullet:getViewRect().height * 0.25)
+	bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
 	bullet:onFire()
 	bullet:setSpeed(cc.p(0, 10))
 	gameLayer:addChild(bullet)
