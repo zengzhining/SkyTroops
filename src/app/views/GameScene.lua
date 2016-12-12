@@ -458,7 +458,7 @@ function GameScene:onCreateArmy(  )
 	local armyData = self:getArmyData()
 	for i, armyInfo in pairs(armyData) do
 		local id = armyInfo.id
-		local army = PlaneFactory:getInstance():createPlane(id)
+		local army = PlaneFactory:getInstance():createEnemy(id)
 
 		local width = army:getViewRect().width
 		local dir = armyInfo.x > display.cx and 1 or -1

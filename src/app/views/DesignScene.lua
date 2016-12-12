@@ -193,7 +193,7 @@ end
 function DesignScene:createPlane( x,y , id_ )
 	if not id_ then id_ = 1 end
 	local layer = self:getChildByTag(TAG_ARMY_LAYER)
-	local plane = PlaneFactory:getInstance():createPlane(id_)
+	local plane = PlaneFactory:getInstance():createEnemy(id_)
 	plane:pos(x,y)
 	layer:add(plane)
 	table.insert(planeSet, plane)

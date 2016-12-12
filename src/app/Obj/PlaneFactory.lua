@@ -10,15 +10,19 @@ function PlaneFactory:ctor(  )
 	
 end
 
+function PlaneFactory:createEnemy( id_ )
+	local str = string.format("#Enemy%02d.png", id_)
+	local army = ArmyPlane.new(str)
+	army:setId(id_)
+	return army
+end
+
 function PlaneFactory:createPlane( id_ )
-	local plane = nil
+	local plane = self:createEnemy(id_)
 	if id_ == 1 then 
-		plane = ArmyPlane.new("#Enemy01.png")	
 	elseif id_ == 2 then
-		plane = ArmyPlane.new("#Enemy02.png")
 		plane:setGameAi(1)
 	end
-	plane:setId(id_)
 	plane:setScore( 2 )
 	return plane
 end
