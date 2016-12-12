@@ -31,6 +31,10 @@ function ResultScene:onCreate(  )
 	local scoreLb = root:getChildByName("Score")
 	scoreLb:setString(tostring(GameData:getInstance():getScore()))
 
+	local expBar = root:getChildByName("ExpBar")
+	expBar:setPercent(50)
+	local expNum = root:getChildByName("ExpNum")
+	expNum:setString("250/500")
 end
 
 function ResultScene:onRetry(  )
