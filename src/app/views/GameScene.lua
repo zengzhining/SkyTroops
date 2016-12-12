@@ -235,29 +235,15 @@ function GameScene:onPlayerDead( target )
 	end
 	__G__ExplosionSound()
 	self.cutBtn_:setTouchEnabled(false)
-	__G__MusicFadeOut(self.cutBtn_, 1)
-	--根据排名来确定是否有续命选项
-	local rank = GameData:getInstance():getRank()
-	if rank <= 50 then 
-		ContinueTimes = 1
-	elseif rank <= 20 then 
-		ContinueTimes = 0
-	end
+	__G__MusicFadeOut(self, 1)
 
 	__G__actDelay( self, function (  )
-		if ContinueTimes > 0 then 
-			if not self:getChildByTag(TAG_CONTINUE_LAYER) then
-				local layer = __G__createContinueLayer("Layer/ContinueLayer.csb")
-				self:addChild(layer, 100, TAG_CONTINUE_LAYER)
-			end
-		else
-			--直接进入结算关卡,相当于按下取消
-			self:onContinueCancel()
-		end
-	end, 1.5 )
+		--直接进入结算关卡,相当于按下取消
+		self:onContinueCancel()
+	end, 0.5 )
 
 	--死亡震动
-	-- device.vibrate( 0.2 )
+	device.vibrate( 0.2 )
 end
 
 function GameScene:isNeedPause()
