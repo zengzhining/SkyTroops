@@ -1,5 +1,6 @@
 local MovedObject = require("app/Obj/MovedObject")
 local BasePlane = class("BasePlane", MovedObject)
+local TAG_GAS = 101
 
 function BasePlane:ctor( fileName )
 	BasePlane.super.ctor(self, fileName)
@@ -135,6 +136,19 @@ end
 --死亡动画
 function BasePlane:playDeadAnimation( formatFile_  )
 	
+end
+
+--尾气的动画
+function BasePlane:addGasAni()
+	local rect = self:getViewRect()
+	self:addAnimation("PlaneCloudGas%02d.png",1,4, -1, { pos_ = cc.p( rect.width*0.5, rect.height * 0.3 ),z_ = 0, tag_ = TAG_GAS})
+end
+
+function BasePlane:hideGas()
+	local gas = self:getChildByTag(TAG_GAS)
+	if gas then 
+		gas:hide()
+	end
 end
 
 return BasePlane

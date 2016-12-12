@@ -11,20 +11,22 @@ function PlaneFactory:ctor(  )
 end
 
 function PlaneFactory:createEnemy( id_ )
-	local str = string.format("#Enemy%02d.png", id_)
-	local army = ArmyPlane.new(str)
-	army:setId(id_)
+	local army = self:createPlane(id_)
+	if id_ == 1 then 
+	elseif id_ == 2 then
+		army:setGameAi(1)
+	end
+	army:setScore( 2 )
+
 	return army
 end
 
 function PlaneFactory:createPlane( id_ )
-	local plane = self:createEnemy(id_)
-	if id_ == 1 then 
-	elseif id_ == 2 then
-		plane:setGameAi(1)
-	end
-	plane:setScore( 2 )
+	local str = string.format("#Enemy%02d.png", id_)
+	local plane = ArmyPlane.new(str)
+	plane:setId(id_)
 	return plane
+	
 end
 
 function PlaneFactory:createRole( id_ )
@@ -42,6 +44,7 @@ function PlaneFactory:createRole( id_ )
 	plane:setBulletId(id_)
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(0.04)
+	plane:addGasAni()
 
 	return plane
 end
