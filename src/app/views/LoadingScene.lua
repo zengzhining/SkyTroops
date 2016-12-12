@@ -7,7 +7,6 @@ local LOADING_DT = 0.1
 local musicTbl = { 
 	"sfx/main.mp3",
 	"sfx/mainMenu.mp3",
-	"sfx/result.mp3",
  }
 
 local fxTbl = {

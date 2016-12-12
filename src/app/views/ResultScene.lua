@@ -55,7 +55,7 @@ function ResultScene:onMenu()
 end
 
 function ResultScene:onEnter()
-	__G__MainMusic(3)		
+	__G__MainMusic(1)		
 end
 
 function ResultScene:onExit()
