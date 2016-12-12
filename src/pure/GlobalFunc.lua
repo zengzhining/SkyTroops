@@ -261,3 +261,12 @@ __G__MainMusic = function( id )
 	end
 	audio.playMusic(fileName)
 end
+
+__G__LoadRes = function ()
+	if DEBUG == 2 then 
+		display.loadSpriteFrames("Planes.plist", "Planes.png")
+		display.loadSpriteFrames("Planes2.plist", "Planes2.png")
+		display.loadSpriteFrames("Object.plist", "Object.png")
+		display.loadSpriteFrames("Animation.plist", "Animation.png")
+	end
+end

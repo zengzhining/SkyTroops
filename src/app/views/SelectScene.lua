@@ -7,11 +7,7 @@ local TAG_ROLE_2 = 102
 
 function SelectScene:onCreate()
 
-	if DEBUG == 2 then
-		display.loadSpriteFrames("Planes.plist", "Planes.png")
-		display.loadSpriteFrames("Object.plist", "Object.png")
-		display.loadSpriteFrames("Animation.plist", "Animation.png")
-	end
+	__G__LoadRes()
 
 	self.roleId_ = 1
 	local root = self:getResourceNode()

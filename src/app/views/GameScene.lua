@@ -50,11 +50,7 @@ end
 function GameScene:initData()
 
 	--测试默认载入plist
-	if DEBUG == 2 then 
-		display.loadSpriteFrames("Planes.plist", "Planes.png")
-		display.loadSpriteFrames("Object.plist", "Object.png")
-		display.loadSpriteFrames("Animation.plist", "Animation.png")
-	end
+	__G__LoadRes()
 
 	armySet = {}
 	--如果已经连击完

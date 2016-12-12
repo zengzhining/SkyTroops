@@ -2,9 +2,7 @@
 local TestScene = class("TestScene", cc.load("mvc").ViewBase)
 
 function TestScene:ctor()
-	display.loadSpriteFrames("Planes.plist", "Planes.png")
-	display.loadSpriteFrames("Animation.plist", "Animation.png")
-	display.loadSpriteFrames("Object.plist", "Object.png")
+	__G__LoadRes()
 	local layer = display.newLayer()
 	layer:onAccelerate(function(x,y,z,timeStap)
 		print("x,y,z,timeStap~~~~~~~~",x, y, z, timeStap)

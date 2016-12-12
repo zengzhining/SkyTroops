@@ -68,9 +68,7 @@ function LoadingScene:update(dt)
 		end
 	elseif self.time_ >= 2* LOADING_DT then 
 		--加载资源
-		display.loadSpriteFrames("Planes.plist", "Planes.png")
-		display.loadSpriteFrames("Object.plist", "Object.png")
-		display.loadSpriteFrames("Animation.plist", "Animation.png")
+		__G__LoadRes()
 	elseif self.time_ >= LOADING_DT then
 		if flag == 1 then
 			if index <= #musicTbl then 

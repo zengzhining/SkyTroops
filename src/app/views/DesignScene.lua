@@ -38,9 +38,7 @@ end
 
 function DesignScene:onCreate()
 	-- body
-	if DEBUG == 2 then 
-		display.loadSpriteFrames("Plane.plist", "Plane.png")
-	end
+	__G__LoadRes()
 	--数据生成
 	-- local tbl = { 
 	-- 	{armyType = 1, posx = 1, posy = 100},
