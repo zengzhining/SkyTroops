@@ -11,7 +11,7 @@ function PlaneFactory:ctor(  )
 end
 
 function PlaneFactory:createEnemy( id_ )
-	id_ = 4
+	id_ = 5
 	local army = self:createPlane(id_)
 	army:setGameAi(id_)
 	army:setBulletId(3)

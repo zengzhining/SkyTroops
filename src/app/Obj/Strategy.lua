@@ -3,6 +3,8 @@ local Strategy = class("Strategy")
 
 local AI_TIME = 0.5
 
+local AI_WIDTH = 50
+
 function Strategy:ctor( id_ )
 	self.id_ = id_
 
@@ -17,6 +19,19 @@ function Strategy:initData(  )
 	self.hasUseAi_ = false
 
 	self.aiTime_ = 0
+
+	self.aiTimeLimit_ = AI_TIME
+
+	self.aiWidth_ = AI_WIDTH
+end
+
+-----------AI WIDTH----------------
+function Strategy:setAiWidth(width)
+	self.aiWidth_ = width
+end
+
+function Strategy:getAiWidth()
+	return self.aiWidth_
 end
 
 function Strategy:useAi(  )
@@ -37,14 +52,18 @@ function Strategy:getAiTime()
 	return self.aiTime_
 end
 
+function Strategy:setAiTimeLimit( time )
+	self.aiTimeLimit_ = time
+end
+
 function Strategy:resetAiTime()
 	self.aiTime_ = 0
 end
 
 function Strategy:canAi()
-	if self.id_ ==4 then 
 		--3s 才能使用一个ai
-		return self.aiTime_ >= AI_TIME
+	if self.id_ >= 4 and self.id_ <= 5 then
+		return self.aiTime_ >= self.aiTimeLimit_
 	end
 end
 
