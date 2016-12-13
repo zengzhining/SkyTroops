@@ -401,6 +401,11 @@ function GameScene:onBomb()
 			army:onCollisionBullet()
 			table.remove(armySet, army.key_)
 		end
+
+		for c,bullet in pairs(armyBulletSet) do
+			bullet:onCollision()
+			table.remove(armyBulletSet,c)
+		end
 		GameData:getInstance():minBomb(1)
 		self:flashBomb()
 	end
@@ -477,7 +482,6 @@ end
 --主角发射炮弹的回调函数
 function GameScene:onFireBullet( id_ )
 	local role = self.role_
-	if #bulletSet >= role:getBulletFireNum() then return end
 	local bullet = PlaneFactory:getInstance():createBullet(id_)
 	local gameLayer = self.gameLayer_
 	local roleX,roleY = role:getPosition()
