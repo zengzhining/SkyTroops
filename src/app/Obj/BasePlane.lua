@@ -22,6 +22,7 @@ function BasePlane:initData()
 
 	--发射子弹类型，直射还是散射，默认发射一个
 	self.bulletFireTypeId_ = 1
+
 end
 
 function BasePlane:onEnter()
@@ -31,6 +32,14 @@ end
 
 function BasePlane:resetHp()
 	self.hp_ = 1
+end
+
+function BasePlane:setHp( hp )
+	self.hp_ = hp
+end
+
+function BasePlane:getHp(  )
+	return self.hp_
 end
 
 --角色的id
@@ -99,8 +108,8 @@ end
 --碰撞检测所用矩形
 function BasePlane:getCollisionRect(  )
 	local rect = self:getBoundingBox()
-	local finalWidth  = rect.width * 0.5
-	local finalHeight = rect.height * 0.6 
+	local finalWidth  = rect.width * 0.4
+	local finalHeight = rect.height * 0.4 
 	local newRect = cc.rect( rect.x, rect.y, finalWidth, finalHeight )
 	return newRect
 end

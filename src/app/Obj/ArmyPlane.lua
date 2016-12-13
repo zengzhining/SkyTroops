@@ -32,7 +32,12 @@ end
 
 function ArmyPlane:onCollisionBullet(other)
 	self:onHurt(1)
-	self:playDeadAnimation("PlaneExplose%02d.png")
+	if self:isDead() then
+		self:playDeadAnimation("PlaneExplose%02d.png")
+	else
+		local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
+		self:runAction(act)
+	end
 end
 
 function ArmyPlane:playDeadAnimation(fileFormat_)
@@ -99,6 +104,7 @@ function ArmyPlane:fireBullet()
 end
 
 function ArmyPlane:aiMove(dt)
+	-- print("aiMove~~~~~",self:isDead())
 	--人物死亡时候没有Ai
 	if self:isDead() then return end
 
@@ -129,11 +135,6 @@ function ArmyPlane:aiMove(dt)
 				return 
 			end
 			self:addSpeed(cc.p(speedX, 0))
-			local angle = cc.pToAngleSelf(delPos)/math.pi * 180
-			if delPos.x < 0 then 
-				angle = -angle -90
-			end
-			self:runAction(cc.RotateBy:create(0.2, angle))
 			strategy:useAi()
 		end
 	elseif aiId == 4 then
@@ -167,7 +168,7 @@ function ArmyPlane:aiMove(dt)
 			local speedX = dir * 5
 			self:setSpeedX(speedX)
 
-			if math.abs(rolePosX - posx) <= strategy:getAiWidth() then
+			if math.abs(rolePosX - posx) <= strategy:getAiWidth() and (posy > rolePosY )then
 				self:fireBullet()
 			end
 		end

@@ -10,12 +10,17 @@ function PlaneFactory:ctor(  )
 	
 end
 
+local armyHpTbl = {
+	3,3,5,3,3,3
+
+}
 function PlaneFactory:createEnemy( id_ )
-	id_ = 5
+	id_ = 6
 	local army = self:createPlane(id_)
 	army:setGameAi(id_)
 	army:setBulletId(3)
 	army:setScore( 2 )
+	army:setHp(armyHpTbl[id_])
 
 	return army
 end
@@ -55,15 +60,16 @@ function PlaneFactory:createRole( id_ )
 	else
 		plane:setFileFormat(pattern)
 	end
+	plane:setHp(10)
 	plane:updateAvatar()
 	plane:setMoveTime(0.3)
 	plane:setBulletFireNum(2)
 	plane:setId(id_)
 	plane:setBulletId(2)
 	--设置子弹冷却时间
-	plane:setBulletCalmTime(0.04)
+	plane:setBulletCalmTime(0.1)
 	--设置发射的类型,2为两列发射
-	plane:setBulletFireType(6)
+	plane:setBulletFireType(2)
 	plane:addGasAni()
 
 

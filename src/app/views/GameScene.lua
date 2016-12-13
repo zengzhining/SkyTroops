@@ -132,8 +132,10 @@ function GameScene:step( dt )
 				self:onBulletHitArmy( bullet, army )
 				--最后再处理去除逻辑
 				table.remove(bulletSet, i)
-				table.remove(armySet, army.key_)
-				break
+				if army:isDead() then
+					table.remove(armySet, army.key_)
+					break
+				end
 			end
 		end
 
@@ -529,29 +531,9 @@ function GameScene:onFireBullet( id_ )
 			table.insert(bulletSet, bullet)
 		end
 	elseif fireId == 5 then
-		--散发射五列
-		local tbl = {-2,-1,0,1,2}
-		local speedX = 2
-		for c,dir in pairs(tbl) do
-			local bullet = PlaneFactory:getInstance():createBullet(id_)
-			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
-			bullet:onFire()
-			bullet:setSpeed(cc.p(speedX * dir, 10))
-			gameLayer:addChild(bullet)
-			table.insert(bulletSet, bullet)
-		end
+		
 	elseif fireId == 6 then
-		--散发射七列
-		local tbl = {-3,-2,-1,0,1,2,3}
-		local speedX = 1
-		for c,dir in pairs(tbl) do
-			local bullet = PlaneFactory:getInstance():createBullet(id_)
-			bullet:pos(roleX + 20*dir, roleY + role:getViewRect().height *0.25)
-			bullet:onFire()
-			bullet:setSpeed(cc.p(speedX * dir, 10))
-			gameLayer:addChild(bullet)
-			table.insert(bulletSet, bullet)
-		end
+		
 	end
 	
 end
@@ -590,6 +572,7 @@ end
 
 function GameScene:onCreateArmy(  )
 	--读取plist数据创建敌人
+
 	local armyData = self:getArmyData()
 	for i, armyInfo in pairs(armyData) do
 		local id = armyInfo.id
@@ -624,7 +607,7 @@ end
 function GameScene:getArmySpeed()
 	--根据排名来获得分数
 	local rank = GameData:getInstance():getRank()
-	local speed = 10
+	local speed = 5
 	--最大到三十
 	return (0-speed)
 end

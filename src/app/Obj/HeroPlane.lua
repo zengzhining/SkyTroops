@@ -139,9 +139,9 @@ function HeroPlane:updateLogic(dt)
 	allTime = allTime + dt
 
 	--每秒加一个能量
-	if allTime > 0.3 then 
+	if allTime > self:getBulletCalmTime() then 
 		allTime = 0
-		self:fireBullet()
+		-- self:fireBullet()
 	end
 
 

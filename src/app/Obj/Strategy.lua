@@ -62,9 +62,9 @@ end
 
 function Strategy:canAi()
 		--3s 才能使用一个ai
-	if self.id_ >= 4 and self.id_ <= 5 then
+	-- if self.id_ >= 4 and self.id_ <= 6 then
 		return self.aiTime_ >= self.aiTimeLimit_
-	end
+	-- end
 end
 
 return Strategy
