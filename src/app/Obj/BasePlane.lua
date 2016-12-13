@@ -19,6 +19,9 @@ function BasePlane:initData()
 	--子弹冷却时间
 	self.bulletCalmTime_ = 1
 	self.lastFireTime_ = 0
+
+	--发射子弹类型，直射还是散射，默认发射一个
+	self.bulletFireTypeId_ = 1
 end
 
 function BasePlane:onEnter()
@@ -51,6 +54,15 @@ end
 
 function BasePlane:getBulletFireNum()
 	return self.bulletFireNum_
+end
+
+------------bullet Fire Type-----------
+function BasePlane:setBulletFireType(id_)
+	self.bulletFireTypeId_ = id_
+end
+
+function BasePlane:getBulletFireType()
+	return self.bulletFireTypeId_
 end
 
 --设置对应子弹的冷却时间

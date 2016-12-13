@@ -245,9 +245,9 @@ function TestScene:ctor()
 	-- local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
 	-- self:add(controlLayer)
 
-	local mainPlane = PlaneFactory:getInstance():createRole(4)
-	mainPlane:pos(display.center)
-	layer:add(mainPlane)
+	-- local mainPlane = PlaneFactory:getInstance():createRole(4)
+	-- mainPlane:pos(display.center)
+	-- layer:add(mainPlane)
 	-- mainPlane:levelUp()
 	-- mainPlane:levelUp()
 
@@ -277,6 +277,13 @@ function TestScene:ctor()
 	-- local lb = display.newBMF("fonts/myFont.fnt", "Test")
 	-- lb:pos(display.center)
 	-- layer:add(lb)
+
+	local tbl = {}
+
+	local bullet = PlaneFactory:getInstance():createBullet(2)
+	print("bullet~~~~~", type(bullet))
+	bullet:pos(display.center)
+	layer:add(bullet)
 
 end
 

@@ -59,10 +59,14 @@ function PlaneFactory:createRole( id_ )
 	plane:setMoveTime(0.3)
 	plane:setBulletFireNum(2)
 	plane:setId(id_)
-	plane:setBulletId(id_)
+	plane:setBulletId(2)
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(0.04)
+	--设置发射的类型,2为两列发射
+	plane:setBulletFireType(3)
 	plane:addGasAni()
+
+
 
 	return plane
 end
@@ -72,8 +76,7 @@ function PlaneFactory:createBullet( id_ )
 	--一共9个子弹
 	local str = string.format("#%02dBullets.png", id_)
 
-	local bullet = Bullet.new(str)
-
+	local bullet =Bullet.new(str)
 	return bullet
 end
 

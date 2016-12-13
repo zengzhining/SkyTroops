@@ -482,26 +482,56 @@ end
 --主角发射炮弹的回调函数
 function GameScene:onFireBullet( id_ )
 	local role = self.role_
-	local bullet = PlaneFactory:getInstance():createBullet(id_)
 	local gameLayer = self.gameLayer_
 	local roleX,roleY = role:getPosition()
-	bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
-	bullet:onFire()
-	bullet:setSpeed(cc.p(0, 10))
-	gameLayer:addChild(bullet)
-	table.insert(bulletSet, bullet)
+	local fireId = self.role_:getBulletFireType()
+
+	if fireId == 1 then
+		--发射一列
+		local bullet = PlaneFactory:getInstance():createBullet(id_)
+		bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
+		bullet:onFire()
+		bullet:setSpeed(cc.p(0, 10))
+		gameLayer:addChild(bullet)
+		table.insert(bulletSet, bullet)
+	elseif fireId == 2 then
+		--发射两列
+		local tbl = {-1,1}
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, 10))
+			gameLayer:addChild(bullet)
+			table.insert(bulletSet, bullet)
+		end
+	elseif fireId == 3 then
+		--发射三列
+		local tbl = {-1,0, 1}
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, 10))
+			gameLayer:addChild(bullet)
+			table.insert(bulletSet, bullet)
+		end
+	end
+	
 end
 
 --敌人发射子弹的回调函数
 function GameScene:onEnemyFire( enemy, bulletId )
-	local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
+	
+	local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
 	bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
 	bullet:onFire()
 	bullet:setSpeed(cc.p(0, -20))
 	gameLayer:addChild(bullet)
 	table.insert(armyBulletSet, bullet)
+		
 
 end
 
