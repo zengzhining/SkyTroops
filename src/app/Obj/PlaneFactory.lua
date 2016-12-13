@@ -65,7 +65,7 @@ function PlaneFactory:createRole( id_ )
 	plane:setMoveTime(0.3)
 	plane:setBulletFireNum(2)
 	plane:setId(id_)
-	plane:setBulletId(2)
+	plane:setBulletId(id_)
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(0.1)
 	--设置发射的类型,2为两列发射
