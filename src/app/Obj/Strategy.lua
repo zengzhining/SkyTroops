@@ -1,7 +1,7 @@
 --策略，用在敌人AI
 local Strategy = class("Strategy")
 
-local AI_TIME = 1
+local AI_TIME = 0.5
 
 function Strategy:ctor( id_ )
 	self.id_ = id_

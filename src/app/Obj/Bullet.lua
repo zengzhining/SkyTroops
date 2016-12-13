@@ -34,7 +34,7 @@ end
 function Bullet:step(dt)
 	self.liveTime_ = self.liveTime_ + dt
 	local gameSpeed = GameData:getInstance():getGameSpeed()
-	local speedY = self.speed_.y * gameSpeed + self.liveTime_ * BULLET_FLY_FACTOR
+	local speedY = self.speed_.y * gameSpeed
 	self:posByY(speedY)
 	self:posByX(self.speed_.x * gameSpeed)
 end

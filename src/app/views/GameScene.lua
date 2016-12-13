@@ -133,7 +133,6 @@ function GameScene:step( dt )
 				--最后再处理去除逻辑
 				table.remove(bulletSet, i)
 				table.remove(armySet, army.key_)
-
 				break
 			end
 		end
@@ -141,6 +140,30 @@ function GameScene:step( dt )
 		--子弹超出边界就去除掉
 		if bullet:getPositionY() >= display.height + bullet:getViewRect().height* 0.5 then 
 			table.remove(bulletSet, i)
+			bullet:removeSelf()
+		end
+	end
+
+	--遍历处理敌人子弹逻辑
+	for i,bullet in pairs(armyBulletSet) do
+		local bulletRect = bullet:getCollisionRect()
+
+		-- 如果有主角就判断主角
+		if not self.role_:isDead() then
+			local roleRect = self.role_:getCollisionRect()
+			local iscollision = cc.rectIntersectsRect(roleRect, bulletRect) 
+			if iscollision then
+				self.role_:onCollision(bullet)
+				bullet:onCollision(self.role_)
+				self:onBulletHitRole( bullet )
+				table.remove(armyBulletSet, i)
+				break
+			end
+		end
+
+		--子弹超出边界就去除掉
+		if bullet:getPositionY() <= -bullet:getViewRect().height* 0.5 then 
+			table.remove(armyBulletSet, i)
 			bullet:removeSelf()
 		end
 	end
@@ -189,6 +212,10 @@ function GameScene:onBulletHitArmy( bullet_, army_ )
 		hitSameArmyNum = 0
 		-- self:updateCommbo()
 	end
+end
+
+--子弹击中自己回调
+function GameScene:onBulletHitRole(bullet_)
 
 end
 
@@ -464,6 +491,13 @@ end
 --敌人发射子弹的回调函数
 function GameScene:onEnemyFire( enemy, bulletId )
 	local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+	local gameLayer = self.gameLayer_
+	local posx,posy = enemy:getPosition()
+	bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
+	bullet:onFire()
+	bullet:setSpeed(cc.p(0, -20))
+	gameLayer:addChild(bullet)
+	table.insert(armyBulletSet, bullet)
 
 end
 

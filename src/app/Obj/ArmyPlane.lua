@@ -134,12 +134,12 @@ function ArmyPlane:aiMove(dt)
 		end
 	elseif aiId == 4 then
 		--简单每隔一段时间发射
-		if self:getPositionY() <= AI_HEIGHT then 
-			if strategy:canAi() then 
-				strategy:resetAiTime()
-				self:fireBullet()
-			end
+		if strategy:canAi() then 
+			strategy:resetAiTime()
+			self:fireBullet()
 		end
+
+		strategy:addAiTime(dt)
 	end
 end
 
