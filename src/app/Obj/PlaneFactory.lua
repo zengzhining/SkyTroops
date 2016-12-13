@@ -15,10 +15,9 @@ local armyHpTbl = {
 
 }
 function PlaneFactory:createEnemy( id_ )
-	id_ = 6
 	local army = self:createPlane(id_)
 	army:setGameAi(id_)
-	army:setBulletId(3)
+	army:setBulletId(1)
 	army:setScore( 2 )
 	army:setHp(armyHpTbl[id_])
 
@@ -61,6 +60,7 @@ function PlaneFactory:createRole( id_ )
 		plane:setFileFormat(pattern)
 	end
 	plane:setHp(10)
+	plane:setMaxHp(10)
 	plane:updateAvatar()
 	plane:setMoveTime(0.3)
 	plane:setBulletFireNum(2)

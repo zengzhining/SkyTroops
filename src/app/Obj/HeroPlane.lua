@@ -284,6 +284,10 @@ function HeroPlane:onCollision(other )
 		--默认在上上层
 		self:playDeadAnimation( "PlaneExplose%02d.png")
 	end
+	local scene = self:getParent():getParent()
+	if scene and scene.onRoleHurt then
+		scene:onRoleHurt(other)
+	end
 end
 
 function HeroPlane:playDeadAnimation( fileFormat_ )

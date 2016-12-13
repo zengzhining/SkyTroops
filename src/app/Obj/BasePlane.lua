@@ -10,6 +10,7 @@ function BasePlane:initData()
 	self.dir_ = cc.p(0, 0)
 	self.speed_ = cc.p(0, 0)
 	self.hp_ = 1
+	self.maxHp_=1
 	self.score_ = 0
 
 	self.id_ = 1
@@ -36,6 +37,14 @@ end
 
 function BasePlane:setHp( hp )
 	self.hp_ = hp
+end
+
+function BasePlane:setMaxHp(hp)
+	self.maxHp_ = hp
+end
+
+function BasePlane:getMaxHp()
+	return self.maxHp_
 end
 
 function BasePlane:getHp(  )

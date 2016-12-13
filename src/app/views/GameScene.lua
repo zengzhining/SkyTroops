@@ -45,6 +45,7 @@ function GameScene:onCreate()
 	frontBg:setSpeed(-5)
 	self:add(frontBg,10, TAG_FRONT )
 
+	self:updateHpBar()
 	self:onCreateArmy()
 end
 
@@ -74,6 +75,9 @@ function GameScene:initData()
 
 	--炸弹个数
 	self.bombLb_ = nil
+
+	--血条
+	self.hpBar_ = nil
 end
 
 function GameScene:step( dt )
@@ -218,7 +222,11 @@ end
 
 --子弹击中自己回调
 function GameScene:onBulletHitRole(bullet_)
+	self:onRoleHurt(bullet_)
+end
 
+function GameScene:onRoleHurt(target)
+	self:updateHpBar()
 end
 
 function GameScene:updateSameHit( )
@@ -386,6 +394,19 @@ function GameScene:initUI( ui_ )
 	local bombLb = bombBtn:getChildByName("boomNum")
 	self.bombLb_ = bombLb
 	self:flashBomb()
+
+	local hpBar = ui_:getChildByName("HpBar")
+	self.hpBar_ = hpBar
+end
+
+--更新血量
+function GameScene:updateHpBar()
+	local role = self.role_
+	local hp = role:getHp()
+	local maxHp = role:getMaxHp()
+	local hurtHp = maxHp - hp
+	local percent = 100* hurtHp/maxHp
+	self.hpBar_:setPercent(percent)
 end
 
 function GameScene:onBomb()
@@ -446,7 +467,7 @@ function GameScene:updateCommbo()
 end
 
 function GameScene:updateRank()
-	self.rankLb_:setString( GameData:getInstance():getRank() )
+	self.rankLb_:setString( self.role_:getLevel() )
 end
 
 function GameScene:initControl()
