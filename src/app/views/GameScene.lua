@@ -516,6 +516,42 @@ function GameScene:onFireBullet( id_ )
 			gameLayer:addChild(bullet)
 			table.insert(bulletSet, bullet)
 		end
+	elseif fireId == 4 then
+		--散发射三列
+		local tbl = {-1,0, 1}
+		local speedX = 5
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(speedX * dir, 10))
+			gameLayer:addChild(bullet)
+			table.insert(bulletSet, bullet)
+		end
+	elseif fireId == 5 then
+		--散发射五列
+		local tbl = {-2,-1,0,1,2}
+		local speedX = 2
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(speedX * dir, 10))
+			gameLayer:addChild(bullet)
+			table.insert(bulletSet, bullet)
+		end
+	elseif fireId == 6 then
+		--散发射七列
+		local tbl = {-3,-2,-1,0,1,2,3}
+		local speedX = 1
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 20*dir, roleY + role:getViewRect().height *0.25)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(speedX * dir, 10))
+			gameLayer:addChild(bullet)
+			table.insert(bulletSet, bullet)
+		end
 	end
 	
 end
