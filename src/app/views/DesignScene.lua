@@ -12,6 +12,7 @@ local g_lastId = 1
 
 --是否强置加入,后为强制加入的id,可用于编辑
 local FORCE_ADD = true
+local NEED_LOAD = false
 local FORCE_ID = 2
 ---------------------------------------
 
@@ -88,7 +89,7 @@ end
 
 function DesignScene:initEdit()
 	local str = string.format("res/config/army%02d.plist", FORCE_ID)
-	if not FORCE_ADD then return end
+	if not NEED_LOAD then return end
 	if not gameio.isExist(str) then return end
 
 	local armyData = gameio.getVectorPlistFromFile(str)
@@ -175,15 +176,16 @@ function DesignScene:changePlaneId()
 	local idTbl = { "#RedPlane.png", "#GreyPlane.png" }
 	if selectPlane then 
 		local id = selectPlane:getId()
-		if id == 1 then 
-			id =  2
-		elseif id == 2 then
-			id = 1
-		end 
-
-		local res = idTbl[id]
-		selectPlane:setSpriteFrame(display.newSpriteFrame(res))
+		id = id + 1 > 6 and 1 or id+1
+		-- if id == 1 then 
+		-- 	id =  2
+		-- elseif id == 2 then
+		-- 	id = 1
+		-- end 
+		local str = string.format("#Enemy%02d.png", id)
+		selectPlane:setSpriteFrame(display.newSpriteFrame(str))
 		selectPlane:setId(id)
+		-- selectPlane:setRotation(180)
 		g_lastId = id
 	end
 end

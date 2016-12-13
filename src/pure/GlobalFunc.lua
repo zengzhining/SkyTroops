@@ -222,9 +222,9 @@ __G__MusicFadeOut = function(target, time)
 		time_ = time_ + dt
 		audio.setMusicVolume(originVol-(dVol* time_))
 
-		if time_ >= time then 
+		if time_ > time then 
+			target:unUpdate()				
 			audio.setMusicVolume(originVol)
-			target:unUpdate()
 		end
 	end )
 end

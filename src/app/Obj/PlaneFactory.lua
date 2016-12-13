@@ -69,7 +69,7 @@ function PlaneFactory:createRole( id_ )
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(0.1)
 	--设置发射的类型,2为两列发射
-	plane:setBulletFireType(2)
+	plane:setBulletFireType(1)
 	plane:addGasAni()
 
 
