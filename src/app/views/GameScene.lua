@@ -339,8 +339,7 @@ end
 --只有敌人死亡时候才更新分数和排名
 function GameScene:onArmyDead( target)
 	__G__ExplosionSound()
-	local scoreFactor = self:getScoreAddFactor()
-	local score = target:getScore() * scoreFactor
+	local score = target:getScore() 
 
 	GameData:getInstance():addScore( score ) 
 	--分数改变时候更新分数

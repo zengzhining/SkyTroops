@@ -15,9 +15,9 @@ local RELIVE_TIME = 3
 local LIMIT_RECT = cc.rect(70,display.cy*0.5 + 50, display.width-150, display.height-150)
 
 local LIMIT_LEFT_X = 70
-local LIMIT_RIGHT_X = display.width-150
-local LIMIT_UP_Y = display.height-150
-local LIMIT_DOWN_Y = display.cy*0.5 + 50
+local LIMIT_RIGHT_X = display.width-50
+local LIMIT_UP_Y = display.height-50
+local LIMIT_DOWN_Y = display.cy*0.3- 60
 
 local allTime = 0
 

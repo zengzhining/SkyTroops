@@ -178,6 +178,7 @@ end
 
 function ArmyPlane:step(dt)
 	ArmyPlane.super.step(self,dt)
+	if DESIGN then return end
 
 	self:aiMove(dt)
 	
