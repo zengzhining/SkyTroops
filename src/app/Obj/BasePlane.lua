@@ -82,7 +82,6 @@ function BasePlane:getLastFireTime()
 end
 
 function BasePlane:fireBullet()
-
 end
 
 --碰撞检测所用矩形

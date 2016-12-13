@@ -11,7 +11,7 @@ function PlaneFactory:ctor(  )
 end
 
 function PlaneFactory:createEnemy( id_ )
-	id_ = 3
+	id_ = 4
 	local army = self:createPlane(id_)
 
 	army:setGameAi(id_)
@@ -69,12 +69,19 @@ end
 
 function PlaneFactory:createBullet( id_ )
 	if not id_ then id_ = 1 end
-	local bullet
-	if id_ == 1 then
-		bullet = Bullet.new("#01Bullets.png")
-	elseif id_ == 2 then 
-		bullet = Bullet.new("#02Bullets.png")
-	end
+	--一共9个子弹
+	local str = string.format("#%02dBullets.png", id_)
+
+	local bullet = Bullet.new(str)
+
+	return bullet
+end
+
+function PlaneFactory:createEmenyBullet( id_ )
+	if not id_ then id_ = 1 end
+	local bullet = self:createBullet(id_)
+	bullet:setRotation(180)
+
 	return bullet
 end
 

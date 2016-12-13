@@ -9,7 +9,8 @@ local TAG_CONTINUE_LAYER = 104
 local TAG_CONTROL_LAYER = 105
 
 local armySet = {}
-local bulletSet = {}
+local bulletSet = {} --主角的子弹
+local armyBulletSet = {}
 local pointSet = {}  --连击显示红点
 
 local ARMY_TIME = 0.6 --敌人生成时间
@@ -55,6 +56,8 @@ function GameScene:initData()
 	armySet = {}
 	--如果已经连击完
 	bulletSet = {}
+
+	armyBulletSet = {}
 
 	hitSameArmyNum = 0
 	commboTimes = 0
@@ -456,6 +459,12 @@ function GameScene:onFireBullet( id_ )
 	bullet:setSpeed(cc.p(0, 10))
 	gameLayer:addChild(bullet)
 	table.insert(bulletSet, bullet)
+end
+
+--敌人发射子弹的回调函数
+function GameScene:onEnemyFire( enemy, bulletId )
+	local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+
 end
 
 --获得army的数据，根据数据来创建敌机

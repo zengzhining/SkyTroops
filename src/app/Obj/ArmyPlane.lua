@@ -83,6 +83,17 @@ function ArmyPlane:onHalfDisplayHeight()
 
 end
 
+--发射子弹
+function ArmyPlane:fireBullet()
+	--如果死掉时候不能发射子弹
+	if self:isDead() then return end
+	local scene = self:getParent():getParent()
+	if scene and scene.onEnemyFire then 
+		local target = self
+		scene:onEnemyFire( target, self:getBulletId())
+	end
+end
+
 function ArmyPlane:aiMove(dt)
 	--人物死亡时候没有Ai
 	if self:isDead() then return end
@@ -95,11 +106,13 @@ function ArmyPlane:aiMove(dt)
 	if aiId == 1 then 
 		--匀速直线，默认就是
 	elseif aiId == 2 then
+		--突然加速
 		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
 			self:addSpeed(cc.p(0, -5))
 			strategy:useAi()
 		end
 	elseif aiId == 3 then 
+		--转向主角
 		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
 			local role = GameData:getInstance():getRole()
 			local speed = self:getSpeed()
@@ -118,6 +131,14 @@ function ArmyPlane:aiMove(dt)
 			end
 			self:runAction(cc.RotateBy:create(0.2, angle))
 			strategy:useAi()
+		end
+	elseif aiId == 4 then
+		--简单每隔一段时间发射
+		if self:getPositionY() <= AI_HEIGHT then 
+			if strategy:canAi() then 
+				strategy:resetAiTime()
+				self:fireBullet()
+			end
 		end
 	end
 end
