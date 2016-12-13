@@ -413,15 +413,15 @@ function GameScene:onBomb()
 	if bombNum > 0 then
 		local armyInScreen = {}
 		for k,army in pairs(armySet) do
+			army.key_ = k
 			if army:getPositionY() >= 0 and army:getPositionY()<= display.height then
-				army.key_ = k
 				table.insert(armyInScreen, army)
 			end
 		end
 
 		for c,army in pairs(armyInScreen) do
-			army:onCollisionBullet()
-			table.remove(armySet, army.key_)
+			-- table.remove(armySet, army.key_)
+			army:onCollisionBomb()
 		end
 
 		for c,bullet in pairs(armyBulletSet) do

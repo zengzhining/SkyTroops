@@ -40,6 +40,10 @@ function ArmyPlane:onCollisionBullet(other)
 	end
 end
 
+function ArmyPlane:onCollisionBomb()
+	self:playDeadAnimation("PlaneExplose%02d.png")
+end
+
 function ArmyPlane:playDeadAnimation(fileFormat_)
 	local ani = display.getAnimationCache("PlaneDeadAnimation")
 	if not ani then 
@@ -58,7 +62,7 @@ function ArmyPlane:playDeadAnimation(fileFormat_)
 		end
 	end ),cc.Animate:create( ani ), cc.CallFunc:create( function ( target )
 		audio.setSoundsVolume(originVol)
-	end ), cc.RemoveSelf:create(true))
+	end ), cc.Hide:create())
 	self:runAction(act)
 end
 
