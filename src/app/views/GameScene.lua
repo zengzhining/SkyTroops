@@ -275,7 +275,7 @@ function GameScene:onPlayerDead( target )
 	end, 0.5 )
 
 	--死亡震动
-	device.vibrate( 0.2 )
+	-- device.vibrate( 0.2 )
 end
 
 function GameScene:isNeedPause()
