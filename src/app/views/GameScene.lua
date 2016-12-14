@@ -221,7 +221,6 @@ end
 
 --主角获得物品的场景回调
 function GameScene:onRoleGetItem(item)
-
 	self:updateUI()
 end
 
@@ -371,8 +370,6 @@ function GameScene:onContinueCancel()
 	end, 1.0)
 end
 
---从排行榜读取分数
-
 --敌人死亡的回调函数
 --只有敌人死亡时候才更新分数和排名
 function GameScene:onArmyDead( target)
@@ -382,16 +379,30 @@ function GameScene:onArmyDead( target)
 	GameData:getInstance():addScore( score ) 
 	--分数改变时候更新分数
 	self:updateScore( score )
-	--排名改变时候更新排名
-	--如果两次的排行榜数据不同就更新显示
-	local score = GameData:getInstance():getScore()
-	local rank = GameData:getInstance():getRankFromScore(score) 
-	local oldRank = GameData:getInstance():getRank()
-	if rank < oldRank then
-		GameData:getInstance():setRank(rank) 
-		self:updateLevelNum()
+
+	--敌机死亡之后显示增加的分数
+	local posx,posy = target:getPosition()
+	local param = {}
+	param.pos_ = cc.p(posx,posy)
+	self:showAddScore(score, param)
+end
+
+function GameScene:showAddScore(dScore, params)
+	local str = string.format("+%d", dScore)
+	local title = display.newTTF(nil, 32,str)
+	local uiLayer = self:getChildByTag(TAG_UI)
+	if params.pos_ then 
+		title:pos(params.pos_)
 	end
-	self:updateSpeed()
+
+	title:setColor(display.COLOR_RED)
+
+	uiLayer:add(title)
+
+	local act = cc.Spawn:create( cc.MoveBy:create(2,cc.p(0,10)),
+		cc.FadeOut:create(2) )
+	title:runAction(cc.Sequence:create( act, cc.RemoveSelf:create(true) ))
+
 end
 
 function GameScene:updateSpeed()	
