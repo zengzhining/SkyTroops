@@ -42,7 +42,7 @@ function PlaneFactory:createRole( id_ )
 	elseif id_ == 2 then 
 		plane = HeroPlane.new("#PlaneGreen1.png")
 		pattern = "#PlaneGreen%d.png"
-	elseif id == 3 then
+	elseif id_ == 3 then
 		plane = HeroPlane.new("#PlaneGrey1.png")
 		pattern = "#PlaneGrey%d.png"
 	elseif id_ == 4 then
@@ -68,7 +68,7 @@ function PlaneFactory:createRole( id_ )
 	plane:setId(id_)
 	plane:setBulletId(id_)
 	--设置子弹冷却时间
-	plane:setBulletCalmTime(0.1)
+	plane:setBulletCalmTime(0.05)
 	--设置发射的类型,2为两列发射
 	plane:setBulletFireType(1)
 	plane:addGasAni()

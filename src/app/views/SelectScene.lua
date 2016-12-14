@@ -5,11 +5,13 @@ SelectScene.RESOURCE_FILENAME = "Layer/SelectRole.csb"
 local TAG_ROLE_1 = 101
 local TAG_ROLE_2 = 102
 
+local bullets = {}
+
 function SelectScene:onCreate()
 
 	__G__LoadRes()
 
-	self.roleId_ = 1
+	self.roleId_ = GameData:getInstance():getRoleId()
 	local root = self:getResourceNode()
 	--button
 	local startBtn = root:getChildByName("Go")
@@ -40,53 +42,110 @@ function SelectScene:onCreate()
 		self:onRight()
 	end)
 
-	if self.roleId_ == 1 then 
-		leftBtn:hide()
-	elseif self.roleId_ == 2 then 
-		rightBtn:hide()
-	end
+	local layer = display.newLayer()
+	self:add(layer)
+	self.roleLayer_ =layer
 
-	self:createRole(1)
-	self:createRole(2)
+	bullets = {}
 
 	self:updateRole()
 end
 
-function SelectScene:createRole(id_)
-	local role = PlaneFactory:getInstance():createRole(id_)
-	role:pos(display.cx, display.cy)
-	if id_ == 1 then
-		self:addChild(role,100, TAG_ROLE_1)
-	elseif id_ == 2 then 
-		self:addChild(role,100, TAG_ROLE_2)
+--主角发射炮弹的回调函数
+function SelectScene:onFireBullet( id_ )
+	local role = self.roleLayer_:getChildByTag(TAG_ROLE_1)
+	local gameLayer = self.roleLayer_
+	local roleX,roleY = role:getPosition()
+	local fireId = role:getBulletFireType()
+
+	if fireId == 1 then
+		--发射一列
+		local bullet = PlaneFactory:getInstance():createBullet(id_)
+		bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
+		bullet:setSpeed(cc.p(0, 10))
+		gameLayer:addChild(bullet)
+	elseif fireId == 2 then
+		--发射两列
+		local tbl = {-1,1}
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
+			bullet:setSpeed(cc.p(0, 10))
+			gameLayer:addChild(bullet)
+		end
+	elseif fireId == 3 then
+		--发射三列
+		local tbl = {-1,0, 1}
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
+			bullet:setSpeed(cc.p(0, 10))
+			gameLayer:addChild(bullet)
+		end
+	elseif fireId == 4 then
+		--散发射三列
+		local tbl = {-1,0, 1}
+		local speedX = 5
+		for c,dir in pairs(tbl) do
+			local bullet = PlaneFactory:getInstance():createBullet(id_)
+			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
+			bullet:setSpeed(cc.p(speedX * dir, 10))
+			gameLayer:addChild(bullet)
+		end
+	elseif fireId == 5 then
+		
+	elseif fireId == 6 then
+		
 	end
+
+	for c,bullet in pairs (bullets)
+		if bullet:getPositionY() > display.height*1.5 then 
+			bullet:removeSelf()
+			table.remove(bullets, c)
+		end
+	end
+	
 end
 
 function SelectScene:updateRole()
-	local role1 = self:getChildByTag(TAG_ROLE_1)
-	local role2 = self:getChildByTag(TAG_ROLE_2)
+	local id = self.roleId_
+	local role = PlaneFactory:getInstance():createRole(id)
+	role:pos(display.cx, display.cy)
+
+	local plane = self.roleLayer_:getChildByTag(TAG_ROLE_1)
+	if plane then 
+		plane:removeSelf()
+	end
+	self.roleLayer_:addChild(role,100, TAG_ROLE_1)
+
+	self:updateUI()
+end
+
+function SelectScene:updateUI()
+	local root = self:getResourceNode()
+	local rightBtn = root:getChildByName("Right")
+	local leftBtn = root:getChildByName("Left")
 	if self.roleId_ == 1 then 
-		role1:show()
-		role2:hide()
-	elseif self.roleId_ == 2 then 
-		role1:hide()
-		role2:show()
+		leftBtn:hide()
+	elseif self.roleId_ == 6 then 
+		rightBtn:hide()
+	else
+		leftBtn:show()
+		rightBtn:show()
 	end
 end
 
 function SelectScene:onLeft(  )
 	-- body
-	self.roleId_ = 1
-	self.leftBtn_:hide()
-	self.rightBtn_:show()
+	local id = self.roleId_ - 1
+	self.roleId_ = id > 0 and id or 1
 	self:updateRole()
 end
 
 function SelectScene:onRight(  )
 	-- body
-	self.roleId_ = 2
-	self.rightBtn_:hide()
-	self.leftBtn_:show()
+	local id = self.roleId_ + 1
+	self.roleId_ = id < 7 and id or 6
 	self:updateRole()
 end
 
