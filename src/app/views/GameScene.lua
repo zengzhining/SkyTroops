@@ -13,6 +13,8 @@ local bulletSet = {} --主角的子弹
 local armyBulletSet = {}
 local itemSet = {}
 
+local armyInScreen = {}
+
 local pointSet = {}  --连击显示红点
 
 local ARMY_TIME = 0.6 --敌人生成时间
@@ -66,6 +68,8 @@ function GameScene:initData()
 
 	armyBulletSet = {}
 
+	armyInScreen = {}
+
 	hitSameArmyNum = 0
 	commboTimes = 0
 	ContinueTimes = 2
@@ -91,9 +95,9 @@ function GameScene:step( dt )
 	local roleRect = self.role_:getCollisionRect()
 	local rolePosY = self.role_:getPositionY()
 
-	local armyInScreen = {}
+	armyInScreen = {}
 	for k,army in pairs(armySet) do
-		if army:getPositionY() >= 0 and army:getPositionY()<= display.height then
+		if army:getPositionY() >= 0 and army:getPositionY()<= display.height + army:getViewRect().height*0.5 then
 			army.key_ = k
 			table.insert(armyInScreen, army)
 		end
@@ -217,7 +221,7 @@ end
 
 --主角获得物品的场景回调
 function GameScene:onRoleGetItem(item)
-	
+
 	self:updateUI()
 end
 
@@ -435,16 +439,7 @@ end
 function GameScene:onBomb()
 	local bombNum = GameData:getInstance():getBomb()
 	if bombNum > 0 then
-		local armyInScreen = {}
-		for k,army in pairs(armySet) do
-			army.key_ = k
-			if army:getPositionY() >= 0 and army:getPositionY()<= display.height then
-				table.insert(armyInScreen, army)
-			end
-		end
-
 		for c,army in pairs(armyInScreen) do
-			-- table.remove(armySet, army.key_)
 			army:onCollisionBomb()
 		end
 

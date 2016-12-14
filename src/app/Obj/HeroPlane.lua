@@ -124,7 +124,7 @@ function HeroPlane:isCanFireBullet( ... )
 	-- body
 	local flag = false
 	local time = os.clock()
-	if time - self:getLastFireTime() >= self:getBulletCalmTi-me() then 
+	if time - self:getLastFireTime() >= self:getBulletCalmTime() then 
 		flag = true
 	end
 
