@@ -39,6 +39,11 @@ function BasePlane:setHp( hp )
 	self.hp_ = hp
 end
 
+function BasePlane:addHp(hp)
+	local finalHp = self.hp_ + hp
+	self.hp_ = finalHp > self:getMaxHp() and self:getMaxHp() or finalHp
+end
+
 function BasePlane:setMaxHp(hp)
 	self.maxHp_ = hp
 end

@@ -124,7 +124,7 @@ function HeroPlane:isCanFireBullet( ... )
 	-- body
 	local flag = false
 	local time = os.clock()
-	if time - self:getLastFireTime() >= self:getBulletCalmTime() then 
+	if time - self:getLastFireTime() >= self:getBulletCalmTi-me() then 
 		flag = true
 	end
 
@@ -137,7 +137,24 @@ end
 
 --得到物品时候的回调函数
 function HeroPlane:onGetItem(item)
-	
+	local id = item:getId()
+	--1就升级
+	if id == 1 then 
+		--小于3才升级，否则
+		if self:getLevel() < 3 then
+			self:levelUp()
+		else
+
+		end
+	--2就补血
+	elseif id == 2 then
+		local hp = item:getRecoverHp()
+		self:addHp(hp)
+	--3就增加炸弹
+	elseif id == 3 then 
+		local bombNum = item:getBombNum()
+		GameData:getInstance():addBomb(bombNum)
+	end
 end
 
 function HeroPlane:updateLogic(dt)
@@ -148,7 +165,6 @@ function HeroPlane:updateLogic(dt)
 		allTime = 0
 		self:fireBullet()
 	end
-
 
 	--如果有虚拟摇杆处理虚拟摇杆逻辑
 	local joy = self:getVirtualJoy()

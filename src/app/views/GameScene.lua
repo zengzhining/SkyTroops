@@ -77,7 +77,7 @@ function GameScene:initData()
 
 	self.cutBtn_ = nil
 	self.scoreLb_ = nil
-	self.rankLb_ = nil
+	self.levelLb_ = nil
 
 	--炸弹个数
 	self.bombLb_ = nil
@@ -215,9 +215,10 @@ function GameScene:step( dt )
 	end
 end
 
---主角获得物品的回调
+--主角获得物品的场景回调
 function GameScene:onRoleGetItem(item)
-	print("onRoleGetItem~~~~")
+	
+	self:updateUI()
 end
 
 --子弹击中敌人的回调，这里可以处理连击
@@ -384,7 +385,7 @@ function GameScene:onArmyDead( target)
 	local oldRank = GameData:getInstance():getRank()
 	if rank < oldRank then
 		GameData:getInstance():setRank(rank) 
-		self:updateRank()
+		self:updateLevelNum()
 	end
 	self:updateSpeed()
 end
@@ -414,7 +415,7 @@ function GameScene:initUI( ui_ )
 	local scoreLb = ui_:getChildByName("Score")
 	self.scoreLb_ = scoreLb
 	local rankLb = ui_:getChildByName("Rank")
-	self.rankLb_ = rankLb
+	self.levelLb_ = rankLb
 	--直接更新
 	self:flashScore()
 
@@ -429,16 +430,6 @@ function GameScene:initUI( ui_ )
 
 	local hpBar = ui_:getChildByName("HpBar")
 	self.hpBar_ = hpBar
-end
-
---更新血量
-function GameScene:updateHpBar()
-	local role = self.role_
-	local hp = role:getHp()
-	local maxHp = role:getMaxHp()
-	local hurtHp = maxHp - hp
-	local percent = 100* hurtHp/maxHp
-	self.hpBar_:setPercent(percent)
 end
 
 function GameScene:onBomb()
@@ -472,18 +463,19 @@ function GameScene:flashBomb()
 	self.bombLb_:setString(num)
 end
 
+--更新分数
 function GameScene:flashScore()
 	local score = GameData:getInstance():getScore()
 	self.scoreLb_:setString(string.format("%04d", score))
 end
 
---更新commbo,更新数字
 function GameScene:updateScore( changeScore )
 	__G__actDelay(self, function (  )
 		self:flashScore()
 	end, 0.4)
 end
 
+--更新commbo,更新数字
 function GameScene:updateCommbo()
 	-- commboTimes
 	if commboTimes <= 0 then 
@@ -498,8 +490,27 @@ function GameScene:updateCommbo()
 	end
 end
 
-function GameScene:updateRank()
-	self.rankLb_:setString( self.role_:getLevel() )
+--更新等级
+function GameScene:updateLevelNum()
+	self.levelLb_:setString( self.role_:getLevel() )
+end
+
+--更新血量
+function GameScene:updateHpBar()
+	local role = self.role_
+	local hp = role:getHp()
+	local maxHp = role:getMaxHp()
+	local hurtHp = maxHp - hp
+	local percent = 100* hurtHp/maxHp
+	self.hpBar_:setPercent(percent)
+end
+
+--更新UI元素
+function GameScene:updateUI()
+	self:updateHpBar()
+	self:updateScore()
+	self:updateLevelNum()
+	self:flashBomb()
 end
 
 function GameScene:initControl()

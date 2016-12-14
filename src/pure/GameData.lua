@@ -6,7 +6,8 @@ local BG_SPEED = 10
 local DEFAULT_ROLE = 1
 local DEFAULT_LEVEL = 2
 
-local DEFAULT_BOMB = 5 --默认炸弹个数
+local DEFAULT_BOMB = 3 --默认炸弹个数
+local MAX_BOMB = 6
 
 function GameData:ctor()
 	self:initData()
@@ -124,11 +125,13 @@ function GameData:getBomb()
 end
 
 function GameData:addBomb(num)
-	self.bombNum_ = self.bombNum_ + num
+	local finalBomb = self.bombNum_ + num
+	self.bombNum_ = finalBomb > MAX_BOMB and MAX_BOMB or finalBomb
 end
 
 function GameData:minBomb(num)
-	self.bombNum_ = self.bombNum_ - num
+	local finalBomb = self.bombNum_ - num
+	self.bombNum_ = finalBomb >= 0 and finalBomb or 0
 end
 
 ----------------bomb---------------------------
