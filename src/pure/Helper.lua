@@ -37,4 +37,9 @@ function showClickParticle( layer, point )
 	showParticle(layer, point, "Particles/LavaFlow.plist")
 end
 
+--显示一个切换特效
+function showChangeParticle(layer, point)
+	showParticle(layer, point, "Particles/change.plist")
+end
+
 

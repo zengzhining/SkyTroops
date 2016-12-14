@@ -143,6 +143,9 @@ function HeroPlane:onGetItem(item)
 		--小于3才升级，否则
 		if self:getLevel() < 3 then
 			self:levelUp()
+			--显示一个粒子特效
+			local point = cc.p(self:getViewRect().width*0.5, self:getViewRect().height*0.8)
+			Helper.showChangeParticle(self, point)
 		else
 
 		end

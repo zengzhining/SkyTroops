@@ -411,15 +411,6 @@ function GameScene:updateSpeed()
 	GameData:getInstance():setGameSpeed(speed)
 end
 
-function GameScene:getScoreAddFactor()
-	local factor = math.pow(2, commboTimes)
-	--限制最高为32
-	if factor >= 32 then 
-		factor = 32
-	end
-	return factor
-end
-
 function GameScene:initUI( ui_ )
 	local cutBtn = ui_:getChildByName("CutButton")
 	cutBtn:onClick(function (  )

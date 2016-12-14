@@ -284,6 +284,8 @@ function TestScene:ctor()
 	bullet:pos(display.center)
 	layer:add(bullet)
 
+	Helper.showChangeParticle(layer, display.center)
+
 end
 
 function TestScene:cameraMove(speed)
