@@ -280,8 +280,7 @@ function TestScene:ctor()
 
 	local tbl = {}
 
-	local bullet = PlaneFactory:getInstance():createBullet(2)
-	print("bullet~~~~~", type(bullet))
+	local bullet = PlaneFactory:getInstance():createItem(1)
 	bullet:pos(display.center)
 	layer:add(bullet)
 

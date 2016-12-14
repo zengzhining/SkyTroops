@@ -63,9 +63,9 @@ end
 --碰撞检测所用矩形
 function MovedObject:getCollisionRect(  )
 	local rect = self:getBoundingBox()
-	local finalWidth  = rect.width * 0.5
+	local finalWidth  = rect.width * 0.6
 	local finalHeight = rect.height 
-	local newRect = cc.rect( rect.x, rect.y, finalWidth, finalWidth )
+	local newRect = cc.rect( rect.x-finalWidth, rect.y-finalHeight, finalWidth, finalHeight )
 	return newRect
 end
 
@@ -103,7 +103,11 @@ function MovedObject:getAnimationFormat()
 end
 
 function MovedObject:restoreOriginSprite()
-	local frame = display.newSpriteFrame(self.originFileName_)
+	self:setNewSpriteFrame(self.originFileName_)
+end
+
+function MovedObject:setNewSpriteFrame(fileName)
+	local frame = display.newSpriteFrame(fileName)
 	self:setSpriteFrame(frame)
 end
 

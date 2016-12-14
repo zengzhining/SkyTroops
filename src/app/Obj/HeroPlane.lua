@@ -135,6 +135,11 @@ function HeroPlane:isCanFireBullet( ... )
 	return flag
 end
 
+--得到物品时候的回调函数
+function HeroPlane:onGetItem(item)
+	
+end
+
 function HeroPlane:updateLogic(dt)
 	allTime = allTime + dt
 

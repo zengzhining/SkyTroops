@@ -2,6 +2,7 @@ PlaneFactory = class("PlaneFactory")
 local HeroPlane = require("app/Obj/HeroPlane")
 local ArmyPlane = require("app/Obj/ArmyPlane")
 local Bullet = require("app/Obj/Bullet")
+local Item = require("app/Obj/Item")
 
 --虚拟摇杆
 local VirtualJoy = require("app/Obj/VirtualJoy")
@@ -92,6 +93,17 @@ function PlaneFactory:createEmenyBullet( id_ )
 	bullet:setRotation(180)
 
 	return bullet
+end
+
+function PlaneFactory:createItem( id_ )
+	--1为星星
+	local item = nil
+	if id_ == 1 then
+		item = Item.new("png/star.png")
+	end
+
+	item:setId(id_)
+	return item
 end
 
 function PlaneFactory:createJoy( bgFile, joyFile )

@@ -11,6 +11,8 @@ local TAG_CONTROL_LAYER = 105
 local armySet = {}
 local bulletSet = {} --主角的子弹
 local armyBulletSet = {}
+local itemSet = {}
+
 local pointSet = {}  --连击显示红点
 
 local ARMY_TIME = 0.6 --敌人生成时间
@@ -47,6 +49,8 @@ function GameScene:onCreate()
 
 	self:updateHpBar()
 	self:onCreateArmy()
+
+	self:createItem()
 end
 
 function GameScene:initData()
@@ -57,6 +61,8 @@ function GameScene:initData()
 	armySet = {}
 	--如果已经连击完
 	bulletSet = {}
+
+	itemSet = {}
 
 	armyBulletSet = {}
 
@@ -174,6 +180,28 @@ function GameScene:step( dt )
 		end
 	end
 
+	--遍历处理物品逻辑
+	for i, item in pairs (itemSet) do
+		local itemRect = item:getCollisionRect()
+		-- 如果有主角就判断主角
+		if not self.role_:isDead() then
+			local roleRect = self.role_:getCollisionRect()
+			local iscollision = cc.rectIntersectsRect(roleRect, itemRect) 
+			if iscollision then
+				self.role_:onGetItem(item)
+				item:onGot()
+				self:onRoleGetItem(item)
+				table.remove(itemSet, i)
+				break
+			end
+		end
+
+		if item:getPositionY() <= -item:getViewRect().height * 0.5 then
+			item:removeSelf()
+			table.remove(itemSet, i)
+		end
+	end
+
 	--生成敌人
 	tempTime = tempTime + dt
 	local armtTime = self:getArmyTime()
@@ -185,6 +213,11 @@ function GameScene:step( dt )
 			-- self:onCreateArmy()
 		end
 	end
+end
+
+--主角获得物品的回调
+function GameScene:onRoleGetItem(item)
+	print("onRoleGetItem~~~~")
 end
 
 --子弹击中敌人的回调，这里可以处理连击
@@ -588,6 +621,16 @@ function GameScene:onAllArmyGone()
 		GameData:getInstance():addLevel(1)		
 	end
 	self:onCreateArmy()
+end
+
+--生成物品
+function GameScene:createItem()
+	local item = PlaneFactory:getInstance():createItem(1)
+	item:pos(display.cx, display.cy*1.5)
+	item:setSpeed(cc.p(0,-1))
+	self.gameLayer_:add(item,-1)
+
+	table.insert(itemSet, item)
 end
 
 function GameScene:onCreateArmy(  )
