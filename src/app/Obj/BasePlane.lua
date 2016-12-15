@@ -16,7 +16,6 @@ function BasePlane:initData()
 	self.id_ = 1
 	--发射子弹的id
 	self.bulletId_ = 1
-	self.bulletFireNum_ = 1
 	--子弹冷却时间
 	self.bulletCalmTime_ = 1
 	self.lastFireTime_ = 0
@@ -68,15 +67,6 @@ end
 --设置角色方向
 function BasePlane:setDirX( dir_ )
 	self.dir_.x = dir_
-end
-
---角色可以发射的子弹个数，暂时放在基础类以便日后其他飞机也能发射子弹
-function BasePlane:setBulletFireNum( num )
-	self.bulletFireNum_ = num
-end
-
-function BasePlane:getBulletFireNum()
-	return self.bulletFireNum_
 end
 
 ------------bullet Fire Type-----------

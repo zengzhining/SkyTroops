@@ -11,6 +11,10 @@ function MainMenu:onCreate()
 		self:getApp():enterLoading("SelectScene")
 	end)
 
+	local bg = root:getChildByName("Bg")
+
+	
+
 end
 
 function MainMenu:onEnter()

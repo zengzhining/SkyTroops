@@ -37,8 +37,6 @@ function HeroPlane:ctor( fileName )
 	--死亡动画播放
 	self.onDeadAni_ = false
 
-	self.moveTime_ = MOVE_TIME
-
 	--是否复活
 	self.isRelive_ = false
 
@@ -83,10 +81,6 @@ end
 
 function HeroPlane:resetPower(  )
 	self.power_ = MAX_POWER
-end
-
-function HeroPlane:setMoveTime(time)
-	self.moveTime_ = time
 end
 
 function HeroPlane:onTouch( event )
@@ -264,25 +258,15 @@ function HeroPlane:resetLevel()
 	self.level_ = 1
 end
 
-
-
 function HeroPlane:accelerateEvent( x,y,z,timeStap )
-	if x < LEFT_ACC then
-		self:onLeft( self:getViewRect().width * 0.6 )
-	end
 	
-	if x > RIGHT_ACC then
-		self:onRight( self:getViewRect().width * 0.6 )
-	end
 end
 
 function HeroPlane:onKeyPad( event )
 	local code = event.keycode
 	local target = event.target
 	if code == cc.KeyCode.KEY_A then 
-		self:onLeft( self:getViewRect().width * 0.6 )
 	elseif code == cc.KeyCode.KEY_D then 
-		self:onRight( self:getViewRect().width * 0.6 )
 
 	elseif code == cc.KeyCode.KEY_S then
 		self:fireBullet()
@@ -349,28 +333,6 @@ function HeroPlane:onHurt(hp_)
 		self.isOnHurt_ = false
 	end, 1.5)
 	self.isOnHurt_ = true
-end
-
-function HeroPlane:onLeft( x )
-	if self.isMoved_ then return end
-	if self.dir_.x == -1 then return end
-	__G__actDelay(self, function (  )
-		self.isMoved_ = false
-	end, self.moveTime_)
-	self:moveTo({ x = display.cx - x, time = self.moveTime_ })
-	self.dir_.x = -1
-	self.isMoved_ = true
-end
-
-function HeroPlane:onRight(x)
-	if self.isMoved_ then return end
-	if self.dir_.x == 1 then return end
-	self:moveTo({ x = display.cx + x, time = self.moveTime_ })
-	__G__actDelay(self, function (  )
-		self.isMoved_ = false
-	end, self.moveTime_)
-	self.dir_.x = 1
-	self.isMoved_ = true
 end
 
 return HeroPlane

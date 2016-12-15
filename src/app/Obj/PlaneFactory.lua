@@ -34,6 +34,15 @@ function PlaneFactory:createPlane( id_ )
 end
 
 function PlaneFactory:createRole( id_ )
+	local PLANE_CONFIG = { 
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		}
 	local plane = nil
 	local pattern = nil
 	if id_ == 1 then 
@@ -60,17 +69,19 @@ function PlaneFactory:createRole( id_ )
 	else
 		plane:setFileFormat(pattern)
 	end
-	plane:setHp(10)
-	plane:setMaxHp(10)
-	plane:updateAvatar()
-	plane:setMoveTime(0.3)
-	plane:setBulletFireNum(2)
+
+	local config = PLANE_CONFIG[id_]
 	plane:setId(id_)
-	plane:setBulletId(id_)
-	--设置子弹冷却时间
-	plane:setBulletCalmTime(0.05)
+	plane:setHp(config.maxHp_)
+	plane:setMaxHp(config.maxHp_)
+	--设置子弹的id
+	plane:setBulletId(config.bulletId_)
+	--设置子弹发射的类型
 	--设置发射的类型,2为两列发射
-	plane:setBulletFireType(1)
+	plane:setBulletFireType(config.bulletType_)
+	--设置子弹冷却时间
+	plane:setBulletCalmTime(config.bulletCalmTime_)
+	plane:updateAvatar()
 	plane:addGasAni()
 
 

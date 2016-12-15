@@ -18,8 +18,6 @@ function ArmyPlane:ctor(  )
 	self.id_ = GREY_PLANE -- id默认1
 	self.isHurtRole_ = false
 
-	self.moveTime_ = MOVE_TIME
-
 	--是否被超越
 	self.hasBeyound_ = false
 
@@ -37,7 +35,7 @@ function ArmyPlane:onCollisionBullet(other)
 	else
 		local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
 		self:runAction(act)
-		
+
 	end
 end
 
@@ -73,24 +71,6 @@ function ArmyPlane:setGameAi( typeId_ )
 	if typeId_ == 5 then 
 		self.aiStrategy_:setAiTimeLimit(0.2)
 	end
-end
-
-function ArmyPlane:onLeft(x)
-	if self.dir_.x == -1 then return end
-	__G__actDelay(self, function (  )
-		self.isMoved_ = false
-	end, self.moveTime_)
-	self:moveTo({ x = display.cx - x, time = self.moveTime_ })
-	self.dir_.x = -1
-end
-
-function ArmyPlane:onRight(x)
-	if self.dir_.x == 1 then return end
-	self:moveTo({ x = display.cx + x, time = self.moveTime_ })
-	__G__actDelay(self, function (  )
-		self.isMoved_ = false
-	end, self.moveTime_)
-	self.dir_.x = 1
 end
 
 function ArmyPlane:onHalfDisplayHeight()

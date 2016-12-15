@@ -703,6 +703,7 @@ end
 
 
 function GameScene:onMenu()
+	display.resume()
 	__G__MenuCancelSound()
 	self:getApp():enterLoading("MainMenu")
 end

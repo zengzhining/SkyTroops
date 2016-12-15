@@ -43,12 +43,11 @@ end
 function LoadingScene:onEnter()
 	self:unUpdate()
 	audio.stopMusic(false)
-	self:onUpdate(handler(self, self.update))
+	self:onUpdate(handler(self, self.step))
 end
 
-function LoadingScene:update(dt)
+function LoadingScene:step(dt)
 	self.time_ = self.time_ + dt
-
 	if self.time_ >=  3*LOADING_DT then 
 		self.time_ = 0
 		self:unUpdate()
@@ -56,15 +55,10 @@ function LoadingScene:update(dt)
 			__G__actDelay(self, function (  )
 				self:getApp():enterScene(self.sceneName_)
 			end, 1.0)
-			SDKManager:getInstance():setFULLADCallback( nil)
 		end
 
-		if self.needAds_ and SDKManager:getInstance():isFULLADAvailable() then
-			SDKManager:getInstance():setFULLADCallback( callback)
-			SDKManager:getInstance():showFULLAD()
-		else
-			callback()
-		end
+		
+		callback()
 	elseif self.time_ >= 2* LOADING_DT then 
 		--加载资源
 		__G__LoadRes()
