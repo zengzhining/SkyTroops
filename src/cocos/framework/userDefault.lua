@@ -10,5 +10,9 @@ function userDefault.getIntegerForKey(pKey, defaultVaule)
 	return user:getIntegerForKey(pKey, defaultVaule)
 end
 
+function userDefault.setIntegerForKey(pKey, value)
+	reurn user:setIntegerForKey(pKey, value)
+end
+
 return userDefault
 
