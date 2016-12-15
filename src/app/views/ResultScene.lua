@@ -6,9 +6,14 @@ local TAG_BG = 101
 local TAG_UNLOCK = 102
 
 local ROLE_SCORE_TBL = {  
-	200,500,1000,2000,5000
+	500,500,1000,2000,5000
  }
 
+ local lastAllScore = 0
+
+ local scoreNum = 0
+
+local pauseFlag = false
 function ResultScene:onCreate(  )
 
 	__G__LoadRes()
@@ -41,29 +46,21 @@ function ResultScene:onCreate(  )
 
 	local expBar = root:getChildByName("ExpBar")
 	local expNum = root:getChildByName("ExpNum")
+	self.expBar_ = expBar
+	self.expNum_ = expNum
 
+	pauseFlag = false
+	lastAllScore = 0
 	--这里更新一下总分数
-	local lastAllScore = GameData:getInstance():getAllScore()
+	lastAllScore = GameData:getInstance():getAllScore()
 
-	-- GameData:getInstance():addAllScore(GameData:getInstance():getScore())
+	scoreNum = lastAllScore
 	GameData:getInstance():addAllScore(GameData:getInstance():getScore())
-
-	local allScore = GameData:getInstance():getAllScore()
-
-	local levelNum = 0
-	for i,num in pairs(ROLE_SCORE_TBL) do
-		levelNum = levelNum + num
-		if levelNum > allScore then 
-			break
-		end
-	end
-
-	local str = string.format("%d/%d", allScore, levelNum)
-	expNum:setString(str)
-	expBar:setPercent(allScore/levelNum * 100)
+	-- GameData:getInstance():addAllScore(2002)
+	GameData:getInstance():reset()
 	
-
 	GameData:getInstance():save()
+
 end
 
 function ResultScene:onRetry(  )
@@ -88,7 +85,7 @@ function ResultScene:onMenu()
 end
 
 function ResultScene:onUnlockClose(  )
-	
+	pauseFlag= false
 end
 
 function ResultScene:showUnlock(id_)
@@ -104,12 +101,58 @@ function ResultScene:showUnlock(id_)
 	end
 end
 
+function ResultScene:step( dt )
+	if pauseFlag then return end
+	--首先算出下个等级需要的分数
+	local AllLevelNum = 0
+	--找到最近一个等级的分数
+	local levelNum = 0
+
+	local unlockId = 0
+
+	for i,num in pairs(ROLE_SCORE_TBL) do
+		AllLevelNum = AllLevelNum + num
+		if AllLevelNum > lastAllScore then 
+			levelNum = num
+			unlockId = i+1
+			break
+		end
+	end
+
+	local delScore = scoreNum-AllLevelNum+levelNum
+
+	local str = string.format("%d/%d", scoreNum, AllLevelNum)
+	self.expNum_:setString(str)
+	self.expBar_:setPercent(delScore/levelNum * 100)
+
+	local score = GameData:getInstance():getAllScore()
+	if scoreNum >= score then
+		scoreNum=score
+	else
+		scoreNum = scoreNum + 10
+	end
+
+	if scoreNum > AllLevelNum then 
+		lastAllScore = scoreNum
+
+		pauseFlag = true
+		self:showUnlock(unlockId)
+	end
+
+end
+
 function ResultScene:onEnter()
-	__G__MainMusic(1)		
+	__G__MainMusic(1)	
+
+	-- __G__actDelay(self, function (  )
+		self:onUpdate(handler(self, self.step))
+		
+	-- end,2)
+
 end
 
 function ResultScene:onExit()
-
+	self:unUpdate()
 end
 
 

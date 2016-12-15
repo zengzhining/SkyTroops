@@ -7,10 +7,6 @@ local TAG_ROLE_2 = 102
 
 local bullets = {}
 
-local ROLE_SCORE_TBL = {  
-	0, 200,500,1000,2000,5000
- }
-
 function SelectScene:onCreate()
 
 	__G__LoadRes()
@@ -159,7 +155,16 @@ function SelectScene:updateUI()
 end
 
 function SelectScene:roleUnlock()
-	local score = ROLE_SCORE_TBL[self.roleId_]
+	local score = 0
+	local id = self.roleId_-1
+	if id == 0 then 
+		return true 
+	end
+	
+	for i = 1, id do
+		score =score + ROLE_SCORE_TBL[i]
+	end
+
 	local allScore = GameData:getInstance():getAllScore()
 	if allScore >= score then 
 		return true

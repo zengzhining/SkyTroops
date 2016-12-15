@@ -14,6 +14,7 @@ local KEY_ALL_SCORE = "ALL_SCORE"
 function GameData:ctor()
 	self:initData()
 
+	self:load()
 	--因为到读取大量文件
 	--只有进行第一次初始化时候才进行读取配置文件
 	self:loadConfig()
@@ -65,7 +66,7 @@ function GameData:initData()
 	self.armyConfig_ = self.armyConfig_ or {}
 
 	--关卡数
-	self.level_ = self.level_ or DEFAULT_LEVEL
+	self.level_ = DEFAULT_LEVEL
 
 	--全局的主角
 	self.role_ = nil
@@ -73,9 +74,7 @@ function GameData:initData()
 	--游戏一次运行时候的分数
 	self.score_ = 0
 	--游戏获得的总分数
-	self.allScore_ = 0
-
-	self:load()
+	self.allScore_ = self.allScore_ or 0
 end
 --读取和存储游戏数据
 function GameData:load()
