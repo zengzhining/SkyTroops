@@ -2,7 +2,7 @@
 --全局函数
 
 __G__createCutLayer = function ( fileName )
-	local layer = display.newLayer(cc.c4b(255, 255, 255, 255*0.2))
+	local layer = display.newLayer(cc.c4b(0, 0, 0, 255*0.8))
 
 	local node = display.newCSNode(fileName)
 	layer:addChild(node)
@@ -175,6 +175,7 @@ __G__createContinueLayer = function ( fileName )
 
 	local exit = node:getChildByName("Menu")
 	exit:onClick(function (  )
+		__G__MenuCancelSound()
 		local scene = layer:getParent()
 		if scene and scene.onMenu then 
 			scene:onMenu()
@@ -203,6 +204,24 @@ __G__createContinueLayer = function ( fileName )
 	end)
 
 
+	return layer
+end
+
+--解锁的弹窗
+__G__createUnLockLayer = function(fileName)
+	local layer = display.newLayer(cc.c4b(0, 0, 0, 0.9*255))
+	local node = display.newCSNode(fileName)
+	layer:add(node)
+
+	local closeBtn = node:getChildByName("Close")
+	closeBtn:onClick(function (  )
+		__G__MenuCancelSound()
+		local scene = layer:getParent()
+		if scene and scene.onUnlockClose then
+			scene:onUnlockClose()
+		end
+		layer:removeSelf()
+	end)
 	return layer
 end
 

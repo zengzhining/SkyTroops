@@ -3,12 +3,15 @@ local ResultScene = class("ResultScene", cc.load("mvc").ViewBase)
 ResultScene.RESOURCE_FILENAME = "Layer/GameOver.csb"
 
 local TAG_BG = 101
+local TAG_UNLOCK = 102
 
 local ROLE_SCORE_TBL = {  
 	200,500,1000,2000,5000
  }
 
 function ResultScene:onCreate(  )
+
+	__G__LoadRes()
 	-- body
 	local root = self:getResourceNode()
 	local Retry = root:getChildByName("Restart")
@@ -29,7 +32,9 @@ function ResultScene:onCreate(  )
 		end		
 	end)
 
-	local rankLb = root:getChildByName("Rank")
+	local gameTimeLb = root:getChildByName("time")
+
+	local enemyKillLb = root:getChildByName("killNum")
 
 	local scoreLb = root:getChildByName("Score")
 	scoreLb:setString(tostring(GameData:getInstance():getScore()))
@@ -80,6 +85,23 @@ function ResultScene:onMenu()
 	__G__actDelay(self, function()
 			self:getApp():enterLoading("MainMenu")
 	end, 0.2)
+end
+
+function ResultScene:onUnlockClose(  )
+	
+end
+
+function ResultScene:showUnlock(id_)
+	if not self:getChildByTag(TAG_UNLOCK) then
+		local layer = __G__createUnLockLayer("Layer/UnlockLayer.csb")
+		self:add(layer,100,TAG_UNLOCK)
+
+		if id_ <= 6 then
+			local plane = PlaneFactory:getInstance():createRole(id_)
+			plane:pos(display.cx, display.cy*1.2)
+			layer:add(plane)
+		end
+	end
 end
 
 function ResultScene:onEnter()
