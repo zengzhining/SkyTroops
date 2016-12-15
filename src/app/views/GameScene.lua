@@ -296,7 +296,6 @@ end
 
 function GameScene:getArmyTime()
 	local time = ARMY_TIME
-	local rank = GameData:getInstance():getRank()
 	local armySpeed = self:getArmySpeed()
 	time = 0.01* math.abs(armySpeed)
 	return time
@@ -359,10 +358,7 @@ end
 --玩家不复活继续游戏
 function GameScene:onContinueCancel()
 	--这里保存数据
-	local rank = GameData:getInstance():getRank()
 	local score = GameData:getInstance():getScore()
-	GameData:getInstance():insertRank( rank, score )
-	GameData:getInstance():save()
 
 	__G__actDelay(self,function (  )
 		self:unUpdate()
@@ -403,12 +399,6 @@ function GameScene:showAddScore(dScore, params)
 		cc.FadeOut:create(2) )
 	title:runAction(cc.Sequence:create( act, cc.RemoveSelf:create(true) ))
 
-end
-
-function GameScene:updateSpeed()	
-	local rank = GameData:getInstance():getRank()
-	local speed = (100-rank) * 0.01 + 1.01
-	GameData:getInstance():setGameSpeed(speed)
 end
 
 function GameScene:initUI( ui_ )
@@ -669,15 +659,14 @@ function GameScene:onCreateArmy(  )
 end
 
 function GameScene:getBgSpeed()
-	local rank = GameData:getInstance():getRank()
-	local speed = (100-rank) * 0.08 + 2
+	local speed = 1
+
 	--最快到8
 	return (0-speed)
 end
 
 function GameScene:getArmySpeed()
 	--根据排名来获得分数
-	local rank = GameData:getInstance():getRank()
 	local speed = 5
 	--最大到三十
 	return (0-speed)
@@ -723,7 +712,7 @@ end
 --------------------------------
 
 function GameScene:onEnter()
-	__G__MainMusic()	
+	__G__MainMusic(2)	
 	-- armySet = {}
 	-- score = 0
 	self:unUpdate()

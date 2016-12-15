@@ -9,6 +9,8 @@ local DEFAULT_LEVEL = 2
 local DEFAULT_BOMB = 3 --默认炸弹个数
 local MAX_BOMB = 6
 
+local KEY_ALL_SCORE = "ALL_SCORE"
+
 function GameData:ctor()
 	self:initData()
 
@@ -48,9 +50,6 @@ function GameData:getArmyConfig( id )
 end
 
 function GameData:initData()
-	self.score_ = 0
-	self.rank_ = MAX_RANK
-	self.lastRank_ = MAX_RANK
 	--游戏背景移动速度
 	self.bgSpeed_ = BG_SPEED
 
@@ -58,9 +57,6 @@ function GameData:initData()
 	self.gameSpeed_ = 1.0
 	--角色id
 	self.roleId_ = self.roleId_ or DEFAULT_ROLE
-
-	--排行榜数据
-	self.rankInfo_ = nil
 
 	--炸弹个数
 	self.bombNum_ = DEFAULT_BOMB
@@ -73,31 +69,27 @@ function GameData:initData()
 
 	--全局的主角
 	self.role_ = nil
+
+	--游戏一次运行时候的分数
+	self.score_ = 0
+	--游戏获得的总分数
+	self.allScore_ = 0
+
 	self:load()
 end
 --读取和存储游戏数据
 function GameData:load()
-    local fileUtils = cc.FileUtils:getInstance()
-	local writePath = fileUtils:getWritablePath()
-	local path = writePath.."score.plist"
-    local data = nil
-    if io.exists(path) then 
-    	data = fileUtils:getValueVectorFromFile(path)
-    else
-		data = fileUtils:getValueVectorFromFile("score.plist")
-	end
-	self.rankInfo_ = data
+    --获得总的分数
+    local allScore = userDefault.getIntegerForKey(KEY_ALL_SCORE, 0)
+    self:setAllScore(allScore) 
 end
 
---插入分数
-function GameData:insertRank( pos,score )
-	if pos > 1 and pos < 100 then 
-		for i = 100,pos,-1 do
-			self.rankInfo_[i] = self.rankInfo_[i-1]
-		end
-		self.rankInfo_[pos] = score
-	end
+function GameData:save()
+	local fileUtils = cc.FileUtils:getInstance()
+	local writePath = fileUtils:getWritablePath()
+	userDefault.setIntegerForKey(KEY_ALL_SCORE, self:getAllScore() )
 end
+
 
 function GameData:resetLevel()
 	self.level_ = 1
@@ -135,23 +127,6 @@ function GameData:minBomb(num)
 end
 
 ----------------bomb---------------------------
-
---从排行榜中取得分数
-function GameData:getRankFromScore( score )
-	for i = 100 , 1 ,-1 do
-		local hScore = self.rankInfo_[i]
-		if score <= hScore then 
-			return (i+1) 
-		end
-	end
-	return 1
-end
-
-function GameData:save()
-	local fileUtils = cc.FileUtils:getInstance()
-	local writePath = fileUtils:getWritablePath()
-	fileUtils:writeValueVectorToFile( self.rankInfo_, writePath.."score.plist")
-end
 
 function GameData:reset()
 	self:initData()
@@ -205,20 +180,17 @@ function GameData:getScore()
 	return self.score_
 end
 
-function GameData:setRank( rank )
-	self.rank_ = rank
+---------all Score
+function GameData:setAllScore( score )
+	self.allScore_ = score
 end
 
-function GameData:getRank()
-	return self.rank_
+function GameData:addAllScore( score )
+	self.allScore_ = self.allScore_ + score
 end
 
-function GameData:getLastRank()
-	return self.lastRank_ 
-end
-
-function GameData:setLastRank( rank )
-	self.lastRank_ = rank
+function GameData:getAllScore()
+	return self.allScore_
 end
 
 -----单例

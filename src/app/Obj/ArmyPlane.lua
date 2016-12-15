@@ -37,6 +37,7 @@ function ArmyPlane:onCollisionBullet(other)
 	else
 		local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
 		self:runAction(act)
+		
 	end
 end
 

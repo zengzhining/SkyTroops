@@ -7,6 +7,10 @@ local TAG_ROLE_2 = 102
 
 local bullets = {}
 
+local ROLE_SCORE_TBL = {  
+	0, 200,500,1000,2000,5000
+ }
+
 function SelectScene:onCreate()
 
 	__G__LoadRes()
@@ -53,6 +57,7 @@ end
 
 --主角发射炮弹的回调函数
 function SelectScene:onFireBullet( id_ )
+	if not self:roleUnlock() then return end
 	local role = self.roleLayer_:getChildByTag(TAG_ROLE_1)
 	local gameLayer = self.roleLayer_
 	local roleX,roleY = role:getPosition()
@@ -98,7 +103,7 @@ function SelectScene:onFireBullet( id_ )
 		
 	end
 
-	for c,bullet in pairs (bullets)
+	for c,bullet in pairs (bullets) do
 		if bullet:getPositionY() > display.height*1.5 then 
 			bullet:removeSelf()
 			table.remove(bullets, c)
@@ -111,6 +116,12 @@ function SelectScene:updateRole()
 	local id = self.roleId_
 	local role = PlaneFactory:getInstance():createRole(id)
 	role:pos(display.cx, display.cy)
+
+	if not self:roleUnlock() then 
+		Effect.greySprite(role)
+	else
+		Effect.colorSprite(role)
+	end
 
 	local plane = self.roleLayer_:getChildByTag(TAG_ROLE_1)
 	if plane then 
@@ -125,6 +136,8 @@ function SelectScene:updateUI()
 	local root = self:getResourceNode()
 	local rightBtn = root:getChildByName("Right")
 	local leftBtn = root:getChildByName("Left")
+	local startBtn = root:getChildByName("Go")
+
 	if self.roleId_ == 1 then 
 		leftBtn:hide()
 	elseif self.roleId_ == 6 then 
@@ -132,6 +145,26 @@ function SelectScene:updateUI()
 	else
 		leftBtn:show()
 		rightBtn:show()
+	end
+
+
+	--如果角色解锁才显示
+	if not self:roleUnlock() then 
+		startBtn:hide()
+
+	else
+		startBtn:show()
+
+	end
+end
+
+function SelectScene:roleUnlock()
+	local score = ROLE_SCORE_TBL[self.roleId_]
+	local allScore = GameData:getInstance():getAllScore()
+	if allScore >= score then 
+		return true
+	else
+		return false
 	end
 end
 

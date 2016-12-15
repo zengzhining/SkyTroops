@@ -21,7 +21,7 @@ CC_DEBUG_RECT = false
 --默认的音效大小
 DEFAULT_SOUND_VOL = 0.5
 --默认音乐声音大小
-DEFAULT_MUSIC_VOL = 1.0
+DEFAULT_MUSIC_VOL = 1
 
 --最大的敌人配置个数，对应config下的army配置表个数
 MAX_LEVEL = 2
