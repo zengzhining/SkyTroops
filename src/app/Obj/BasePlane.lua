@@ -112,9 +112,11 @@ end
 --碰撞检测所用矩形
 function BasePlane:getCollisionRect(  )
 	local rect = self:getBoundingBox()
-	local finalWidth  = rect.width * 0.4
-	local finalHeight = rect.height * 0.4 
-	local newRect = cc.rect( rect.x, rect.y, finalWidth, finalHeight )
+	local finalWidth  = rect.width * 0.5 
+	local finalHeight = rect.height * 0.5
+	-- local pos = cc.p( rect.x+ rect.width*0.5-finalWidth*0.5, rect.y+rect.height*0.5-finalHeight*0.5 ) 
+	local pos = cc.p(rect.x + rect.width*0.5-finalWidth*0.5,rect.y + rect.height-finalHeight*0.5)
+	local newRect = cc.rect( pos.x, pos.y, finalWidth, finalHeight )
 	return newRect
 end
 

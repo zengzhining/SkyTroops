@@ -35,7 +35,7 @@ function GameData:loadConfig()
 
 	if DEBUG == 2 then 
 		print("armyConfig==============")
-		dump(self.armyConfig_)
+		-- dump(self.armyConfig_)
 	end
 end
 

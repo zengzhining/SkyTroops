@@ -5,7 +5,6 @@ end)
 function MovedObject:ctor( fileName )
 	self:enableNodeEvents()
 	self:initData()
-	self:debugDraw()
 
 	self.originFileName_ = fileName
 end
@@ -17,10 +16,13 @@ function MovedObject:debugDraw()
 		--draw a rectangle
 		local rect = self:getCollisionRect()
 		local viewRect = self:getViewRect()
-        -- draw:drawRect(cc.p( (viewRect.width - rect.width) * 0.5 , (viewRect.height - rect.height) * 0.5 ), cc.p(rect.width + (viewRect.width - rect.width) * 0.5,rect.height +  (viewRect.width - rect.width) * 0.5), cc.c4f(1,1,0,1))
+        draw:drawRect(cc.p( (viewRect.width - rect.width) * 0.5 , (viewRect.height - rect.height) * 0.5 ), cc.p(rect.width + (viewRect.width - rect.width) * 0.5,rect.height +  (viewRect.width - rect.width) * 0.5), cc.c4f(1,1,0,1))
 
-        -- draw:drawRect(cc.p( 0 , viewRect.height), cc.p(rect.width ,rect.height), cc.c4f(1,1,0,1))
-        draw:drawRect(cc.p( rect.x , rect.y), cc.p(rect.width ,rect.height), cc.c4f(1,1,0,1))
+        draw:drawRect(cc.p( 0 , 0), cc.p(viewRect.width,viewRect.height), cc.c4f(1,1,0,1))
+
+        local originPos = cc.p( viewRect.width*0.5+rect.x, viewRect.height*0.5+rect.y)
+        -- local originPos = cc.p( viewRect.width*0.5-rect.width*0.5,viewRect.width*0.5-rect.height*0.5)
+        -- draw:drawRect(originPos, cc.p(originPos.x+rect.width ,originPos.y+rect.height), cc.c4f(1,0,0,1))
 	end
 end
 
@@ -65,9 +67,9 @@ end
 --碰撞检测所用矩形
 function MovedObject:getCollisionRect(  )
 	local rect = self:getBoundingBox()
-	local finalWidth  = rect.width * 0.6
-	local finalHeight = rect.height 
-	local newRect = cc.rect( rect.x-finalWidth*0.5, rect.y-finalHeight*0.5, finalWidth, finalHeight )
+	local finalWidth  = rect.width * 0.5
+	local finalHeight = rect.height *0.5
+	local newRect = cc.rect( -finalWidth*0.5, -finalHeight*0.5, finalWidth, finalHeight )
 	return newRect
 end
 
@@ -81,6 +83,8 @@ function MovedObject:onCollision( other )
 end
 
 function MovedObject:onEnter()
+	self:debugDraw()
+	
 	self:onUpdate(handler(self, self.step))
 end
 

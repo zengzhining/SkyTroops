@@ -32,7 +32,6 @@ function TestScene:ctor()
 
     if isSuccess then 
     	local data = fileUtils:getValueVectorFromFile(writePath.."score.plist")
-    	dump(data)
     end
 
     local decodeTbl = json.decode(text)
@@ -245,9 +244,6 @@ function TestScene:ctor()
 	-- local controlLayer = PlaneFactory:getInstance():createJoy("ui/bg.png", "ui/btn.png")
 	-- self:add(controlLayer)
 
-	-- local mainPlane = PlaneFactory:getInstance():createRole(4)
-	-- mainPlane:pos(display.center)
-	-- layer:add(mainPlane)
 	-- mainPlane:levelUp()
 	-- mainPlane:levelUp()
 
@@ -280,11 +276,26 @@ function TestScene:ctor()
 
 	local tbl = {}
 
-	local bullet = PlaneFactory:getInstance():createItem(1)
-	bullet:pos(display.center)
-	layer:add(bullet)
+	-- local bullet = PlaneFactory:getInstance():createItem(1)
+	-- bullet:pos(display.center)
+	-- layer:add(bullet)
+	local mainPlane = PlaneFactory:getInstance():createRole(4)
+	mainPlane:pos(display.center)
+	layer:add(mainPlane)
 
-	Helper.showChangeParticle(layer, display.center)
+	local box = mainPlane:getBoundingBox()
+	local posx,posy = mainPlane:getPosition()
+	local pos = cc.p( posx-box.width*0.5, posy-box.height*0.5 )
+	dump(box)
+	print("pos~~~~",pos)
+	dump(pos)
+
+	local rect = mainPlane:getCollisionRect()
+	dump(rect)
+
+	-- local mainPlane
+
+	-- Helper.showChangeParticle(layer, display.center)
 
 end
 
