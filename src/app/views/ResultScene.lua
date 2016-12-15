@@ -56,8 +56,9 @@ function ResultScene:onCreate(  )
 	local str = string.format("%d/%d", allScore, levelNum)
 	expNum:setString(str)
 	expBar:setPercent(allScore/levelNum * 100)
+	
 
-
+	GameData:getInstance():save()
 end
 
 function ResultScene:onRetry(  )
