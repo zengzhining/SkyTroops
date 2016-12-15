@@ -4,6 +4,10 @@ ResultScene.RESOURCE_FILENAME = "Layer/GameOver.csb"
 
 local TAG_BG = 101
 
+local ROLE_SCORE_TBL = {  
+	200,500,1000,2000,5000
+ }
+
 function ResultScene:onCreate(  )
 	-- body
 	local root = self:getResourceNode()
@@ -26,15 +30,34 @@ function ResultScene:onCreate(  )
 	end)
 
 	local rankLb = root:getChildByName("Rank")
-	rankLb:setString(tostring(GameData:getInstance():getRank()))
 
 	local scoreLb = root:getChildByName("Score")
 	scoreLb:setString(tostring(GameData:getInstance():getScore()))
 
 	local expBar = root:getChildByName("ExpBar")
-	expBar:setPercent(50)
 	local expNum = root:getChildByName("ExpNum")
-	expNum:setString("250/500")
+
+	--这里更新一下总分数
+	local lastAllScore = GameData:getInstance():getAllScore()
+
+	-- GameData:getInstance():addAllScore(GameData:getInstance():getScore())
+	GameData:getInstance():addAllScore(GameData:getInstance():getScore())
+
+	local allScore = GameData:getInstance():getAllScore()
+
+	local levelNum = 0
+	for i,num in pairs(ROLE_SCORE_TBL) do
+		levelNum = levelNum + num
+		if levelNum > allScore then 
+			break
+		end
+	end
+
+	local str = string.format("%d/%d", allScore, levelNum)
+	expNum:setString(str)
+	expBar:setPercent(allScore/levelNum * 100)
+
+
 end
 
 function ResultScene:onRetry(  )

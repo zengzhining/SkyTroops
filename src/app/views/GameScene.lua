@@ -357,9 +357,7 @@ end
 
 --玩家不复活继续游戏
 function GameScene:onContinueCancel()
-	--这里保存数据
-	local score = GameData:getInstance():getScore()
-
+	--这里保存数据	
 	__G__actDelay(self,function (  )
 		self:unUpdate()
 		self:getApp():enterScene("ResultScene")
