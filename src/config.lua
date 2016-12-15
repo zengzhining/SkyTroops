@@ -16,7 +16,7 @@ CC_DISABLE_GLOBAL = false
 -- need SDK
 CC_NEED_SDK = false
 
-CC_DEBUG_RECT = false
+CC_DEBUG_RECT = true
 
 --默认的音效大小
 DEFAULT_SOUND_VOL = 0.5

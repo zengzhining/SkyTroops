@@ -17,8 +17,10 @@ function MovedObject:debugDraw()
 		--draw a rectangle
 		local rect = self:getCollisionRect()
 		local viewRect = self:getViewRect()
-        draw:drawRect(cc.p( (viewRect.width - rect.width) * 0.5 , (viewRect.height - rect.height) * 0.5 ), cc.p(rect.width + (viewRect.width - rect.width) * 0.5,rect.height +  (viewRect.width - rect.width) * 0.5), cc.c4f(1,1,0,1))
+        -- draw:drawRect(cc.p( (viewRect.width - rect.width) * 0.5 , (viewRect.height - rect.height) * 0.5 ), cc.p(rect.width + (viewRect.width - rect.width) * 0.5,rect.height +  (viewRect.width - rect.width) * 0.5), cc.c4f(1,1,0,1))
+
         -- draw:drawRect(cc.p( 0 , viewRect.height), cc.p(rect.width ,rect.height), cc.c4f(1,1,0,1))
+        draw:drawRect(cc.p( rect.x , rect.y), cc.p(rect.width ,rect.height), cc.c4f(1,1,0,1))
 	end
 end
 
@@ -65,7 +67,7 @@ function MovedObject:getCollisionRect(  )
 	local rect = self:getBoundingBox()
 	local finalWidth  = rect.width * 0.6
 	local finalHeight = rect.height 
-	local newRect = cc.rect( rect.x-finalWidth, rect.y-finalHeight, finalWidth, finalHeight )
+	local newRect = cc.rect( rect.x-finalWidth*0.5, rect.y-finalHeight*0.5, finalWidth, finalHeight )
 	return newRect
 end
 
