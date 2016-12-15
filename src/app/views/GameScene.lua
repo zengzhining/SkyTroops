@@ -189,7 +189,7 @@ function GameScene:step( dt )
 		local itemRect = item:getCollisionRect()
 		-- 如果有主角就判断主角
 		if not self.role_:isDead() then
-			local roleRect = self.role_:getCollisionRect()
+			local roleRect = self.role_:getViewRect()
 			local iscollision = cc.rectIntersectsRect(roleRect, itemRect) 
 			if iscollision then
 				self.role_:onGetItem(item)
@@ -631,23 +631,27 @@ end
 
 function GameScene:onCreateArmy(  )
 	--读取plist数据创建敌人
+	local army = PlaneFactory:getInstance():createEnemy(1)
+	army:pos(display.cx*0.5, display.cy*1.5)
+	self.gameLayer_ :addChild(army)
+	table.insert(armySet, army)
 
-	local armyData = self:getArmyData()
-	for i, armyInfo in pairs(armyData) do
-		local id = armyInfo.id
-		local army = PlaneFactory:getInstance():createEnemy(id)
+	-- local armyData = self:getArmyData()
+	-- for i, armyInfo in pairs(armyData) do
+	-- 	local id = armyInfo.id
+	-- 	local army = PlaneFactory:getInstance():createEnemy(id)
 
-		local width = army:getViewRect().width
-		local dir = armyInfo.x > display.cx and 1 or -1
-		local x = display.cx + width * 0.6 * dir
-		local armyPos = cc.p(x, armyInfo.y)
-		local armySpeed = self:getArmySpeed()
-		army:setSpeed(cc.p(0, armySpeed))
-		army:setDirX(dir)
-		army:pos(armyPos)
-		self.gameLayer_ :addChild(army)
-		table.insert(armySet, army)
-	end
+	-- 	local width = army:getViewRect().width
+	-- 	local dir = armyInfo.x > display.cx and 1 or -1
+	-- 	local x = display.cx + width * 0.6 * dir
+	-- 	local armyPos = cc.p(x, armyInfo.y)
+	-- 	local armySpeed = self:getArmySpeed()
+	-- 	army:setSpeed(cc.p(0, armySpeed))
+	-- 	army:setDirX(dir)
+	-- 	army:pos(armyPos)
+	-- 	self.gameLayer_ :addChild(army)
+	-- 	table.insert(armySet, army)
+	-- end
 	--调整一下游戏背景速度
 	local bgSpeed = self:getBgSpeed()
 	local bg = self:getChildByTag(TAG_BG)
