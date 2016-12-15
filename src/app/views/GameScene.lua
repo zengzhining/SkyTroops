@@ -36,7 +36,7 @@ function GameScene:onCreate()
 	local uiLayer = display.newCSNode(fileName)	
 
 	self:initUI(uiLayer)
-	self:addChild(uiLayer, 1, TAG_UI )
+	self:addChild(uiLayer, 10, TAG_UI )
 
 	self:initObj()
 	self:initControl()
@@ -417,6 +417,7 @@ function GameScene:initUI( ui_ )
 	bombBtn:onClick(function (  )
 		self:onBomb()
 	end)
+	self.bombBtn_ = bombBtn
 
 	local bombLb = bombBtn:getChildByName("boomNum")
 	self.bombLb_ = bombLb
@@ -424,6 +425,22 @@ function GameScene:initUI( ui_ )
 
 	local hpBar = ui_:getChildByName("HpBar")
 	self.hpBar_ = hpBar
+end
+
+function GameScene:hideUI(  )
+	self.bombBtn_:hide()
+	local controlLayer = self:getChildByTag(TAG_CONTROL_LAYER)
+	if controlLayer then
+		controlLayer:hide()
+	end
+end
+
+function GameScene:showUI(  )
+	self.bombBtn_:show()
+	local controlLayer = self:getChildByTag(TAG_CONTROL_LAYER)
+	if controlLayer then
+		controlLayer:show()
+	end
 end
 
 function GameScene:onBomb()
@@ -631,27 +648,22 @@ end
 
 function GameScene:onCreateArmy(  )
 	--读取plist数据创建敌人
-	local army = PlaneFactory:getInstance():createEnemy(1)
-	army:pos(display.cx*0.5, display.cy*1.5)
-	self.gameLayer_ :addChild(army)
-	table.insert(armySet, army)
+	local armyData = self:getArmyData()
+	for i, armyInfo in pairs(armyData) do
+		local id = armyInfo.id
+		local army = PlaneFactory:getInstance():createEnemy(id)
 
-	-- local armyData = self:getArmyData()
-	-- for i, armyInfo in pairs(armyData) do
-	-- 	local id = armyInfo.id
-	-- 	local army = PlaneFactory:getInstance():createEnemy(id)
-
-	-- 	local width = army:getViewRect().width
-	-- 	local dir = armyInfo.x > display.cx and 1 or -1
-	-- 	local x = display.cx + width * 0.6 * dir
-	-- 	local armyPos = cc.p(x, armyInfo.y)
-	-- 	local armySpeed = self:getArmySpeed()
-	-- 	army:setSpeed(cc.p(0, armySpeed))
-	-- 	army:setDirX(dir)
-	-- 	army:pos(armyPos)
-	-- 	self.gameLayer_ :addChild(army)
-	-- 	table.insert(armySet, army)
-	-- end
+		local width = army:getViewRect().width
+		local dir = armyInfo.x > display.cx and 1 or -1
+		local x = display.cx + width * 0.6 * dir
+		local armyPos = cc.p(x, armyInfo.y)
+		local armySpeed = self:getArmySpeed()
+		army:setSpeed(cc.p(0, armySpeed))
+		army:setDirX(dir)
+		army:pos(armyPos)
+		self.gameLayer_ :addChild(army)
+		table.insert(armySet, army)
+	end
 	--调整一下游戏背景速度
 	local bgSpeed = self:getBgSpeed()
 	local bg = self:getChildByTag(TAG_BG)
@@ -677,12 +689,15 @@ end
 function GameScene:onCut(  )
 	if not self:getChildByTag(TAG_CUT) then 
 		__G__MenuClickSound()
-
+		self:hideUI()
 		self.gameLayer_:setTouchEnabled(false)	
 		self.cutBtn_:setTouchEnabled(false)
 		local layer = __G__createCutLayer( "Layer/ResumeLayer.csb" )
 		self:addChild(layer, 100, TAG_CUT)
-		display.pause()
+		__G__actDelay(self, function (  )
+			
+			display.pause()
+		end,0.2)
 
 	end
 end
@@ -691,6 +706,7 @@ end
 function GameScene:onResume()
 	__G__MenuCancelSound()
 	display.resume()
+	self:showUI()
 	self.gameLayer_:setTouchEnabled(true)
 	self:removeChildByTag(TAG_CUT, true)
 	self.cutBtn_:setTouchEnabled(true)

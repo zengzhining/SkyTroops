@@ -2,7 +2,7 @@
 --全局函数
 
 __G__createCutLayer = function ( fileName )
-	local layer = display.newLayer(cc.c4b(255, 255, 255, 0))
+	local layer = display.newLayer(cc.c4b(255, 255, 255, 255*0.2))
 
 	local node = display.newCSNode(fileName)
 	layer:addChild(node)
@@ -12,6 +12,7 @@ __G__createCutLayer = function ( fileName )
 		local scene = layer:getParent()
 		if scene and scene.onResume then 
 			scene:onResume()
+				
 		end		
 	end)
 

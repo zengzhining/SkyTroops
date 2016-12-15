@@ -28,7 +28,7 @@ function SelectScene:onCreate()
 			GameData:getInstance():setRoleId(self.roleId_)
 			__G__actDelay(self, function (  )
 				self:getApp():enterLoading("GameScene")
-			end, 0.5)
+			end, 1)
 		end
 	end)
 	--left

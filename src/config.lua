@@ -8,7 +8,7 @@ DESIGN = false
 CC_USE_FRAMEWORK = true
 
 -- show FPS on screen
-CC_SHOW_FPS = true
+CC_SHOW_FPS = false
 
 -- disable create unexpected global variable
 CC_DISABLE_GLOBAL = false
@@ -16,7 +16,7 @@ CC_DISABLE_GLOBAL = false
 -- need SDK
 CC_NEED_SDK = false
 
-CC_DEBUG_RECT = true
+CC_DEBUG_RECT = false
 
 --默认的音效大小
 DEFAULT_SOUND_VOL = 0.5

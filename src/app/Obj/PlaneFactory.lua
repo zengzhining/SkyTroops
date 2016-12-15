@@ -35,7 +35,7 @@ end
 
 function PlaneFactory:createRole( id_ )
 	local PLANE_CONFIG = { 
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.02},
+		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
 		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
 		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
 		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
@@ -82,7 +82,7 @@ function PlaneFactory:createRole( id_ )
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(config.bulletCalmTime_)
 	plane:updateAvatar()
-	-- plane:addGasAni()
+	plane:addGasAni()
 
 
 

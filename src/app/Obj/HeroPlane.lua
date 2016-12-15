@@ -160,7 +160,7 @@ function HeroPlane:updateLogic(dt)
 	--每秒加一个能量
 	if allTime > self:getBulletCalmTime() then 
 		allTime = 0
-		-- self:fireBullet()
+		self:fireBullet()
 	end
 
 	--如果有虚拟摇杆处理虚拟摇杆逻辑
