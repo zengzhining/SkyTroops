@@ -285,7 +285,16 @@ function TestScene:ctor()
 
 	-- Helper.showChangeParticle(layer, display.center)
 
-	
+	--拖尾
+	-- local ms = cc.MotionStreak:create(0.5, 5, 20, display.COLOR_RED, "png/streak.png")
+	-- ms:pos(display.center)
+	-- ms:runAction(cc.MoveBy:create(1, cc.p(100,0)))
+	-- layer:add(ms)
+
+	-- layer:onTouch( function ( event )
+	-- 	local x,y = event.x ,event.y
+	-- 	ms:pos(x,y)
+	-- end )
 
 
 end
