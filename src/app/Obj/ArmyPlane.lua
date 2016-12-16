@@ -176,6 +176,18 @@ function ArmyPlane:aiMove(dt)
 			end
 		end
 		strategy:addAiTime(dt)
+	elseif aiId == 9 then
+		--发射两列子弹,看见主角才发射
+		if strategy:canAi() then
+			strategy:resetAiTime()
+			local role = GameData:getInstance():getRole()
+			local posx, posy = self:getPosition()
+			local rolePosX, rolePosY = role:getPosition()
+			if math.abs(rolePosX - posx) <= strategy:getAiWidth() then
+				self:fireBullet()
+			end
+		end
+		strategy:addAiTime(dt)
 	elseif aiId == 10 then 
 		
 	end

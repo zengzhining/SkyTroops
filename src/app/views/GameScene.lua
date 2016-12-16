@@ -388,6 +388,16 @@ function GameScene:onArmyDead( target)
 			return 
 		end
 		self:createItem(id, param.pos_)
+	elseif aiId == 6 then 
+		--发射一串子弹
+		self:fireBullet(3, target, target:getBulletId() )
+	elseif aiId == 7 then 
+		--发射全场的散弹
+		self:fireBullet(5, target, target:getBulletId() )
+	elseif aiId == 11 then 
+		--发射三个的散弹
+		self:fireBullet(2, target, target:getBulletId() )
+
 	end
 end
 
@@ -614,12 +624,20 @@ function GameScene:onFireBullet( id_ )
 	
 end
 
---敌人发射子弹的回调函数
-function GameScene:onEnemyFire( enemy, bulletId )
+--发射子弹方法
+function GameScene:fireBullet( typeId_ , enemy , bulletId)
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
-	local id = enemy:getId()
-	if id == 5 then 
+
+	if typeId_ == 1 then 
+		--普通发射
+		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+		bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
+		bullet:onFire()
+		bullet:setSpeed(cc.p(0, -10))
+		gameLayer:addChild(bullet)
+		table.insert(armyBulletSet, bullet)
+	elseif typeId_ == 2 then 
 		--发射散弹
 		local speedX = 3
 		for i = -1, 1,1 do
@@ -630,15 +648,47 @@ function GameScene:onEnemyFire( enemy, bulletId )
 			gameLayer:addChild(bullet)
 			table.insert(armyBulletSet, bullet)
 		end
+	elseif typeId_ == 3 then 
+		--发射一串的子弹
+		local speedY = 10
+		local DEL_HEIGHT = 30
+		for i = 0,2,1 do
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx, posy - enemy:getViewRect().height *0.25 - DEL_HEIGHT*i )
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, -speedY))
+			gameLayer:addChild(bullet)
+			table.insert(armyBulletSet, bullet)
+		end
+	elseif typeId_ == 4 then 
+		--发射两列子弹
+		local PER_WIDTH = 30
+		for i = -1, 1, 2 do 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx + PER_WIDTH * i, posy - enemy:getViewRect().height *0.25)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, -10))
+			gameLayer:addChild(bullet)
+			table.insert(armyBulletSet, bullet)
+		end
+	end
+
+end
+
+--敌人发射子弹的回调函数
+function GameScene:onEnemyFire( enemy, bulletId )
+	local gameLayer = self.gameLayer_
+	local posx,posy = enemy:getPosition()
+	local id = enemy:getAiId()
+	if id == 5 then 
+		--发射散弹
+		self:fireBullet(2, enemy, bulletId)
+	elseif id == 9 then 
+		--发射两列子弹
+		self:fireBullet(4, enemy, bulletId )
 	else
 		--普通发射
-		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
-		bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
-		bullet:onFire()
-		bullet:setSpeed(cc.p(0, -10))
-		gameLayer:addChild(bullet)
-		table.insert(armyBulletSet, bullet)
-		
+		self:fireBullet(1,enemy, bulletId)
 	end
 		
 
