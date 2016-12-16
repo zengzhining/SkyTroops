@@ -112,7 +112,15 @@ function PlaneFactory:createItem( id_ )
 	--1为星星
 	local item = nil
 	if id_ == 1 then
-		item = Item.new("png/star.png")
+		item = Item.new("#chick.png")
+	elseif id_ == 2 then 
+		item = Item.new("#HealthBoxSprite01.png")
+		item:playAnimation("HealthBoxSprite%02d.png",1,2,-1, 0.5)
+		item:setRecoverHp(2)
+	elseif id_ == 3 then 
+		item = Item.new("#bombboxsprite01.png")
+		item:playAnimation("bombboxsprite%02d.png",1,2,-1, 0.5)
+		item:setBombNum(1)
 	end
 
 	item:setId(id_)

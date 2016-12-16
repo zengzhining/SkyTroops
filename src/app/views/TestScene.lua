@@ -279,23 +279,14 @@ function TestScene:ctor()
 	-- local bullet = PlaneFactory:getInstance():createItem(1)
 	-- bullet:pos(display.center)
 	-- layer:add(bullet)
-	local mainPlane = PlaneFactory:getInstance():createRole(4)
-	mainPlane:pos(display.center)
-	layer:add(mainPlane)
-
-	local box = mainPlane:getBoundingBox()
-	local posx,posy = mainPlane:getPosition()
-	local pos = cc.p( posx-box.width*0.5, posy-box.height*0.5 )
-	dump(box)
-	print("pos~~~~",pos)
-	dump(pos)
-
-	local rect = mainPlane:getCollisionRect()
-	dump(rect)
+	
 
 	-- local mainPlane
 
 	-- Helper.showChangeParticle(layer, display.center)
+
+	
+
 
 end
 

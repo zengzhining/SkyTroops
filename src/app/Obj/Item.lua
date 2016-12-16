@@ -9,6 +9,7 @@ function Item:ctor()
 	self.recoverHp_ = 0
 
 	self.bombNum_ = 0
+
 end
 
 function Item:setId(id_)
@@ -39,8 +40,8 @@ end
 
 function Item:getCollisionRect()
 	local rect = self:getBoundingBox()
-	local finalWidth  = rect.width * 0.5 
-	local finalHeight = rect.height * 0.5
+	local finalWidth  = rect.width * 1.0
+	local finalHeight = rect.height * 1.2
 	-- local pos = cc.p( rect.x+ rect.width*0.5-finalWidth*0.5, rect.y+rect.height*0.5-finalHeight*0.5 ) 
 	local pos = cc.p(rect.x + rect.width*0.5-finalWidth*0.5,rect.y + rect.height-finalHeight*0.5)
 	local newRect = cc.rect( pos.x, pos.y, finalWidth, finalHeight )

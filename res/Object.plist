@@ -7,7 +7,7 @@
             <key>01Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,54},{12,26}}</string>
+                <string>{{70,234},{12,26}}</string>
                 <key>offset</key>
                 <string>{-2,2}</string>
                 <key>rotated</key>
@@ -20,11 +20,11 @@
             <key>02Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{40,30},{12,18}}</string>
+                <string>{{56,234},{12,18}}</string>
                 <key>offset</key>
                 <string>{-2,2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{35,32},{12,18}}</string>
                 <key>sourceSize</key>
@@ -33,11 +33,11 @@
             <key>03Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{20,42}}</string>
+                <string>{{2,206},{20,42}}</string>
                 <key>offset</key>
                 <string>{-2,2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{31,20},{20,42}}</string>
                 <key>sourceSize</key>
@@ -46,11 +46,11 @@
             <key>04Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{30,58},{12,24}}</string>
+                <string>{{76,206},{12,24}}</string>
                 <key>offset</key>
                 <string>{-2,1}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{35,30},{12,24}}</string>
                 <key>sourceSize</key>
@@ -59,11 +59,11 @@
             <key>05Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{34,44},{12,26}}</string>
+                <string>{{62,206},{12,26}}</string>
                 <key>offset</key>
                 <string>{-2,1}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{35,29},{12,26}}</string>
                 <key>sourceSize</key>
@@ -72,7 +72,7 @@
             <key>06Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{46,2},{26,16}}</string>
+                <string>{{44,206},{26,16}}</string>
                 <key>offset</key>
                 <string>{-2,2}</string>
                 <key>rotated</key>
@@ -85,11 +85,11 @@
             <key>07Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,24},{18,36}}</string>
+                <string>{{24,206},{18,36}}</string>
                 <key>offset</key>
                 <string>{-2,1}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{32,24},{18,36}}</string>
                 <key>sourceSize</key>
@@ -98,7 +98,7 @@
             <key>08Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,68},{12,12}}</string>
+                <string>{{199,2},{12,12}}</string>
                 <key>offset</key>
                 <string>{-2,2}</string>
                 <key>rotated</key>
@@ -111,7 +111,7 @@
             <key>09Bullets.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,44},{30,8}}</string>
+                <string>{{24,244},{30,8}}</string>
                 <key>offset</key>
                 <string>{-2,1}</string>
                 <key>rotated</key>
@@ -121,6 +121,71 @@
                 <key>sourceSize</key>
                 <string>{86,86}</string>
             </dict>
+            <key>HealthBoxSprite01.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{89,81},{77,99}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{37,25},{77,99}}</string>
+                <key>sourceSize</key>
+                <string>{149,149}</string>
+            </dict>
+            <key>HealthBoxSprite02.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{98,2},{77,99}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{37,25},{77,99}}</string>
+                <key>sourceSize</key>
+                <string>{149,149}</string>
+            </dict>
+            <key>bombboxsprite01.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{85,101}}</string>
+                <key>offset</key>
+                <string>{1,-2}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{33,26},{85,101}}</string>
+                <key>sourceSize</key>
+                <string>{149,149}</string>
+            </dict>
+            <key>bombboxsprite02.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,105},{85,99}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{33,25},{85,99}}</string>
+                <key>sourceSize</key>
+                <string>{149,149}</string>
+            </dict>
+            <key>chick.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{98,182},{92,62}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{92,62}}</string>
+                <key>sourceSize</key>
+                <string>{92,62}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -129,9 +194,9 @@
             <key>realTextureFileName</key>
             <string>Object.png</string>
             <key>size</key>
-            <string>{64,128}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:9144602884f6542b593bf57fb85b0b94:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:dfb59ee80afd95594209dee8e59910ca:1/1$</string>
             <key>textureFileName</key>
             <string>Object.png</string>
         </dict>

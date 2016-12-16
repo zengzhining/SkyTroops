@@ -141,7 +141,6 @@ function HeroPlane:onGetItem(item)
 			local point = cc.p(self:getViewRect().width*0.5, self:getViewRect().height*0.8)
 			Helper.showChangeParticle(self, point)
 		else
-
 		end
 	--2就补血
 	elseif id == 2 then

@@ -136,13 +136,14 @@ function MovedObject:addAnimation(formatFile , fromIdx, length, repeatTime, objP
 	obj:playAnimation(formatFile , fromIdx, length, repeatTime)
 end
 
-function MovedObject:playAnimation( formatFile , fromIdx, length, repeatTime )
+function MovedObject:playAnimation( formatFile , fromIdx, length, repeatTime, time )
+	if not time then time = 0.15 end
 	if not repeatTime then repeatTime = 1 end 
 	local name = string.format(formatFile,1)
 	local ani = display.getAnimationCache(name)
 	if not ani then 
 		local frames = display.newFrames( formatFile, fromIdx, length, true )
-		ani = display.newAnimation(frames, 0.15)
+		ani = display.newAnimation(frames, time)
 		display.setAnimationCache( name, ani )
 	end
 

@@ -653,7 +653,7 @@ end
 
 --生成物品
 function GameScene:createItem()
-	local item = PlaneFactory:getInstance():createItem(1)
+	local item = PlaneFactory:getInstance():createItem(2)
 	item:pos(display.cx, display.cy*1.5)
 	item:setSpeed(cc.p(0,-1))
 	self.gameLayer_:add(item,-1)
