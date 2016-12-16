@@ -11,17 +11,13 @@ function PlaneFactory:ctor(  )
 	
 end
 
-local armyHpTbl = {
-	3,3,5,3,3,3,3,3,3,3,3,3
-
-}
 function PlaneFactory:createEnemy( id_ )
 	id_ = 6
 	local army = self:createPlane(id_)
 	army:setGameAi(7)
 	army:setBulletId(2)
 	army:setScore( 2 )
-	army:setHp(armyHpTbl[id_])
+	army:setHp(ENEMY_HP_TBL[id_])
 	-- army:setHp(99)
 	army:setAiTimeLimit(1)
 	return army
@@ -86,8 +82,6 @@ function PlaneFactory:createRole( id_ )
 	plane:updateAvatar()
 	plane:addGasAni()
 
-
-
 	return plane
 end
 
@@ -97,6 +91,9 @@ function PlaneFactory:createBullet( id_ )
 	local str = string.format("#%02dBullets.png", id_)
 
 	local bullet =Bullet.new(str)
+
+	bullet:setDamge(BULLET_DAMAGE_TBL[id_])
+
 	return bullet
 end
 

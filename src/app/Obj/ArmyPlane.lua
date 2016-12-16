@@ -28,8 +28,14 @@ function ArmyPlane:onCollision( other )
 	self.isHurtRole_ = true
 end
 
-function ArmyPlane:onCollisionBullet(other)
-	self:onHurt(1)
+function ArmyPlane:onCollisionBullet(bullet)
+	local damge = bullet:getDamge()
+	local role = GameData:getInstance():getRole()
+	if not role:isDead() then 
+		damge = bullet:getDamge() * role:getLevel()
+	end
+	print("damge~~~~~", damge)
+	self:onHurt(damge)
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
 	else

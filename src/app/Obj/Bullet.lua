@@ -5,8 +5,15 @@ local BULLET_FLY_FACTOR = 100
 function Bullet:ctor()
 	self.super.ctor(self)
 
-	--子弹的存活时间，一般是时间越长越快的
-	self.liveTime_ = 0
+	self.damge_ = 1
+end
+
+function Bullet:setDamge( damge )
+	self.damge_ = damge
+end
+
+function Bullet:getDamge()
+	return self.damge_
 end
 
 --发射时候的回调函数
