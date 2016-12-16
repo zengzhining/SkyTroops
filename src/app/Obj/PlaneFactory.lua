@@ -16,7 +16,7 @@ local armyHpTbl = {
 
 }
 function PlaneFactory:createEnemy( id_ )
-	id_ = 5
+	id_ = 10
 	local army = self:createPlane(id_)
 	army:setGameAi(id_)
 	army:setBulletId(1)
@@ -109,6 +109,7 @@ function PlaneFactory:createEmenyBullet( id_ )
 end
 
 function PlaneFactory:createItem( id_ )
+	if not id_ then id_ = 1 end
 	--1为星星
 	local item = nil
 	if id_ == 1 then

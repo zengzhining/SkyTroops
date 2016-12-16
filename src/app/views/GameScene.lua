@@ -51,8 +51,6 @@ function GameScene:onCreate()
 
 	self:updateHpBar()
 	self:onCreateArmy()
-
-	self:createItem()
 end
 
 function GameScene:initData()
@@ -379,6 +377,18 @@ function GameScene:onArmyDead( target)
 	local param = {}
 	param.pos_ = cc.p(posx,posy)
 	self:showAddScore(score, param)
+
+	local aiId = target:getAiId()
+	--10的话发物品
+	if aiId == 10 then 
+		local id = math.random(1,3)
+		local randomNum = math.random(1,1000)
+		--一半的概率
+		if randomNum > 500 then 
+			return 
+		end
+		self:createItem(id, param.pos_)
+	end
 end
 
 function GameScene:showAddScore(dScore, params)
@@ -652,10 +662,12 @@ function GameScene:onAllArmyGone()
 end
 
 --生成物品
-function GameScene:createItem()
-	local item = PlaneFactory:getInstance():createItem(2)
-	item:pos(display.cx, display.cy*1.5)
-	item:setSpeed(cc.p(0,-1))
+function GameScene:createItem( id, pos_ )
+	if not pos_ then pos_ = cc.p(display.cx, display.height) end
+	local item = PlaneFactory:getInstance():createItem(id)
+	item:pos(pos_)
+	local speedY = math.random(1,5)
+	item:setSpeed(cc.p(0,-speedY))
 	self.gameLayer_:add(item,-1)
 
 	table.insert(itemSet, item)

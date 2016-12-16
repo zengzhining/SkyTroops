@@ -69,6 +69,14 @@ function ArmyPlane:setGameAi( typeId_ )
 	self.aiStrategy_ = Strategy.new(typeId_)
 end
 
+function ArmyPlane:getAiId()
+	if self.aiStrategy_ then 
+		return self.aiStrategy_:getAiId()
+	end
+
+	return 0
+end
+
 function ArmyPlane:setAiTimeLimit(time)
 	if self.aiStrategy_ then
 		self.aiStrategy_:setAiTimeLimit(time)
@@ -83,6 +91,15 @@ end
 function ArmyPlane:fireBullet()
 	--如果死掉时候不能发射子弹
 	if self:isDead() then return end
+	local scene = self:getParent():getParent()
+	if scene and scene.onEnemyFire then 
+		local target = self
+		scene:onEnemyFire( target, self:getBulletId())
+	end
+end
+
+--发射物品
+function ArmyPlane:fireItem( id_ )
 	local scene = self:getParent():getParent()
 	if scene and scene.onEnemyFire then 
 		local target = self
@@ -159,6 +176,8 @@ function ArmyPlane:aiMove(dt)
 			end
 		end
 		strategy:addAiTime(dt)
+	elseif aiId == 10 then 
+		
 	end
 end
 
