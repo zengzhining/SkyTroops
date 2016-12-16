@@ -189,7 +189,7 @@ function GameScene:step( dt )
 		local itemRect = item:getCollisionRect()
 		-- 如果有主角就判断主角
 		if not self.role_:isDead() then
-			local roleRect = self.role_:getViewRect()
+			local roleRect = self.role_:getCollisionRect()
 			local iscollision = cc.rectIntersectsRect(roleRect, itemRect) 
 			if iscollision then
 				self.role_:onGetItem(item)
