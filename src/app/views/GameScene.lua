@@ -7,6 +7,7 @@ local TAG_BG = 103
 local TAG_FRONT = 106  --前景，云神马的
 local TAG_CONTINUE_LAYER = 104
 local TAG_CONTROL_LAYER = 105
+local TAG_TITLE_LAYER = 107 --关卡文字
 
 local armySet = {}
 local bulletSet = {} --主角的子弹
@@ -50,7 +51,6 @@ function GameScene:onCreate()
 	self:add(frontBg,10, TAG_FRONT )
 
 	self:updateHpBar()
-	self:onCreateArmy()
 end
 
 function GameScene:initData()
@@ -448,19 +448,71 @@ function GameScene:initUI( ui_ )
 end
 
 function GameScene:hideUI(  )
-	self.bombBtn_:hide()
-	local controlLayer = self:getChildByTag(TAG_CONTROL_LAYER)
-	if controlLayer then
-		controlLayer:hide()
+	local uiLayer = self:getChildByTag(TAG_UI)
+	if uiLayer then 
+		uiLayer:hide()
 	end
+	self:hideController()
 end
 
 function GameScene:showUI(  )
-	self.bombBtn_:show()
+	local uiLayer = self:getChildByTag(TAG_UI)
+	if uiLayer then 
+		uiLayer:show()
+	end
+	self:showController()
+end
+
+function GameScene:hideUIWithAnimation()
+
+end
+
+function GameScene:showUIWithAnimation()
+	
+end
+
+function GameScene:hideController()
+	self:setVisibleController(false)
+end
+
+function GameScene:showController()
+	self:setVisibleController(true)
+end
+
+function GameScene:setVisibleController(flag)
 	local controlLayer = self:getChildByTag(TAG_CONTROL_LAYER)
 	if controlLayer then
-		controlLayer:show()
+		if flag then
+			controlLayer:show()
+		else
+			controlLayer:hide()
+		end
 	end
+end
+
+--展示关卡文字
+function GameScene:showLevelTitle()
+	local TAG = 213
+	local str = "Hello World"
+	local layer = __G__createLevelTitleLayer(str)
+
+	local title = layer:getChildByTag(TAG)
+	if title then 
+		title:setOpacity(0)
+		title:runAction(cc.FadeIn:create(0.5))
+	end
+	self:add(layer, 100, TAG_TITLE_LAYER)
+end
+
+function GameScene:removeLevelTitle()
+	local TAG = 213
+	local layer = self:getChildByTag(TAG_TITLE_LAYER)
+	local title = layer:getChildByTag(TAG)
+	if title then 
+		title:runAction(cc.FadeOut:create(2))
+	end
+	local act = cc.Sequence:create(cc.DelayTime:create(2), cc.RemoveSelf:create(true))
+	layer:runAction(act)
 end
 
 function GameScene:onBomb()
@@ -826,13 +878,28 @@ end
 
 --------------------------------
 
+function GameScene:startGame()
+	self:onUpdate(handler(self, self.step))
+end
+
 function GameScene:onEnter()
-	__G__MainMusic(2)	
 	-- armySet = {}
 	-- score = 0
 	self:unUpdate()
 
-	self:onUpdate(handler(self, self.step))
+	self:hideUI()
+
+	--首先展示一下文本
+	self:showLevelTitle()
+	__G__actDelay(self,function (  )
+		self:removeLevelTitle()
+		
+	end, 4)
+	__G__actDelay(self,function (  )
+		__G__MainMusic(2)	
+		self:showUIWithAnimation()
+		self:onCreateArmy()
+	end, 6)
 
 end
 

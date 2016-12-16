@@ -35,6 +35,15 @@ __G__createCutLayer = function ( fileName )
 	return layer
 end
 
+__G__createLevelTitleLayer = function ( str )
+	local layer = display.newLayer()
+
+	local title = display.newTTF(nil, 48, str)
+	title:pos(display.cx, display.cy*1.5)
+	layer:add(title,0, 213)
+	return layer
+end
+
 __G__createOverLayer = function ( fileName )
 	local layer = display.newLayer(cc.c4b(255, 255, 255, 0))
 
