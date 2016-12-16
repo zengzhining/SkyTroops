@@ -16,10 +16,10 @@ local armyHpTbl = {
 
 }
 function PlaneFactory:createEnemy( id_ )
-	id_ = 9
+	id_ = 6
 	local army = self:createPlane(id_)
-	army:setGameAi(9)
-	army:setBulletId(6)
+	army:setGameAi(7)
+	army:setBulletId(2)
 	army:setScore( 2 )
 	army:setHp(armyHpTbl[id_])
 	-- army:setHp(99)

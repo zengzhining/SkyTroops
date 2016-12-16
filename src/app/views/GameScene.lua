@@ -671,6 +671,21 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			gameLayer:addChild(bullet)
 			table.insert(armyBulletSet, bullet)
 		end
+	elseif typeId_ == 5 then 
+		--发射全场的子弹
+		local PER_DREE = math.pi/6
+		local SPEED = 5
+		for i = 1, 12 do
+			--
+			local dgree = i * PER_DREE 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx , posy )
+			bullet:onFire()
+			bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
+			gameLayer:addChild(bullet)
+			table.insert(armyBulletSet, bullet)
+		end 
+
 	end
 
 end
