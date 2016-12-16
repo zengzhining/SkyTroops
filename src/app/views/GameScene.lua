@@ -468,7 +468,7 @@ function GameScene:hideUIWithAnimation()
 end
 
 function GameScene:showUIWithAnimation()
-	
+	self:showUI()
 end
 
 function GameScene:hideController()
@@ -898,6 +898,7 @@ function GameScene:onEnter()
 	__G__actDelay(self,function (  )
 		__G__MainMusic(2)	
 		self:showUIWithAnimation()
+		self:startGame()
 		self:onCreateArmy()
 	end, 6)
 
