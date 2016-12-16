@@ -115,7 +115,7 @@ function BasePlane:getCollisionRect(  )
 	local finalWidth  = rect.width * 0.5 
 	local finalHeight = rect.height * 0.5
 	-- local pos = cc.p( rect.x+ rect.width*0.5-finalWidth*0.5, rect.y+rect.height*0.5-finalHeight*0.5 ) 
-	local pos = cc.p(rect.x + rect.width*0.5-finalWidth*0.5,rect.y + rect.height-finalHeight*0.5)
+	local pos = cc.p(rect.x + rect.width*0.5-finalWidth*0.5 - 20,rect.y + rect.height*0.5-finalHeight*0.5)
 	local newRect = cc.rect( pos.x, pos.y, finalWidth, finalHeight )
 	return newRect
 end

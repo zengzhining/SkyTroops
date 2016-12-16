@@ -608,13 +608,28 @@ end
 function GameScene:onEnemyFire( enemy, bulletId )
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
-	
-	local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
-	bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
-	bullet:onFire()
-	bullet:setSpeed(cc.p(0, -20))
-	gameLayer:addChild(bullet)
-	table.insert(armyBulletSet, bullet)
+	local id = enemy:getId()
+	if id == 5 then 
+		--发射散弹
+		local speedX = 3
+		for i = -1, 1,1 do
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(speedX * i, -10))
+			gameLayer:addChild(bullet)
+			table.insert(armyBulletSet, bullet)
+		end
+	else
+		--普通发射
+		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+		bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
+		bullet:onFire()
+		bullet:setSpeed(cc.p(0, -10))
+		gameLayer:addChild(bullet)
+		table.insert(armyBulletSet, bullet)
+		
+	end
 		
 
 end
@@ -647,6 +662,10 @@ function GameScene:createItem()
 end
 
 function GameScene:onCreateArmy(  )
+	-- local army = PlaneFactory:getInstance():createEnemy(1)
+	-- army:pos(display.cx, display.cy*1.5)
+	-- self.gameLayer_:add(army)
+	-- table.insert(armySet, army)
 	--读取plist数据创建敌人
 	local armyData = self:getArmyData()
 	for i, armyInfo in pairs(armyData) do

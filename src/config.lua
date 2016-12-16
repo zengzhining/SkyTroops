@@ -8,7 +8,7 @@ DESIGN = false
 CC_USE_FRAMEWORK = true
 
 -- show FPS on screen
-CC_SHOW_FPS = false
+CC_SHOW_FPS = true
 
 -- disable create unexpected global variable
 CC_DISABLE_GLOBAL = false
@@ -46,5 +46,5 @@ CC_DESIGN_RESOLUTION = {
     end
 }
 
-DEFAULT_SCENE = "SlashScene"
+DEFAULT_SCENE = "GameScene"
 

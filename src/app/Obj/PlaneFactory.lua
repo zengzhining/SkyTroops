@@ -12,16 +12,18 @@ function PlaneFactory:ctor(  )
 end
 
 local armyHpTbl = {
-	3,3,5,3,3,3
+	3,3,5,3,3,3,3,3,3,3,3,3
 
 }
 function PlaneFactory:createEnemy( id_ )
+	id_ = 5
 	local army = self:createPlane(id_)
 	army:setGameAi(id_)
 	army:setBulletId(1)
 	army:setScore( 2 )
 	army:setHp(armyHpTbl[id_])
-
+	-- army:setHp(99)
+	army:setAiTimeLimit(1)
 	return army
 end
 

@@ -67,9 +67,11 @@ end
 
 function ArmyPlane:setGameAi( typeId_ )
 	self.aiStrategy_ = Strategy.new(typeId_)
+end
 
-	if typeId_ == 5 then 
-		self.aiStrategy_:setAiTimeLimit(0.2)
+function ArmyPlane:setAiTimeLimit(time)
+	if self.aiStrategy_ then
+		self.aiStrategy_:setAiTimeLimit(time)
 	end
 end
 
@@ -89,7 +91,6 @@ function ArmyPlane:fireBullet()
 end
 
 function ArmyPlane:aiMove(dt)
-	-- print("aiMove~~~~~",self:isDead())
 	--人物死亡时候没有Ai
 	if self:isDead() then return end
 
@@ -123,13 +124,6 @@ function ArmyPlane:aiMove(dt)
 			strategy:useAi()
 		end
 	elseif aiId == 4 then
-		--简单每隔一段时间发射
-		if strategy:canAi() then 
-			strategy:resetAiTime()
-			self:fireBullet()
-		end
-		strategy:addAiTime(dt)
-	elseif aiId == 5 then
 		--看见主角才发射
 		if strategy:canAi() then
 			strategy:resetAiTime()
@@ -141,7 +135,14 @@ function ArmyPlane:aiMove(dt)
 			end
 		end
 		strategy:addAiTime(dt)
-	elseif aiId == 6 then 
+	elseif aiId == 5 then 
+		--发射散弹
+		if strategy:canAi() then
+			strategy:resetAiTime()
+			self:fireBullet()
+		end
+		strategy:addAiTime(dt)
+	elseif aiId == 8 then 
 		--会根据主角位置移动，如果主角到攻击范围局攻击
 		if strategy:canAi() then
 			strategy:resetAiTime()
