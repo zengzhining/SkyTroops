@@ -322,6 +322,17 @@ function HeroPlane:playDeadAnimation( fileFormat_ )
 	self:runAction(act)
 end
 
+--碰撞检测所用矩形
+function HeroPlane:getCollisionRect(  )
+	local rect = self:getBoundingBox()
+	local finalWidth  = rect.width * 0.3 
+	local finalHeight = rect.height * 0.3
+	-- local pos = cc.p( rect.x+ rect.width*0.5-finalWidth*0.5, rect.y+rect.height*0.5-finalHeight*0.5 ) 
+	local pos = cc.p(rect.x + rect.width*0.5-finalWidth*0.5 - 20,rect.y + rect.height*0.5-finalHeight*0.5)
+	local newRect = cc.rect( pos.x, pos.y, finalWidth, finalHeight )
+	return newRect
+end
+
 function HeroPlane:onHurt(hp_)
 	--受伤过程不可再受伤
 	if self.isOnHurt_ then return end

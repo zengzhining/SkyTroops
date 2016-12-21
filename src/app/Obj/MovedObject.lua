@@ -17,7 +17,7 @@ function MovedObject:debugDraw()
 		local rect = self:getCollisionRect()
 		local viewRect = self:getViewRect()
         draw:drawRect(cc.p( (viewRect.width - rect.width) * 0.5 , (viewRect.height - rect.height) * 0.5 ), cc.p(rect.width + (viewRect.width - rect.width) * 0.5,rect.height +  (viewRect.height - rect.height) * 0.5), cc.c4f(1,1,0,1))
-        draw:drawRect(cc.p( 0 , 0 ), cc.p(viewRect.width,viewRect.height), cc.c4f(1,1,0,1))
+        -- draw:drawRect(cc.p( 0 , 0 ), cc.p(viewRect.width,viewRect.height), cc.c4f(1,1,0,1))
 	end
 end
 
