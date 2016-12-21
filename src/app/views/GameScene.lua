@@ -771,11 +771,17 @@ end
 
 --全部敌人离开屏幕或者死掉的回调，用来判断是否进入下一个关卡
 function GameScene:onAllArmyGone()
+	local world = GameData:getInstance():getWorld()
+	GameData:getInstance():addLevel(1)		
 	local level = GameData:getInstance():getLevel()
-	if level < GameData:getInGameScene():getMaxLevel() then 
-		GameData:getInstance():addLevel(1)		
+	local str = string.format("config/level%02d/army%02d", world,level)
+	local isExit = gameio.isExist(str)
+	if isExit then 
+		--存在下一个的配置就生成敌人
+		self:onCreateArmy()
+	else
+		--不存在就进入下一个世界
 	end
-	self:onCreateArmy()
 end
 
 --生成物品
@@ -791,10 +797,6 @@ function GameScene:createItem( id, pos_ )
 end
 
 function GameScene:onCreateArmy(  )
-	-- local army = PlaneFactory:getInstance():createEnemy(1)
-	-- army:pos(display.cx, display.cy*1.5)
-	-- self.gameLayer_:add(army)
-	-- table.insert(armySet, army)
 	--读取plist数据创建敌人
 	local armyData = self:getArmyData()
 	for i, armyInfo in pairs(armyData) do

@@ -6,8 +6,12 @@ local BG_SPEED = 10
 local DEFAULT_ROLE = 1
 local DEFAULT_LEVEL = 2
 
+local DEFAULT_WORLD = 1
+
 local DEFAULT_BOMB = 3 --默认炸弹个数
 local MAX_BOMB = 6
+
+local MAX_WORLD = 6
 
 local KEY_ALL_SCORE = "ALL_SCORE"
 
@@ -68,6 +72,9 @@ function GameData:initData()
 	--关卡数
 	self.level_ = DEFAULT_LEVEL
 
+	--世界数目
+	self.worldNum_ = DEFAULT_WORLD
+
 	--全局的主角
 	self.role_ = nil
 
@@ -89,7 +96,7 @@ function GameData:save()
 	userDefault.setIntegerForKey(KEY_ALL_SCORE, self:getAllScore() )
 end
 
-
+--------------level----------------
 function GameData:resetLevel()
 	self.level_ = 1
 end
@@ -104,6 +111,23 @@ end
 
 function GameData:getMaxLevel()
 	return MAX_LEVEL
+end
+
+----------------WORLD-----------------
+function GameData:resetWorld()
+	self.worldNum_ = DEFAULT_WORLD
+end
+
+function GameData:getWorld()
+	return self.worldNum_
+end
+
+function GameData:addWorld(num)
+	self.worldNum_ = self.worldNum_ + 1
+end
+
+function GameData:getMaxWorld()
+	return MAX_WORLD
 end
 
 ----------------bomb---------------------------
