@@ -12,9 +12,8 @@ function PlaneFactory:ctor(  )
 end
 
 function PlaneFactory:createEnemy( id_ )
-	id_ = 6
 	local army = self:createPlane(id_)
-	army:setGameAi(7)
+	army:setGameAi(id_)
 	army:setBulletId(2)
 	army:setScore( 2 )
 	army:setHp(ENEMY_HP_TBL[id_])

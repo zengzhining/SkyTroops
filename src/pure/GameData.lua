@@ -21,7 +21,7 @@ function GameData:ctor()
 	self:load()
 	--因为到读取大量文件
 	--只有进行第一次初始化时候才进行读取配置文件
-	self:loadConfig()
+	-- self:loadConfig()
 end
 
 function GameData:loadConfig()
@@ -44,13 +44,13 @@ function GameData:loadConfig()
 	end
 end
 
-function GameData:getArmyConfig( id )
-	if not id then return self.armyConfig_ end
-	if self.armyConfig_ and self.armyConfig_[id] then 
-		return self.armyConfig_[id]
+function GameData:getArmyConfig(world, id )
+	local fileName = string.format("config/level%02d/army%02d.plist",world, id)
+	if gameio.isExist(fileName) then
+		local armyConfig = gameio.getVectorPlistFromFile(fileName)
+		return armyConfig
 	else
-		print("id ~~~", id)
-		error("no army config")
+		error("not File"..fileName)
 	end
 end
 

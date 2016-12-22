@@ -764,7 +764,8 @@ end
 --获得army的数据，根据数据来创建敌机
 function GameScene:getArmyData(  )
 	local level = GameData:getInstance():getLevel()
-	local armyData = GameData:getInstance():getArmyConfig(level)
+	local world = GameData:getInstance():getWorld()
+	local armyData = GameData:getInstance():getArmyConfig(world,level)
 
 	return armyData
 end
@@ -781,6 +782,15 @@ function GameScene:onAllArmyGone()
 		self:onCreateArmy()
 	else
 		--不存在就进入下一个世界
+		GameData:getInstance():addWorld(1)
+		GameData:getInstance():resetLevel()
+
+		--如果超过就进入游戏结束场景
+		if GameData:getInstance():getWorld() > GameData:getInstance():getMaxWorld() then
+			-- self:getApp()
+		else
+			self:onCreateArmy()
+		end
 	end
 end
 
