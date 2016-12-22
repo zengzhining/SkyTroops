@@ -14,3 +14,14 @@ ENEMY_HP_TBL = {
 	3,3,3,
 	3,3,3
 }
+
+--关卡的描述
+LEVEL_DES = {
+	"Faith",
+	"Courage",
+	"Courage",
+	"Courage",
+	"Courage",
+	"Courage",
+	
+}

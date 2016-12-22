@@ -4,7 +4,7 @@ local MAX_RANK = 100
 local BG_SPEED = 10
 
 local DEFAULT_ROLE = 1
-local DEFAULT_LEVEL = 2
+local DEFAULT_LEVEL = 1
 
 local DEFAULT_WORLD = 1
 

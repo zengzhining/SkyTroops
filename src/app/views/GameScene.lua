@@ -95,6 +95,14 @@ function GameScene:step( dt )
 
 	armyInScreen = {}
 	for k,army in pairs(armySet) do
+		local armyPosY = army:getPositionY()
+		local isOutOfWindow = ( armyPosY <= (-display.cy * 0.5) and true or false )
+		if isOutOfWindow then 
+			table.remove(armySet, k)
+			army:removeSelf()
+			break
+		end
+
 		if army:getPositionY() >= 0 and army:getPositionY()<= display.height + army:getViewRect().height*0.5 then
 			army.key_ = k
 			table.insert(armyInScreen, army)
@@ -122,13 +130,7 @@ function GameScene:step( dt )
 			end
 		end
 
-		local isOutOfWindow = ( armyPosY <= (-display.cy * 0.5) and true or false )
-		if isOutOfWindow then 
-			army:removeSelf()
-			table.remove(armySet, army.key_)
-			table.remove(armyInScreen, k)
-			break
-		end
+
 	end
 
 	
@@ -490,10 +492,20 @@ function GameScene:setVisibleController(flag)
 	end
 end
 
+--获得关卡的描述
+function GameScene:getLevelDes()
+	local world = GameData:getInstance():getWorld()
+	local str = LEVEL_DES[world]
+	if not str then 
+		error("not level_des in world "..world)
+	end
+	return str
+end
+
 --展示关卡文字
 function GameScene:showLevelTitle()
 	local TAG = 213
-	local str = "Hello World"
+	local str = self:getLevelDes()
 	local layer = __G__createLevelTitleLayer(str)
 
 	local title = layer:getChildByTag(TAG)
@@ -502,6 +514,11 @@ function GameScene:showLevelTitle()
 		title:runAction(cc.FadeIn:create(0.5))
 	end
 	self:add(layer, 100, TAG_TITLE_LAYER)
+
+	__G__actDelay(self,function (  )
+		self:removeLevelTitle()
+		
+	end, 4)
 end
 
 function GameScene:removeLevelTitle()
@@ -775,7 +792,7 @@ function GameScene:onAllArmyGone()
 	local world = GameData:getInstance():getWorld()
 	GameData:getInstance():addLevel(1)		
 	local level = GameData:getInstance():getLevel()
-	local str = string.format("config/level%02d/army%02d", world,level)
+	local str = string.format("config/level%02d/army%02d.plist", world,level)
 	local isExit = gameio.isExist(str)
 	if isExit then 
 		--存在下一个的配置就生成敌人
@@ -789,7 +806,13 @@ function GameScene:onAllArmyGone()
 		if GameData:getInstance():getWorld() > GameData:getInstance():getMaxWorld() then
 			-- self:getApp()
 		else
-			self:onCreateArmy()
+			--要先展示一下文本
+			self:showLevelTitle()
+			self:unUpdate()
+			-- self:onCreateArmy()
+			__G__actDelay(self,function (  )
+				self:startGame()
+			end, 2)
 		end
 	end
 end
@@ -891,7 +914,11 @@ end
 --------------------------------
 
 function GameScene:startGame()
+	audio.stopMusic()
+	__G__MainMusic(2)	
+	self:showUIWithAnimation()
 	self:onUpdate(handler(self, self.step))
+	self:onCreateArmy()
 end
 
 function GameScene:onEnter()
@@ -899,20 +926,13 @@ function GameScene:onEnter()
 	-- score = 0
 	self:unUpdate()
 
-	self:hideUI()
-
+	-- self:hideUI()
 	--首先展示一下文本
 	self:showLevelTitle()
+	
 	__G__actDelay(self,function (  )
-		self:removeLevelTitle()
-		
-	end, 4)
-	__G__actDelay(self,function (  )
-		__G__MainMusic(2)	
-		self:showUIWithAnimation()
 		self:startGame()
-		self:onCreateArmy()
-	end, 6)
+	end, 2)
 
 end
 
