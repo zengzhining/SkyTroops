@@ -12,6 +12,7 @@ function PlaneFactory:ctor(  )
 end
 
 function PlaneFactory:createEnemy( id_ )
+	--最高到11
 	local army = self:createPlane(id_)
 	army:setGameAi(id_)
 	army:setBulletId(2)

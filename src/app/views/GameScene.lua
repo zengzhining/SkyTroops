@@ -703,7 +703,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
 		bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
 		bullet:onFire()
-		bullet:setSpeed(cc.p(0, -10))
+		bullet:setSpeed(cc.p(0, -5))
 		gameLayer:addChild(bullet)
 		table.insert(armyBulletSet, bullet)
 	elseif typeId_ == 2 then 
@@ -713,13 +713,13 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
 			bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
 			bullet:onFire()
-			bullet:setSpeed(cc.p(speedX * i, -10))
+			bullet:setSpeed(cc.p(speedX * i, -5))
 			gameLayer:addChild(bullet)
 			table.insert(armyBulletSet, bullet)
 		end
 	elseif typeId_ == 3 then 
 		--发射一串的子弹
-		local speedY = 10
+		local speedY = 5
 		local DEL_HEIGHT = 30
 		for i = 0,2,1 do
 			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
@@ -736,7 +736,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
 			bullet:pos(posx + PER_WIDTH * i, posy - enemy:getViewRect().height *0.25)
 			bullet:onFire()
-			bullet:setSpeed(cc.p(0, -10))
+			bullet:setSpeed(cc.p(0, -5))
 			gameLayer:addChild(bullet)
 			table.insert(armyBulletSet, bullet)
 		end
@@ -864,7 +864,7 @@ end
 
 function GameScene:getArmySpeed()
 	--根据排名来获得分数
-	local speed = 5
+	local speed = 3
 	--最大到三十
 	return (0-speed)
 end

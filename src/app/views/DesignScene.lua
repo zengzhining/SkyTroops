@@ -13,7 +13,8 @@ local g_lastId = 1
 --是否强置加入,后为强制加入的id,可用于编辑
 local FORCE_ADD = true
 local NEED_LOAD = true
-local FORCE_ID = 2
+local LEVEL = 1
+local FORCE_ID = 1
 ---------------------------------------
 
 --------------function----------------
@@ -88,7 +89,7 @@ function DesignScene:onCreate()
 end
 
 function DesignScene:initEdit()
-	local str = string.format("res/config/army%02d.plist", FORCE_ID)
+	local str = string.format("res/config/level%02d/army%02d.plist",LEVEL, FORCE_ID)
 	if not NEED_LOAD then return end
 	if not gameio.isExist(str) then return end
 
@@ -187,6 +188,8 @@ function DesignScene:changePlaneId()
 		selectPlane:setId(id)
 		-- selectPlane:setRotation(180)
 		g_lastId = id
+
+		print("id~~~~~", id)
 	end
 end
 
@@ -212,13 +215,13 @@ function DesignScene:save()
 	dump(tbl)
 
 	if FORCE_ADD then 
-		local str = string.format("res/config/army%02d.plist", FORCE_ID)
+		local str = string.format("res/config/level%02d/army%02d.plist", LEVEL ,FORCE_ID)
 		gameio.writeVectorPlistToFile(tbl, str)
 		return 
 	end
 	--默认自动增加,到后面去
 	for i = 1, 50 do
-		local str = string.format("res/config/army%02d.plist", i)
+		local str = string.format("res/config/level%02d/army%02d.plist", LEVEL, i)
 		if not gameio.isExist(str) then 
 			gameio.writeVectorPlistToFile(tbl, str)
 			break
