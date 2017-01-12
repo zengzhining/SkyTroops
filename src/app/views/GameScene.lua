@@ -42,7 +42,8 @@ function GameScene:onCreate()
 	self:initObj()
 	self:initControl()
 
-	local bg = __G__createPngBg( "bg/01Background.png" )
+	local str = string.format("bg/%02dBackground.png", GameData:getInstance():getWorld())
+	local bg = __G__createPngBg( str )
 	bg:setSpeed(-1)
 	self:add(bg, -2, TAG_BG)
 
@@ -801,18 +802,28 @@ function GameScene:onAllArmyGone()
 		--不存在就进入下一个世界
 		GameData:getInstance():addWorld(1)
 		GameData:getInstance():resetLevel()
-
+		local world = GameData:getInstance():getWorld()
 		--如果超过就进入游戏结束场景
 		if GameData:getInstance():getWorld() > GameData:getInstance():getMaxWorld() then
 			-- self:getApp()
 		else
 			--要先展示一下文本
-			self:showLevelTitle()
 			self:unUpdate()
+			--更新背景
+			local bg = self:getChildByTag(TAG_BG)
+			bg:fadeOut(5)
+
+			__G__actDelay(bg,function (  )
+				local str = string.format("bg/%02dBackground.png", world)
+				bg:change(str)
+				bg:fadeIn(5)
+				self:showLevelTitle()
+			end, 6)
+
 			-- self:onCreateArmy()
 			__G__actDelay(self,function (  )
 				self:startGame()
-			end, 2)
+			end, 10)
 		end
 	end
 end

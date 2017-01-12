@@ -131,11 +131,27 @@ __G__createPngBg = function ( fileName )
 	bg:pos(display.cx, bg:getBoundingBox().height)
 	layer:add(bg,0, TAG_UP)
 
+	function bg:fadeIn( time )
+		self:runAction(cc.FadeIn:create(time))
+	end
+
+	function bg:fadeOut(time)
+		self:runAction(cc.FadeOut:create(time))
+	end
+
 	local downBg = display.newSprite(fileName)
 	downBg:setAnchorPoint(cc.p(0.5,1))
 	downBg:pos(display.cx, 2 * bg:getBoundingBox().height)
 	downBg:setScale(display.width/downBg:getContentSize().width)
 	layer:add(downBg,0, TAG_DOWN)
+
+	function downBg:fadeIn( time )
+		self:runAction(cc.FadeIn:create(time))
+	end
+
+	function downBg:fadeOut(time)
+		self:runAction(cc.FadeOut:create(time))
+	end
 
 
 	function layer:update(dt)
@@ -151,6 +167,26 @@ __G__createPngBg = function ( fileName )
 		end
 	end
 
+	function layer:change( fileName )
+		local upBg = self:getChildByTag(TAG_UP)
+		local downBg = self:getChildByTag(TAG_DOWN)
+		upBg:setSprite(fileName)
+		downBg:setSprite(fileName)
+	end
+
+	function layer:fadeIn( time )
+		local upBg = self:getChildByTag(TAG_UP)
+		local downBg = self:getChildByTag(TAG_DOWN)
+		upBg:fadeIn(time)
+		downBg:fadeIn(time)
+	end
+
+	function layer:fadeOut( time )
+		local upBg = self:getChildByTag(TAG_UP)
+		local downBg = self:getChildByTag(TAG_DOWN)
+		upBg:fadeOut(time)
+		downBg:fadeOut(time)
+	end
 
 	return layer
 end
