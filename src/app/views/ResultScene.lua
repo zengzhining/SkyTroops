@@ -143,10 +143,12 @@ end
 
 function ResultScene:onEnter()
 	__G__MainMusic(1)	
-
+	__G__actDelay(self,function (  )
+		SDKManager:getInstance():showVideo(  )
+	end,1)
 	-- __G__actDelay(self, function (  )
-		self:onUpdate(handler(self, self.step))
 		
+	self:onUpdate(handler(self, self.step))
 	-- end,2)
 
 end

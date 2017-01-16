@@ -349,7 +349,6 @@ function GameScene:onContinue()
 
 	--判断能否播放广告，可以就播放,原型测试暂时关闭
 	self.isNeedPause_ = false
-	SDKManager:getInstance():showVideo( callback )
 
 	if DEBUG == 2 and device.platform ~= "android" then 
 		callback()
