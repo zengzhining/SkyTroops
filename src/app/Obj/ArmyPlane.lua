@@ -34,7 +34,6 @@ function ArmyPlane:onCollisionBullet(bullet)
 	if not role:isDead() then 
 		damge = bullet:getDamge() * role:getLevel()
 	end
-	print("damge~~~~~", damge)
 	self:onHurt(damge)
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
@@ -170,7 +169,6 @@ function ArmyPlane:aiMove(dt)
 		if strategy:canAi() then
 			strategy:resetAiTime()
 			local role = GameData:getInstance():getRole()
-			if role:isDead() then return end
 			local posx, posy = self:getPosition()
 			local rolePosX, rolePosY = role:getPosition()
 			local dir = posx > rolePosX and -1 or 1
