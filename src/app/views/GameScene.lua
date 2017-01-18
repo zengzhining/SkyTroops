@@ -697,6 +697,7 @@ end
 function GameScene:fireBullet( typeId_ , enemy , bulletId)
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
+	if enemy:isDead() then return end
 
 	if typeId_ == 1 then 
 		--普通发射
@@ -761,6 +762,8 @@ end
 
 --敌人发射子弹的回调函数
 function GameScene:onEnemyFire( enemy, bulletId )
+	print("onEnemyFire~~~~~~~")
+	print(debug.traceback())
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
 	local id = enemy:getAiId()

@@ -45,7 +45,10 @@ function ArmyPlane:onCollisionBullet(bullet)
 end
 
 function ArmyPlane:onCollisionBomb()
-	self:playDeadAnimation("PlaneExplose%02d.png")
+	self:onHurt(999)
+	if self:isDead() then
+		self:playDeadAnimation("PlaneExplose%02d.png")
+	end
 end
 
 function ArmyPlane:playDeadAnimation(fileFormat_)
@@ -115,6 +118,7 @@ end
 function ArmyPlane:aiMove(dt)
 	--人物死亡时候没有Ai
 	if self:isDead() then return end
+	-- print("self:isDead()~~~~~", self:isDead())
 
 	--ai只有进入到游戏场景高度才开始运行
 	local posx,posy = self:getPosition()
