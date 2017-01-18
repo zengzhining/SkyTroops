@@ -116,7 +116,7 @@ function GameScene:step( dt )
 		local isRelive = self.role_:isRelive()
 		local isDead = self.role_:isDead()
 		--碰撞检测成功判断下角色是否处于复活状态
-		if iscollision and (not isRelive) and (not isDead) then 
+		if iscollision and (not isRelive) and (not isDead) and (not army:isDead()) then 
 			self.role_:onCollision( army )
 			army:onCollision( self.role_ )
 		end
@@ -130,8 +130,6 @@ function GameScene:step( dt )
 				self:onBeyoundArmy(army)
 			end
 		end
-
-
 	end
 
 	
@@ -141,7 +139,7 @@ function GameScene:step( dt )
 		for k, army in pairs(armyInScreen) do
 			local armyRect = army:getCollisionRect()
 			local iscollision = cc.rectIntersectsRect(armyRect, bulletRect) 
-			if iscollision then
+			if iscollision and (not army:isDead() )  then
 				army:onCollisionBullet(bullet)
 				bullet:onCollision(army)
 				self:onBulletHitArmy( bullet, army )
