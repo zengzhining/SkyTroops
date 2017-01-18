@@ -12,7 +12,7 @@ require "app.Obj.PlaneFactory"
 local function main()
 	
 	if device.platform == "android" or device.platform == "ios" then
-		CC_NEED_SDK = false
+		CC_NEED_SDK = true
 	end
 
    --初始化SDK

@@ -20,7 +20,7 @@ function SDKManager:initAllSDK()
 	sdkbox.PluginReview:init()
 	--video
 	sdkbox.PluginAdColony:init()
-	sdkbox.PluginVungle:init()
+	-- sdkbox.PluginVungle:init()
 
 end
 
@@ -99,21 +99,21 @@ function SDKManager:addEvent()
 	    end
     end)
 
-	sdkbox.PluginVungle:setListener(function(name, args)
-	    if "onVungleCacheAvailable" == name then
-	        print("onVungleCacheAvailable")
-	    elseif "onVungleStarted" ==  name then
-	        print("onVungleStarted")
-	    elseif "onVungleFinished" ==  name then
-	        print("onVungleFinished")
-	    elseif "onVungleAdViewed" ==  name then
-	        print("onVungleAdViewed:", args)
-	        SDKManager:getInstance():onVedioFinished()
+	-- sdkbox.PluginVungle:setListener(function(name, args)
+	--     if "onVungleCacheAvailable" == name then
+	--         print("onVungleCacheAvailable")
+	--     elseif "onVungleStarted" ==  name then
+	--         print("onVungleStarted")
+	--     elseif "onVungleFinished" ==  name then
+	--         print("onVungleFinished")
+	--     elseif "onVungleAdViewed" ==  name then
+	--         print("onVungleAdViewed:", args)
+	--         SDKManager:getInstance():onVedioFinished()
 
-	    elseif "onVungleAdReward" ==  name then
-	        print("onVungleAdReward:", args)
-	    end
-	end)
+	--     elseif "onVungleAdReward" ==  name then
+	--         print("onVungleAdReward:", args)
+	--     end
+	-- end)
 
 end
 
@@ -269,9 +269,9 @@ function SDKManager:isCanPlayVedio()
 		return true
 	end
 
-	if sdkbox.PluginVungle:isCacheAvailable() then 
-		return true
-	end
+	-- if sdkbox.PluginVungle:isCacheAvailable() then 
+	-- 	return true
+	-- end
 
 	return false
 end
@@ -285,10 +285,10 @@ function SDKManager:showVideo( callback )
 		self:setVedioCallback( callback )
 		sdkbox.PluginAdColony:show(SDK_VEDIO_NAME)
 	else
-		if sdkbox.PluginVungle:isCacheAvailable() then
-			self:setVedioCallback( callback )
-			sdkbox.PluginVungle:show("video")
-		else
+		-- if sdkbox.PluginVungle:isCacheAvailable() then
+		-- 	self:setVedioCallback( callback )
+		-- 	sdkbox.PluginVungle:show("video")
+		-- else
 			if self:isFULLADAvailable() then
 				self:setFULLADCallback( callback )
 				self:showFULLAD()
@@ -296,7 +296,7 @@ function SDKManager:showVideo( callback )
 				callback()
 				return 
 			end
-		end
+		-- end
 	end
 
 	self.lastPlayVedioTime_ = os.time()
