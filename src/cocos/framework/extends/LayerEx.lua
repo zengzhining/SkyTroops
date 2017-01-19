@@ -70,12 +70,18 @@ function Layer:onKeypad(callback)
 
     --new
     local keyboardCallback = function ( keyCode, event )
-        local event = { keycode = keyCode, target = event:getCurrentTarget() }
+        local event = { keycode = keyCode, target = event:getCurrentTarget(), eventType = "press" }
+        return callback(event)
+    end
+
+    local keyboardCallbackUp = function ( keyCode, event )
+        local event = { keycode = keyCode, target = event:getCurrentTarget(), eventType = "release" }
         return callback(event)
     end
 
     local listener = cc.EventListenerKeyboard:create()
     listener:registerScriptHandler(keyboardCallback, cc.Handler.EVENT_KEYBOARD_PRESSED )
+    listener:registerScriptHandler(keyboardCallbackUp, cc.Handler.EVENT_KEYBOARD_RELEASED )
 
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)

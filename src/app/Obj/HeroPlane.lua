@@ -266,23 +266,33 @@ end
 function HeroPlane:onKeyPad( event )
 	local code = event.keycode
 	local target = event.target
-	if code == cc.KeyCode.KEY_A then 
-	elseif code == cc.KeyCode.KEY_D then 
+	local eventtype = event.eventType
+	if eventtype == "press" then
+		if code == cc.KeyCode.KEY_A then 
+			if self.virtualJoy_ then
+				self.virtualJoy_:setStrength(cc.p( -1,0 ))
+			end
+		elseif code == cc.KeyCode.KEY_D then 
+			if self.virtualJoy_ then
+				self.virtualJoy_:setStrength(cc.p( 1,0 ))
+			end
+		elseif code == cc.KeyCode.KEY_S then
+			if self.virtualJoy_ then
+				self.virtualJoy_:setStrength(cc.p( 0,-1 ))
+			end
+		elseif code == cc.KeyCode.KEY_W then
+			if self.virtualJoy_ then
+				self.virtualJoy_:setStrength(cc.p( 0,1 ))
+			end
+		end
 
-	elseif code == cc.KeyCode.KEY_S then
-		self:fireBullet()
-	end
-
-	if code == cc.KeyCode.KEY_SPACE then 
-		-- speed = GameData:getInstance():getGameSpeed()
-		-- if speed > 1.0 then 
-		-- 	GameData:getInstance():setGameSpeed(1.0)
-		-- else
-		-- 	GameData:getInstance():setGameSpeed(2.0)
-		-- end
-
-		self:fireBullet()
-
+		if code == cc.KeyCode.KEY_SPACE then 
+			self:fireBullet()
+		end
+	elseif eventtype == "release" then 
+		if self.virtualJoy_ then
+			self.virtualJoy_:setStrength(cc.p( 0,0 ))
+		end
 	end
 end
 

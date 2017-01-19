@@ -119,7 +119,6 @@ end
 function ArmyPlane:aiMove(dt)
 	--人物死亡时候没有Ai
 	if self:isDead() then return end
-	-- print("self:isDead()~~~~~", self:isDead())
 
 	--ai只有进入到游戏场景高度才开始运行
 	local posx,posy = self:getPosition()
