@@ -8,6 +8,7 @@ local TAG_FRONT = 106  --前景，云神马的
 local TAG_CONTINUE_LAYER = 104
 local TAG_CONTROL_LAYER = 105
 local TAG_TITLE_LAYER = 107 --关卡文字
+local TAG_ARMY = 201
 
 local armySet = {}
 local bulletSet = {} --主角的子弹
@@ -760,8 +761,6 @@ end
 
 --敌人发射子弹的回调函数
 function GameScene:onEnemyFire( enemy, bulletId )
-	print("onEnemyFire~~~~~~~")
-	print(debug.traceback())
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
 	local id = enemy:getAiId()
@@ -842,6 +841,14 @@ function GameScene:createItem( id, pos_ )
 end
 
 function GameScene:onCreateArmy(  )
+	local tbl = self.gameLayer_:getChildren()
+	for k, item in pairs(tbl) do
+		local tag = item:getTag()
+		if tag == TAG_ARMY then
+			item:removeSelf()
+		end
+	end
+	
 	--读取plist数据创建敌人
 	local armyData = self:getArmyData()
 	for i, armyInfo in pairs(armyData) do
@@ -854,7 +861,8 @@ function GameScene:onCreateArmy(  )
 		army:setSpeed(cc.p(0, armySpeed))
 		army:setDirX(dir)
 		army:pos(armyPos)
-		self.gameLayer_ :addChild(army)
+		army:setTag(TAG_ARMY)
+		self.gameLayer_:addChild(army)
 		table.insert(armySet, army)
 	end
 	--调整一下游戏背景速度
