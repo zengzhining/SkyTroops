@@ -848,9 +848,7 @@ function GameScene:onCreateArmy(  )
 		local army = PlaneFactory:getInstance():createEnemy(id)
 
 		local width = army:getViewRect().width
-		local dir = armyInfo.x > display.cx and 1 or -1
-		local x = display.cx + width * 0.6 * dir
-		local armyPos = cc.p(x, armyInfo.y)
+		local armyPos = cc.p(armyInfo.x, armyInfo.y)
 		local armySpeed = self:getArmySpeed()
 		army:setSpeed(cc.p(0, armySpeed))
 		army:setDirX(dir)

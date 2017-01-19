@@ -15,8 +15,8 @@ function PlaneFactory:createEnemy( id_ )
 	--最高到11
 	local army = self:createPlane(id_)
 	army:setGameAi(id_)
-	army:setBulletId(2)
-	army:setScore( 2 )
+	army:setBulletId(ENEMY_BULLET_TBL[id_])
+	army:setScore( ENEMY_SCORE_TBL[id_] )
 	army:setMaxHp(ENEMY_HP_TBL[id_])
 	army:setHp(ENEMY_HP_TBL[id_])
 	-- army:setHp(99)
@@ -34,7 +34,7 @@ end
 
 function PlaneFactory:createRole( id_ )
 	local PLANE_CONFIG = { 
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+		{maxHp_ = 5, bulletId_ = 3, bulletType_ = 2, bulletCalmTime_ = 0.2},
 		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
 		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
 		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
