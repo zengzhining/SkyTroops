@@ -184,7 +184,7 @@ function ArmyPlane:aiMove(dt)
 			end
 		end
 		strategy:addAiTime(dt)
-	elseif aiId == 9 then
+	elseif aiId == 10 then
 		--发射两列子弹,看见主角才发射
 		if strategy:canAi() then
 			strategy:resetAiTime()

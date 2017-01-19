@@ -33,15 +33,7 @@ function PlaneFactory:createPlane( id_ )
 end
 
 function PlaneFactory:createRole( id_ )
-	local PLANE_CONFIG = { 
-		{maxHp_ = 5, bulletId_ = 3, bulletType_ = 2, bulletCalmTime_ = 0.2},
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
-		{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
-		}
+	
 	local plane = nil
 	local pattern = nil
 	if id_ == 1 then 

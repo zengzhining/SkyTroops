@@ -12,8 +12,8 @@ local g_lastId = 1
 
 --是否强置加入,后为强制加入的id,可用于编辑
 local FORCE_ADD = true
-local NEED_LOAD = true
-local LEVEL = 1
+local NEED_LOAD = false
+local LEVEL = 2
 local FORCE_ID = 3
 ---------------------------------------
 
@@ -150,17 +150,19 @@ function DesignScene:initControl()
 
 	layer:onKeypad(function ( event )
 		-- body
-		local keycode = event.keycode
-		if keycode == cc.KeyCode.KEY_W then 
-			self:cameraMove(1)
-		elseif keycode == cc.KeyCode.KEY_S then 
-			self:cameraMove(-1)
-		elseif keycode == cc.KeyCode.KEY_Q then 
-			self:save()
-		elseif keycode == cc.KeyCode.KEY_SPACE or keycode == cc.KeyCode.KEY_D then
-			self:changePlaneId()
-		elseif keycode == cc.KeyCode.KEY_DELETE then
-			self:deleteSelectPlane()
+		if event.eventType == "press" then
+			local keycode = event.keycode
+			if keycode == cc.KeyCode.KEY_W then 
+				self:cameraMove(1)
+			elseif keycode == cc.KeyCode.KEY_S then 
+				self:cameraMove(-1)
+			elseif keycode == cc.KeyCode.KEY_Q then 
+				self:save()
+			elseif keycode == cc.KeyCode.KEY_SPACE or keycode == cc.KeyCode.KEY_D then
+				self:changePlaneId()
+			elseif keycode == cc.KeyCode.KEY_DELETE then
+				self:deleteSelectPlane()
+			end
 		end
 	end)
 end
@@ -177,7 +179,7 @@ function DesignScene:changePlaneId()
 	local idTbl = { "#RedPlane.png", "#GreyPlane.png" }
 	if selectPlane then 
 		local id = selectPlane:getId()
-		id = id + 1 > 6 and 1 or id+1
+		id = id + 1 > 9 and 1 or id+1
 		-- if id == 1 then 
 		-- 	id =  2
 		-- elseif id == 2 then

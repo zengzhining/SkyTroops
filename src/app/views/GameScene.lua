@@ -380,8 +380,9 @@ function GameScene:onArmyDead( target)
 	self:showAddScore(score, param)
 
 	local aiId = target:getAiId()
+
 	--10的话发物品
-	if aiId == 10 then 
+	if aiId == 9 then 
 		local id = math.random(1,3)
 		local randomNum = math.random(1,1000)
 		--一半的概率
@@ -398,7 +399,6 @@ function GameScene:onArmyDead( target)
 	elseif aiId == 11 then 
 		--发射三个的散弹
 		self:fireBullet(2, target, target:getBulletId() )
-
 	end
 end
 
@@ -696,7 +696,7 @@ end
 function GameScene:fireBullet( typeId_ , enemy , bulletId)
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
-	if enemy:isDead() then return end
+	-- if enemy:isDead() then return end
 
 	if typeId_ == 1 then 
 		--普通发射
@@ -719,7 +719,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		end
 	elseif typeId_ == 3 then 
 		--发射一串的子弹
-		local speedY = 5
+		local speedY = 10
 		local DEL_HEIGHT = 30
 		for i = 0,2,1 do
 			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)

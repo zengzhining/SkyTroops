@@ -1,3 +1,14 @@
+--主角机体
+PLANE_CONFIG = { 
+	{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.1},
+	{maxHp_ = 5, bulletId_ = 2, bulletType_ = 2, bulletCalmTime_ = 0.2},
+	{maxHp_ = 8, bulletId_ = 2, bulletType_ = 1, bulletCalmTime_ = 0.15},
+	{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+	{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+	{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+	{maxHp_ = 5, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
+	}
+
 ROLE_SCORE_TBL = {  
 	500,500,1000,2000,5000
  }
@@ -9,10 +20,10 @@ BULLET_DAMAGE_TBL = {
 
 --敌人的血量
 ENEMY_HP_TBL = {
-	15,20,20,
-	20,20,20,
-	50,50,50,
-	50,50,50
+	3,6,10,
+	8,8,8,
+	15,15,15,
+	15,15,15
 }
 
 --敌人的分数
