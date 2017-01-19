@@ -24,7 +24,7 @@ DEFAULT_SOUND_VOL = 0.5
 DEFAULT_MUSIC_VOL = 1
 
 --最大的敌人配置个数，对应config下的army配置表个数
-MAX_LEVEL = 2
+MAX_LEVEL = 6
 
 SDK_BANNER_NAME = "admob"
 SDK_FULLAD_NAME = "gameover"
