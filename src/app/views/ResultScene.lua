@@ -142,7 +142,7 @@ function ResultScene:step( dt )
 end
 
 function ResultScene:onEnter()
-	__G__MainMusic(1)	
+	__G__MainMusic(3)	
 	__G__actDelay(self,function (  )
 		SDKManager:getInstance():showVideo(  )
 	end,1)

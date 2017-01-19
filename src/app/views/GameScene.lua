@@ -926,7 +926,7 @@ end
 
 function GameScene:startGame()
 	audio.stopMusic()
-	__G__MainMusic(2)	
+	__G__GameBgm(GameData:getInstance():getWorld())
 	self:showUIWithAnimation()
 	self:onUpdate(handler(self, self.step))
 	self:onCreateArmy()

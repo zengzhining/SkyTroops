@@ -327,6 +327,12 @@ __G__MainMusic = function( id )
 	audio.playMusic(fileName)
 end
 
+__G__GameBgm = function ( level )
+	local str = string.format("sfx/level%02d.mp3",level)
+	audio.playMusic(str)
+	
+end
+
 __G__LoadRes = function ()
 	if DEBUG == 2 then 
 		display.loadSpriteFrames("Planes.plist", "Planes.png")

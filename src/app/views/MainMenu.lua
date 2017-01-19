@@ -24,7 +24,7 @@ function MainMenu:onCreate()
 end
 
 function MainMenu:onEnter()
-	__G__MainMusic(1)
+	__G__MainMusic(2)
 	local root = self:getResourceNode()
 	local bg = root:getChildByName("bg")
 	bg:runAction(cc.FadeIn:create(1))
