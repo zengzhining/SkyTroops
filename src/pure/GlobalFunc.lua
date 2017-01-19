@@ -188,6 +188,14 @@ __G__createPngBg = function ( fileName )
 		downBg:fadeOut(time)
 	end
 
+	function layer:opacity(num)	
+		-- body
+		local upBg = self:getChildByTag(TAG_UP)
+		local downBg = self:getChildByTag(TAG_DOWN)
+		upBg:setOpacity(num)
+		downBg:setOpacity(num)
+	end
+
 	return layer
 end
 

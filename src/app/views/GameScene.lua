@@ -817,7 +817,7 @@ function GameScene:onAllArmyGone()
 				local str = string.format("bg/%02dBackground.png", world)
 				bg:change(str)
 				bg:fadeIn(5)
-				self:showLevelTitle()
+				-- self:showLevelTitle()
 			end, 6)
 
 			-- self:onCreateArmy()
@@ -946,8 +946,12 @@ function GameScene:onEnter()
 
 	-- self:hideUI()
 	--首先展示一下文本
-	self:showLevelTitle()
+	-- self:showLevelTitle()
 	
+--背景淡入
+	local bg = self:getChildByTag(TAG_BG)
+	bg:opacity(0)
+	bg:fadeIn(2)
 	__G__actDelay(self,function (  )
 		self:startGame()
 	end, 2)
