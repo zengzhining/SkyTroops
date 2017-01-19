@@ -38,7 +38,8 @@ function ArmyPlane:onCollisionBullet(bullet)
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
 	else
-		local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
+		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
+		local act = cc.Sequence:create(cc.TintTo:create( 0.1,255,0,0 ),cc.TintTo:create( 0.1,255,255,255 ) )
 		self:runAction(act)
 
 	end
