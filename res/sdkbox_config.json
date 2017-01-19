@@ -3,20 +3,6 @@
         "GoogleAnalytics": {
             "trackingCode": "UA-86337536-1"
         }, 
-        "Vungle": {
-            "id": "573773b60fc58d1156000081", 
-            "ads": {
-                "reward": {
-                    "sound": false, 
-                    "backbutton": false, 
-                    "incentivized": true
-                }, 
-                "video": {
-                    "sound": true, 
-                    "backbutton": true
-                }
-            }
-        }, 
         "AdMob": {
             "test": false, 
             "ads": {
@@ -36,7 +22,7 @@
         "Review": {
             "LaunchLimit": 3, 
             "DayForReminding": 1, 
-            "tryPromptWhenInit": true, 
+            "tryPromptWhenInit": false, 
             "DayLimit": 0, 
             "LaunchForReminding": 2, 
             "UserEventLimit": 0
