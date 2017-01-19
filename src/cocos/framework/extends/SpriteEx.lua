@@ -72,6 +72,6 @@ function Sprite:flipY( b )
 end
 
 function Sprite:setSprite(fileName)
-    local texture = display.loadImage(fileName)
+    local texture = display.getImage(fileName)
     self:setTexture(texture)
 end

@@ -334,10 +334,16 @@ __G__GameBgm = function ( level )
 end
 
 __G__LoadRes = function ()
-	if DEBUG == 2 then 
+	-- if DEBUG == 2 then 
 		display.loadSpriteFrames("Planes.plist", "Planes.png")
 		display.loadSpriteFrames("Planes2.plist", "Planes2.png")
 		display.loadSpriteFrames("Object.plist", "Object.png")
 		display.loadSpriteFrames("Animation.plist", "Animation.png")
-	end
+		display.loadSpriteFrames("Animation.plist", "Animation.png")
+		display.loadSpriteFrames("Animation.plist", "Animation.png")
+		for i = 1, 6 do
+			local str = string.format("bg/%02dBackground.png", i)
+			display.loadImage(str)
+		end
+	-- end
 end
