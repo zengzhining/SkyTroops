@@ -33,6 +33,10 @@ function MainMenu:onEnter()
 	startBtn:posByX(display.width)
 	startBtn:runAction(cc.Sequence:create(cc.DelayTime:create(0.5),cc.MoveBy:create(0.5,cc.p( -display.width,0 ))))
 
+	__G__actDelay(self,function (  )
+		SDKManager:getInstance():showReview()
+	end,1.0)
+
 end
 
 function MainMenu:onExit(  )

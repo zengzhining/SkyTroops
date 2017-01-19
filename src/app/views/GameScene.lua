@@ -802,6 +802,7 @@ function GameScene:onAllArmyGone()
 		--不存在就进入下一个世界
 		GameData:getInstance():addWorld(1)
 		GameData:getInstance():resetLevel()
+		audio.stopMusic(true)
 		local world = GameData:getInstance():getWorld()
 		--如果超过就进入游戏结束场景
 		if GameData:getInstance():getWorld() > GameData:getInstance():getMaxWorld() then
@@ -923,7 +924,7 @@ end
 --------------------------------
 
 function GameScene:startGame()
-	audio.stopMusic()
+	-- audio.stopMusic()
 	__G__GameBgm(GameData:getInstance():getWorld())
 	self:showUIWithAnimation()
 	self:onUpdate(handler(self, self.step))

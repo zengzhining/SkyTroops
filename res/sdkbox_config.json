@@ -20,11 +20,11 @@
             }
         }, 
         "Review": {
-            "LaunchLimit": 3, 
-            "DayForReminding": 1, 
+            "LaunchLimit": 0, 
+            "DayForReminding": 0, 
             "tryPromptWhenInit": false, 
             "DayLimit": 0, 
-            "LaunchForReminding": 2, 
+            "LaunchForReminding": 0, 
             "UserEventLimit": 0
         }, 
         "AdColony": {
