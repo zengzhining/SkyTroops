@@ -164,11 +164,6 @@ function BasePlane:playDeadAnimation( formatFile_  )
 	
 end
 
---漂浮的动作
-function BasePlane:float(dt)
-	
-end
-
 --尾气的动画
 function BasePlane:addGasAni()
 	local rect = self:getViewRect()

@@ -28,6 +28,10 @@ function ArmyPlane:ctor(  )
 	self.isFloat_ = false
 end
 
+function ArmyPlane:setFloat( isFloat )
+	self.isFloat_ = isFloat
+end
+
 function ArmyPlane:onCollision( other )
 	self.isHurtRole_ = true
 end
@@ -208,9 +212,14 @@ function ArmyPlane:updateLogic(dt)
 	if self.isFloat_ == true then
 		if posy <= AI_HEIGHT then
 			self:setSpeed(cc.p(0,0))
-			self:float()
+			self:float(dt)
 		end
 	end
+end
+
+--漂浮的动作
+function ArmyPlane:float(dt)
+
 end
 
 function ArmyPlane:step(dt)
