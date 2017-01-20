@@ -165,16 +165,12 @@ function ArmyPlane:aiMove(dt)
 			self:addSpeed(cc.p(speedX, 0))
 			strategy:useAi()
 		end
+	--发射子弹
 	elseif aiId == 4 then
 		--看见主角才发射
 		if strategy:canAi() then
 			strategy:resetAiTime()
-			local role = GameData:getInstance():getRole()
-			local posx, posy = self:getPosition()
-			local rolePosX, rolePosY = role:getPosition()
-			if math.abs(rolePosX - posx) <= strategy:getAiWidth() then
-				self:fireBullet()
-			end
+			self:fireBullet()
 		end
 		strategy:addAiTime(dt)
 	elseif aiId == 5 then 
@@ -184,34 +180,47 @@ function ArmyPlane:aiMove(dt)
 			self:fireBullet()
 		end
 		strategy:addAiTime(dt)
-	elseif aiId == 8 then 
-		--会根据主角位置移动，如果主角到攻击范围局攻击
+	elseif aiId == 6 then
+		--发射两列
 		if strategy:canAi() then
 			strategy:resetAiTime()
-			local role = GameData:getInstance():getRole()
-			local posx, posy = self:getPosition()
-			local rolePosX, rolePosY = role:getPosition()
-			local dir = posx > rolePosX and -1 or 1
-			local speedX = dir * 5
-			self:setSpeedX(speedX)
-
-			if math.abs(rolePosX - posx) <= strategy:getAiWidth() and (posy > rolePosY )then
-				self:fireBullet()
-			end
+			self:fireBullet()
 		end
 		strategy:addAiTime(dt)
+	elseif aiId == 7 then
+		--死亡发射爆炸弹
+		
+	elseif aiId == 8 then
+		--死亡发射散弹
+		
+	elseif aiId == 9 then 
+		-- --会根据主角位置移动，如果主角到攻击范围局攻击
+		-- if strategy:canAi() then
+		-- 	strategy:resetAiTime()
+		-- 	local role = GameData:getInstance():getRole()
+		-- 	local posx, posy = self:getPosition()
+		-- 	local rolePosX, rolePosY = role:getPosition()
+		-- 	local dir = posx > rolePosX and -1 or 1
+		-- 	local speedX = dir * 5
+		-- 	self:setSpeedX(speedX)
+
+		-- 	if math.abs(rolePosX - posx) <= strategy:getAiWidth() and (posy > rolePosY )then
+		-- 		self:fireBullet()
+		-- 	end
+		-- end
+		-- strategy:addAiTime(dt)
 	elseif aiId == 10 then
 		--发射两列子弹,看见主角才发射
-		if strategy:canAi() then
-			strategy:resetAiTime()
-			local role = GameData:getInstance():getRole()
-			local posx, posy = self:getPosition()
-			local rolePosX, rolePosY = role:getPosition()
-			if math.abs(rolePosX - posx) <= strategy:getAiWidth() then
-				self:fireBullet()
-			end
-		end
-		strategy:addAiTime(dt)
+		-- if strategy:canAi() then
+		-- 	strategy:resetAiTime()
+		-- 	local role = GameData:getInstance():getRole()
+		-- 	local posx, posy = self:getPosition()
+		-- 	local rolePosX, rolePosY = role:getPosition()
+		-- 	if math.abs(rolePosX - posx) <= strategy:getAiWidth() then
+		-- 		self:fireBullet()
+		-- 	end
+		-- end
+		-- strategy:addAiTime(dt)
 	end
 end
 

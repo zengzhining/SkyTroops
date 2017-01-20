@@ -390,13 +390,10 @@ function GameScene:onArmyDead( target)
 			return 
 		end
 		self:createItem(id, param.pos_)
-	elseif aiId == 6 then 
-		--发射一串子弹
-		self:fireBullet(3, target, target:getBulletId() )
 	elseif aiId == 7 then 
 		--发射全场的散弹
 		self:fireBullet(5, target, target:getBulletId() )
-	elseif aiId == 11 then 
+	elseif aiId == 8 then 
 		--发射三个的散弹
 		self:fireBullet(2, target, target:getBulletId() )
 	end
@@ -698,7 +695,6 @@ end
 function GameScene:fireBullet( typeId_ , enemy , bulletId)
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
-	-- if enemy:isDead() then return end
 
 	if typeId_ == 1 then 
 		--普通发射
@@ -769,8 +765,10 @@ function GameScene:onEnemyFire( enemy, bulletId )
 	if id == 5 then 
 		--发射散弹
 		self:fireBullet(2, enemy, bulletId)
-	elseif id == 9 then 
+	elseif id == 6 then
 		--发射两列子弹
+		self:fireBullet(4, enemy, bulletId)
+	elseif id == 9 then 
 		self:fireBullet(4, enemy, bulletId )
 	else
 		--普通发射
