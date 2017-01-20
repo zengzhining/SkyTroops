@@ -49,7 +49,7 @@ function TestScene:ctor()
 	self:add(layer)
 
 	--test label
-	-- local title = display.newTTF("Pixel.ttf", 48, "Hello World")
+	-- local title = display.newTTF("fonts/allura.otf", 48, "Pure Studio")
 	-- title:pos(display.cx, display.cy)
 	-- self:addChild(title)
 
