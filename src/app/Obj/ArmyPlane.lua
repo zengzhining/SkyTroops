@@ -22,6 +22,10 @@ function ArmyPlane:ctor(  )
 	self.hasBeyound_ = false
 
 	self.aiStrategy_ = nil
+
+	--是否漂浮
+	--漂浮一般用在一些boss上，不用让一直下降
+	self.isFloat_ = false
 end
 
 function ArmyPlane:onCollision( other )
@@ -41,7 +45,6 @@ function ArmyPlane:onCollisionBullet(bullet)
 		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
 		local act = cc.Sequence:create(cc.TintTo:create( 0.1,255,0,0 ),cc.TintTo:create( 0.1,255,255,255 ) )
 		self:runAction(act)
-
 	end
 end
 
@@ -196,8 +199,17 @@ function ArmyPlane:aiMove(dt)
 			end
 		end
 		strategy:addAiTime(dt)
-	elseif aiId == 10 then 
-		
+	end
+end
+
+--刷新逻辑
+function ArmyPlane:updateLogic(dt)
+	local posy = self:getPositionY()
+	if self.isFloat_ == true then
+		if posy <= AI_HEIGHT then
+			self:setSpeed(cc.p(0,0))
+			self:float()
+		end
 	end
 end
 
