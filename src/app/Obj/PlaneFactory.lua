@@ -14,11 +14,12 @@ end
 function PlaneFactory:createEnemy( id_ )
 	--最高到11
 	local army = self:createPlane(id_)
-	army:setGameAi(id_)
+	army:setGameAi(ENEMY_AI_TBL[id_])
 	army:setBulletId(ENEMY_BULLET_TBL[id_])
 	army:setScore( ENEMY_SCORE_TBL[id_] )
 	army:setMaxHp(ENEMY_HP_TBL[id_])
 	army:setHp(ENEMY_HP_TBL[id_])
+	army:setFloat(ENEMY_FLOAT_TBL[id_])
 	-- army:setHp(99)
 	army:setAiTimeLimit(1)
 	return army

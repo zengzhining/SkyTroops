@@ -26,6 +26,14 @@ ENEMY_HP_TBL = {
 	15,15,15
 }
 
+--敌人的AI
+ENEMY_AI_TBL = {
+	1,10,1,
+	5,7,6,
+	9,11,1,
+	2
+}
+
 --敌人的分数
 ENEMY_SCORE_TBL = {
 	10,10,15,
@@ -36,9 +44,17 @@ ENEMY_SCORE_TBL = {
 
 --敌人对应的子弹
 ENEMY_BULLET_TBL = {
-	1,2,3,
-	6,5,4,
-	7,8,9,
+	1,1,1,
+	2,4,5,
+	8,9,1,
+	5
+}
+
+--敌人对应的是否漂浮
+ENEMY_FLOAT_TBL = {
+	false,false,false,
+	false,false,false,
+	false,false,false,
 }
 
 --关卡的描述

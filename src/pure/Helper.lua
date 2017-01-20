@@ -6,10 +6,10 @@ function floatObject( obj, time )
 		time = 1.0
 	end
 	local a = CCRepeatForever:create(cc.Sequence:create(
-		cc.EaseIn:create( cc.MoveBy:create(time, ccp( 0, 4 )), 1.5),
-		cc.EaseOut:create( cc.MoveBy:create(time, ccp( 0, 4 )), 1.5),
-		cc.EaseIn:create( cc.MoveBy:create(time, ccp( 0, -4 )), 1.5),
-		cc.EaseOut:create( cc.MoveBy:create(time, ccp( 0, -4 )), 1.5)
+		cc.EaseIn:create( cc.MoveBy:create(time, cc.p( 0, 4 )), 1.5),
+		cc.EaseOut:create( cc.MoveBy:create(time, cc.p( 0, 4 )), 1.5),
+		cc.EaseIn:create( cc.MoveBy:create(time, cc.p( 0, -4 )), 1.5),
+		cc.EaseOut:create( cc.MoveBy:create(time, cc.p( 0, -4 )), 1.5)
 		))
 	obj:runAction(a)
 end

@@ -6,12 +6,12 @@ local BG_SPEED = 10
 local DEFAULT_ROLE = 3
 local DEFAULT_LEVEL = 1
 
-local DEFAULT_WORLD = 2
+local DEFAULT_WORLD = 1
 
 local DEFAULT_BOMB = 3 --默认炸弹个数
 local MAX_BOMB = 6
 
-local MAX_WORLD = 6
+local MAX_WORLD = 5
 
 local KEY_ALL_SCORE = "ALL_SCORE"
 

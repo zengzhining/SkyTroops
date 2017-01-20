@@ -8,7 +8,9 @@ local RED_PLABNE = 2
 
 local MOVE_TIME = 0.2
 
-local AI_HEIGHT = display.height * 2 /3
+local AI_HEIGHT = display.height * 4 /5
+
+local FLOAT_TIME = 5
 
 function ArmyPlane:ctor(  )
 	self.super.ctor(self)
@@ -26,6 +28,9 @@ function ArmyPlane:ctor(  )
 	--是否漂浮
 	--漂浮一般用在一些boss上，不用让一直下降
 	self.isFloat_ = false
+
+	--是否已经漂浮，用于触发
+	self.hasFloat_ = false
 end
 
 function ArmyPlane:setFloat( isFloat )
@@ -53,9 +58,13 @@ function ArmyPlane:onCollisionBullet(bullet)
 end
 
 function ArmyPlane:onCollisionBomb()
-	self:onHurt(999)
+	self:onHurt(50)
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
+	else
+		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
+		local act = cc.Sequence:create(cc.TintTo:create( 0.1,255,0,0 ),cc.TintTo:create( 0.1,255,255,255 ) )
+		self:runAction(act)
 	end
 end
 
@@ -211,15 +220,19 @@ function ArmyPlane:updateLogic(dt)
 	local posy = self:getPositionY()
 	if self.isFloat_ == true then
 		if posy <= AI_HEIGHT then
-			self:setSpeed(cc.p(0,0))
-			self:float(dt)
+			if self.hasFloat_ == false then
+				self:setSpeed(cc.p(0,0))
+				self:float()
+				self.hasFloat_ = true
+			end
 		end
 	end
 end
 
 --漂浮的动作
-function ArmyPlane:float(dt)
-
+function ArmyPlane:float()
+	print("float~~~~~~")
+	Helper.floatObject(self,1)
 end
 
 function ArmyPlane:step(dt)
