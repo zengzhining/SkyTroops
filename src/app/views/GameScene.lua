@@ -535,7 +535,9 @@ function GameScene:onBomb()
 	local bombNum = GameData:getInstance():getBomb()
 	if bombNum > 0 then
 		for c,army in pairs(armyInScreen) do
-			army:onCollisionBomb()
+			if not army:isDead() then
+				army:onCollisionBomb()
+			end
 		end
 
 		for c,bullet in pairs(armyBulletSet) do
