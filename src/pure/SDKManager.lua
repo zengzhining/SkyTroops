@@ -65,21 +65,26 @@ function SDKManager:addEvent()
             print("onDisplayAlert")
         elseif "onDeclineToRate" == event then
             print("onDeclineToRate")
+            self:onDeclineToRate()
         elseif "onRate" == event then
             print("onRate")
+            self:onRate()
         elseif "onRemindLater" == event then
             print("onRemindLater")
+            self:onRemindLater()
         end
     end)
 
     --vedio event
     sdkbox.PluginAdColony:setListener(function(args)
-
+    	print("PluginAdColony~~~~~~~~")
+    	print("args.name~~~~~~~", args.name)
         if "onAdColonyChange" == args.name then
 		        local info = args.info  -- sdkbox::AdColonyAdInfo
 		        local available = args.available -- boolean
                 dump(info, "onAdColonyChange:")
 		        print("available:", available)
+		        self:onVedioLoaded()
 	    elseif "onAdColonyReward" ==  args.name then
 	        local info = args.info  -- sdkbox::AdColonyAdInfo
 	        local currencyName = args.currencyName -- string
@@ -117,13 +122,26 @@ function SDKManager:addEvent()
 
 end
 
+--评论回调
+function SDKManager:onRate()
+
+end
+
+function SDKManager:onRemindLater()
+
+end
+
+function SDKManager:onDeclineToRate()
+
+end
+
 --广告回调事件
 function SDKManager:onBannerLoaded()
 
 end
 
 function SDKManager:onFULLADLoaded()
-
+	self.fullLoad_ = true
 end
 
 function SDKManager:onBeforeShowBanner()
@@ -144,6 +162,10 @@ function SDKManager:onFULLADDismiss()
 	end
 end
 
+function SDKManager:onVedioLoaded()
+	self.vedioLoad_ = true
+end
+
 function SDKManager:onVedioFinished()
 	if self.vedioFinishCallback_ then 
 		self.vedioFinishCallback_()
@@ -155,6 +177,9 @@ function SDKManager:initData()
 	self.vedioFinishCallback_ = nil
 	self.lastPlayVedioTime_ = 0
 	self.lastShowFullTime_ = 0
+
+	self.fullLoad_ = false
+	self.vedioLoad_ = false
 end
 
 function SDKManager:setVedioCallback( callback_ )
@@ -175,7 +200,7 @@ function SDKManager:logEvent( key, value )
 end
 
 function SDKManager:cacheADS()
-	sdkbox.PluginAdMob:cache(SDK_BANNER_NAME)
+	-- sdkbox.PluginAdMob:cache(SDK_BANNER_NAME)
 	sdkbox.PluginAdMob:cache(SDK_FULLAD_NAME)
 end
 
@@ -277,11 +302,12 @@ function SDKManager:isCanPlayVedio()
 end
 
 function SDKManager:showVideo( callback )
+	print("showVideo~~~~~~",CC_NEED_SDK)
 	if not CC_NEED_SDK then return end
 	local status = sdkbox.PluginAdColony:getStatus(SDK_VEDIO_NAME)
-	print("status~~~~~~", status)
+	print("status~~~~", status)
 	--没有就播放全屏
-	if status >= 2 and status <= 3 then
+	if status >= 3 then
 		self:setVedioCallback( callback )
 		sdkbox.PluginAdColony:show(SDK_VEDIO_NAME)
 	else

@@ -59,11 +59,13 @@ function LoadingScene:step(dt)
 		self.time_ = 0
 		self:unUpdate()
 		local callback = function()
+			print("callback~~~~~")
 			__G__actDelay(self, function (  )
 				self:getApp():enterScene(self.sceneName_)
 			end, 1.0)
 		end
 
+		print("self.needAds_~~~~~~", self.needAds_)
 		if self.needAds_ then
 			SDKManager:getInstance():showVideo(callback)
 		else		
