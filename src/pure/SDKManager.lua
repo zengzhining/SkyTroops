@@ -76,8 +76,8 @@ function SDKManager:addEvent()
     sdkbox.PluginAdColony:setListener(function(args)
 
         if "onAdColonyChange" == args.name then
-        local info = args.info  -- sdkbox::AdColonyAdInfo
-        local available = args.available -- boolean
+		        local info = args.info  -- sdkbox::AdColonyAdInfo
+		        local available = args.available -- boolean
                 dump(info, "onAdColonyChange:")
 		        print("available:", available)
 	    elseif "onAdColonyReward" ==  args.name then

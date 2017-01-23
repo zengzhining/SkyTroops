@@ -64,8 +64,11 @@ function LoadingScene:step(dt)
 			end, 1.0)
 		end
 
-		
-		callback()
+		if self.needAds_ then
+			SDKManager:getInstance():showVideo(callback)
+		else		
+			callback()
+		end
 	elseif self.time_ >= 2* LOADING_DT then 
 		--加载资源
 		__G__LoadRes()

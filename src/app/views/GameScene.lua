@@ -359,7 +359,7 @@ function GameScene:onContinueCancel()
 	--这里保存数据	
 	__G__actDelay(self,function (  )
 		self:unUpdate()
-		self:getApp():enterScene("ResultScene")
+		self:getApp():enterLoading("ResultScene", true)
 	end, 1.0)
 end
 
