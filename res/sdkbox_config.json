@@ -12,6 +12,18 @@
                 }
             }
         }, 
+        "Chartboost": {
+            "ads": {
+                "vedio": {
+                    "type": "rewarded_video"
+                }, 
+                "level": {
+                    "type": "interstitial"
+                }
+            }, 
+            "id": "5885b4e643150f4771a4b396", 
+            "signature": "bf2260cedceb13f5af2be82d53f5fd5ae5689f35"
+        }, 
         "Review": {
             "LaunchLimit": 0, 
             "DayForReminding": 0, 
@@ -36,20 +48,14 @@
             "track_init_screen": false, 
             "trackingCode": "UA-62417901-1"
         }, 
-        "Vungle": {
-            "debug": true, 
-            "id": "5535dc14a104ddf07600001c", 
-            "ads": {
-                "reward": {
-                    "sound": false, 
-                    "backbutton": false, 
-                    "incentivized": true
-                }, 
-                "video": {
-                    "sound": true, 
-                    "backbutton": true
-                }
-            }
+        "Review": {
+            "LaunchLimit": 3, 
+            "DayForReminding": 1, 
+            "tryPromptWhenInit": true, 
+            "AppID": "587767923", 
+            "DayLimit": 0, 
+            "LaunchForReminding": 2, 
+            "UserEventLimit": 0
         }, 
         "AdMob": {
             "test": true, 
@@ -67,14 +73,35 @@
                 }
             }
         }, 
-        "Review": {
-            "LaunchLimit": 3, 
-            "DayForReminding": 1, 
-            "tryPromptWhenInit": true, 
-            "AppID": "587767923", 
-            "DayLimit": 0, 
-            "LaunchForReminding": 2, 
-            "UserEventLimit": 0
+        "Vungle": {
+            "debug": true, 
+            "id": "5535dc14a104ddf07600001c", 
+            "ads": {
+                "reward": {
+                    "sound": false, 
+                    "backbutton": false, 
+                    "incentivized": true
+                }, 
+                "video": {
+                    "sound": true, 
+                    "backbutton": true
+                }
+            }
+        }, 
+        "Chartboost": {
+            "ads": {
+                "Default": {
+                    "type": "interstitial"
+                }, 
+                "Level Complete": {
+                    "type": "rewarded_video"
+                }, 
+                "MoreApp": {
+                    "type": "more_app"
+                }
+            }, 
+            "id": "4f21c409cd1cb2fb7000001b", 
+            "signature": "92e2de2fd7070327bdeb54c15a5295309c6fcd2d"
         }, 
         "AdColony": {
             "debug": true, 
