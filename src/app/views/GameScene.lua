@@ -857,9 +857,6 @@ function GameScene:onCreateArmy(  )
 
 		local width = army:getViewRect().width
 		local armyPos = cc.p(armyInfo.x, armyInfo.y)
-		local armySpeed = self:getArmySpeed()
-		army:setSpeed(cc.p(0, armySpeed))
-		army:setDirX(dir)
 		army:pos(armyPos)
 		army:setTag(TAG_ARMY)
 		self.gameLayer_:addChild(army)

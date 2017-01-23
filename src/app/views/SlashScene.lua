@@ -5,7 +5,7 @@ function SlashScene:onCreate()
 	-- body
 	local layer = display.newLayer(display.COLOR_WHITE)
 	self:add(layer)
-	local str = "Pure Studio"
+	local str = "Pure  Studio"
 	local title = display.newTTF("fonts/allura.otf", 72, str)
 	title:setColor(display.COLOR_BLACK)
 	title:pos(display.cx, display.cy)
@@ -15,7 +15,7 @@ end
 function SlashScene:onEnter()
 	__G__actDelay(self, function (  )
 		self:getApp():enterScene("MainMenu")
-	end, 3)
+	end, 5)
 end
 
 function SlashScene:onExit()

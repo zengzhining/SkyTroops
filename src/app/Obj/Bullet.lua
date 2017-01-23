@@ -34,7 +34,7 @@ function Bullet:getCollisionRect()
 end
 
 function Bullet:onCollision(army)
-	local act = cc.Sequence:create( cc.FadeOut:create(0.1), cc.RemoveSelf:create(true) )
+	local act = cc.RemoveSelf:create(true)
 	self:runAction(act)
 end
 

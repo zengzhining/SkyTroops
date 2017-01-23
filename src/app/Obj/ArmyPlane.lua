@@ -25,6 +25,7 @@ function ArmyPlane:ctor(  )
 
 	self.aiStrategy_ = nil
 
+	self.hasInScreen_ = false
 	--是否漂浮
 	--漂浮一般用在一些boss上，不用让一直下降
 	self.isFloat_ = false
@@ -58,7 +59,7 @@ function ArmyPlane:onCollisionBullet(bullet)
 end
 
 function ArmyPlane:onCollisionBomb()
-	self:onHurt(50)
+	self:onHurt(20)
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
 	else
@@ -167,7 +168,7 @@ function ArmyPlane:aiMove(dt)
 		end
 	--发射子弹
 	elseif aiId == 4 then
-		--看见主角才发射
+		--才发射
 		if strategy:canAi() then
 			strategy:resetAiTime()
 			self:fireBullet()
@@ -224,9 +225,23 @@ function ArmyPlane:aiMove(dt)
 	end
 end
 
+--进入屏幕的回调函数
+function ArmyPlane:onInScreen()
+	
+end
+
 --刷新逻辑
 function ArmyPlane:updateLogic(dt)
 	local posy = self:getPositionY()
+	if not self.hasInScreen_ then 
+		if posy < display.height + self:getViewRect().height * 0.5 then
+			self.hasInScreen_ = true
+			if self.onInScreen then
+				self:onInScreen()
+			end
+		end
+	end
+	
 	if self.isFloat_ == true then
 		if posy <= AI_HEIGHT then
 			if self.hasFloat_ == false then
@@ -240,7 +255,6 @@ end
 
 --漂浮的动作
 function ArmyPlane:float()
-	print("float~~~~~~")
 	Helper.floatObject(self,1)
 end
 

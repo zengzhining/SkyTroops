@@ -301,7 +301,11 @@ end
 
 function SDKManager:showVideo( callback )
 	print("showVideo~~~~~~",CC_NEED_SDK)
-	if not CC_NEED_SDK then return end
+	if not CC_NEED_SDK then 
+		callback()
+		return 
+	end
+
 	local status = sdkbox.PluginAdColony:getStatus(SDK_VEDIO_NAME)
 	print("status~~~~", status)
 	--没有就播放全屏
