@@ -77,8 +77,6 @@ function SDKManager:addEvent()
 
     --vedio event
     sdkbox.PluginAdColony:setListener(function(args)
-    	print("PluginAdColony~~~~~~~~")
-    	print("args.name~~~~~~~", args.name)
         if "onAdColonyChange" == args.name then
 		        local info = args.info  -- sdkbox::AdColonyAdInfo
 		        local available = args.available -- boolean

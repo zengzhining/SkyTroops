@@ -12,7 +12,7 @@ function MainMenu:onCreate()
 		Helper.showClickParticle(startBtn, cc.p(size.width * 0.5, size.height * 0.5))
 		__G__actDelay(self,function (  )
 			
-			self:getApp():enterLoading("SelectScene", true)
+			self:getApp():enterLoading("SelectScene")
 		end, 1)
 	end)
 
