@@ -88,6 +88,9 @@ function GameScene:initData()
 
 	--血条
 	self.hpBar_ = nil
+
+	--标记只有一次全部敌人死亡的回调
+	self.isAllDead_ = false
 end
 
 function GameScene:step( dt )
@@ -213,8 +216,10 @@ function GameScene:step( dt )
 		tempTime = 0 
 		--没有敌人时候需要进入下一个关卡生成敌人
 		if #armySet <= 0 then
-			self:onAllArmyGone()
-			-- self:onCreateArmy()
+			if self.isAllDead_ == false then
+				self:onAllArmyGone()
+				self.isAllDead_ = true
+			end
 		end
 	end
 end
@@ -914,6 +919,8 @@ function GameScene:onCreateArmy(  )
 	if self:isBoss() then
 		__G__GameBgm(GameData:getInstance():getWorld(), GameData:getInstance():getLevel())
 	end
+
+	self.isAllDead_ = false
 end
 
 function GameScene:isBoss()
