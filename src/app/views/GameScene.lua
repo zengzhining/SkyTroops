@@ -695,11 +695,11 @@ end
 function GameScene:fireBullet( typeId_ , enemy , bulletId)
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
-
+	local bulletY = posy - enemy:getViewRect().height *0.05
 	if typeId_ == 1 then 
 		--普通发射
 		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
-		bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
+		bullet:pos(posx, bulletY)
 		bullet:onFire()
 		bullet:setSpeed(cc.p(0, -5))
 		gameLayer:addChild(bullet)
@@ -709,7 +709,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		local speedX = 3
 		for i = -1, 1,1 do
 			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
-			bullet:pos(posx, posy - enemy:getViewRect().height *0.25)
+			bullet:pos(posx, bulletY)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(speedX * i, -5))
 			gameLayer:addChild(bullet)
@@ -721,7 +721,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		local DEL_HEIGHT = 30
 		for i = 0,2,1 do
 			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
-			bullet:pos(posx, posy - enemy:getViewRect().height *0.25 - DEL_HEIGHT*i )
+			bullet:pos(posx, bulletY - DEL_HEIGHT*i )
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, -speedY))
 			gameLayer:addChild(bullet)
@@ -732,7 +732,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		local PER_WIDTH = 30
 		for i = -1, 1, 2 do 
 			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
-			bullet:pos(posx + PER_WIDTH * i, posy - enemy:getViewRect().height *0.25)
+			bullet:pos(posx + PER_WIDTH * i, bulletY)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, -5))
 			gameLayer:addChild(bullet)
@@ -770,6 +770,12 @@ function GameScene:onEnemyFire( enemy, bulletId )
 		self:fireBullet(4, enemy, bulletId)
 	elseif id == 9 then 
 		self:fireBullet(4, enemy, bulletId )
+	elseif id == 13 then
+		--发射散弹
+		self:fireBullet(2, enemy, bulletId)
+	elseif id == 14 then
+		--发射两列子弹
+		self:fireBullet(4, enemy, bulletId)
 	else
 		--普通发射
 		self:fireBullet(1,enemy, bulletId)

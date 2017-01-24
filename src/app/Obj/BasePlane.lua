@@ -22,7 +22,6 @@ function BasePlane:initData()
 
 	--发射子弹类型，直射还是散射，默认发射一个
 	self.bulletFireTypeId_ = 1
-
 end
 
 function BasePlane:onEnter()

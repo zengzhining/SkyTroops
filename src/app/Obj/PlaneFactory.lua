@@ -21,7 +21,9 @@ function PlaneFactory:createEnemy( id_ )
 	army:setMaxHp(ENEMY_HP_TBL[id_])
 	army:setHp(ENEMY_HP_TBL[id_])
 	army:setFloat(ENEMY_FLOAT_TBL[id_])
-	army:setSpeed(cc.p(0,-3))
+	if not DESIGN then
+		army:setSpeed(cc.p(0,-3))
+	end
 
 	function army:onInScreen()
 		army:setSpeed(ENEMY_SPEED_TBL[id_])

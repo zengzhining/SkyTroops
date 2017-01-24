@@ -179,7 +179,7 @@ function DesignScene:changePlaneId()
 	local idTbl = { "#RedPlane.png", "#GreyPlane.png" }
 	if selectPlane then 
 		local id = selectPlane:getId()
-		id = id + 1 > 9 and 1 or id+1
+		id = id + 1 > 15 and 1 or id+1
 		-- if id == 1 then 
 		-- 	id =  2
 		-- elseif id == 2 then

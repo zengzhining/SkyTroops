@@ -15,7 +15,7 @@ local FLOAT_TIME = 5
 function ArmyPlane:ctor(  )
 	self.super.ctor(self)
 	-- self:flipY(true)
-	self:setRotation(180)
+	-- self:setRotation(180)
 
 	self.id_ = GREY_PLANE -- id默认1
 	self.isHurtRole_ = false
@@ -32,6 +32,9 @@ function ArmyPlane:ctor(  )
 
 	--是否已经漂浮，用于触发
 	self.hasFloat_ = false
+
+	--碰撞到的伤害
+	self.damge_ = 1
 end
 
 function ArmyPlane:setFloat( isFloat )
@@ -41,6 +44,15 @@ end
 function ArmyPlane:onCollision( other )
 	self.isHurtRole_ = true
 end
+
+function ArmyPlane:setDamge(damge_)
+	self.damge_ = damge_
+end
+
+function ArmyPlane:getDamge()
+	return self.damge_
+end
+
 
 function ArmyPlane:onCollisionBullet(bullet)
 	local damge = bullet:getDamge()
@@ -222,6 +234,42 @@ function ArmyPlane:aiMove(dt)
 		-- 	end
 		-- end
 		-- strategy:addAiTime(dt)
+	elseif aiId == 13 then
+		--小boss Ai 发射子弹，同时跟着角色左右移动
+		local role = GameData:getInstance():getRole()
+		local rolePosX, rolePosY = role:getPosition()
+		local posx, posy = self:getPosition()
+		if strategy:canAi() then
+			strategy:resetAiTime()
+			self:fireBullet()
+		end
+
+		local dir = 1
+		if posx > rolePosX then
+			dir = -1
+		end
+		self:posByX(dir,0)
+
+
+		strategy:addAiTime(dt)
+	elseif aiId == 14 then
+		--小boss Ai 发射子弹，同时跟着角色左右移动
+		local role = GameData:getInstance():getRole()
+		local rolePosX, rolePosY = role:getPosition()
+		local posx, posy = self:getPosition()
+		if strategy:canAi() then
+			strategy:resetAiTime()
+			self:fireBullet()
+		end
+
+		local dir = 1
+		if posx > rolePosX then
+			dir = -1
+		end
+		self:posByX(dir,0)
+
+
+		strategy:addAiTime(dt)
 	end
 end
 

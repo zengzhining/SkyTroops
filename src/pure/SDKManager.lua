@@ -363,9 +363,10 @@ function SDKManager:isCanPlayVedio()
 end
 
 function SDKManager:showVideo( callback )
-	print("showVideo~~~~~~",CC_NEED_SDK)
 	if not CC_NEED_SDK then 
-		callback()
+		if callback then
+			callback()
+		end
 		return 
 	end
 

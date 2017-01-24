@@ -298,7 +298,11 @@ end
 
 --碰撞碰到敌人回调
 function HeroPlane:onCollision(other )
-	self:onHurt(1)
+	local damge = 1 
+	if other and other.getDamge then
+		damge = other:getDamge()
+	end
+	self:onHurt(damge)
 	if self:isDead() then 
 		--默认在上上层
 		self:playDeadAnimation( "PlaneExplose%02d.png")
