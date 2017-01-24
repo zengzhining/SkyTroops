@@ -829,7 +829,9 @@ function GameScene:onAllArmyGone()
 	local isExit = gameio.isExist(str)
 	if isExit then 
 		--存在下一个的配置就生成敌人
-		self:onCreateArmy()
+		__G__actDelay(self,function (  )
+			self:onCreateArmy()
+		end, 2.0)
 	else
 		--不存在就进入下一个世界
 		GameData:getInstance():addWorld(1)
