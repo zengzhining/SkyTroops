@@ -916,6 +916,8 @@ function GameScene:onCreateArmy(  )
 			elseif item:getPositionY() < 0 then
 				item:removeSelf()
 			end
+
+			armyBulletSet = {}
 		end
 	end
 	
