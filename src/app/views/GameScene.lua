@@ -9,6 +9,7 @@ local TAG_CONTINUE_LAYER = 104
 local TAG_CONTROL_LAYER = 105
 local TAG_TITLE_LAYER = 107 --关卡文字
 local TAG_ARMY = 201
+local TAG_BULLET = 202
 
 local armySet = {}
 local bulletSet = {} --主角的子弹
@@ -713,7 +714,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		bullet:pos(posx, bulletY)
 		bullet:onFire()
 		bullet:setSpeed(cc.p(0, -5))
-		gameLayer:addChild(bullet)
+		gameLayer:addChild(bullet, 0, TAG_BULLET)
 		table.insert(armyBulletSet, bullet)
 	elseif typeId_ == 2 then 
 		--发射散弹
@@ -723,7 +724,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			bullet:pos(posx, bulletY)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(speedX * i, -5))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
 			table.insert(armyBulletSet, bullet)
 		end
 	elseif typeId_ == 3 then 
@@ -735,7 +736,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			bullet:pos(posx, bulletY - DEL_HEIGHT*i )
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, -speedY))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
 			table.insert(armyBulletSet, bullet)
 		end
 	elseif typeId_ == 4 then 
@@ -746,7 +747,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			bullet:pos(posx + PER_WIDTH * i, bulletY)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, -5))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
 			table.insert(armyBulletSet, bullet)
 		end
 	elseif typeId_ == 5 then 
@@ -760,7 +761,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			bullet:pos(posx , posy )
 			bullet:onFire()
 			bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
 			table.insert(armyBulletSet, bullet)
 		end 
 	elseif typeId_ == 6 then
@@ -780,7 +781,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		local speedX = dx/dy * speedY
 
 		bullet:setSpeed(cc.p(-speedX, -speedY))
-		gameLayer:addChild(bullet)
+		gameLayer:addChild(bullet, 0, TAG_BULLET)
 		table.insert(armyBulletSet, bullet)
 	elseif typeId_ ==7 then
 		--发射一半的散弹
@@ -793,7 +794,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			bullet:pos(posx , posy )
 			bullet:onFire()
 			bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
 			table.insert(armyBulletSet, bullet)
 		end 
 	end
@@ -909,6 +910,12 @@ function GameScene:onCreateArmy(  )
 		local tag = item:getTag()
 		if tag == TAG_ARMY then
 			item:removeSelf()
+		else tag == TAG_BULLET then
+			if item:getPositionY() > display.height then
+				item:removeSelf()
+			elseif item:getPositionY() < 0 then
+				item:removeSelf()
+			end
 		end
 	end
 	

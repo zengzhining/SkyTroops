@@ -75,9 +75,9 @@ function ArmyPlane:onCollisionBomb()
 	self:onHurt(20)
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
-		__G__actDelay(self, function (  )
-			self:setSpeedY(-10)
-		end, 1.0)
+		-- __G__actDelay(self, function (  )
+		-- 	self:setSpeedY(-10)
+		-- end, 1.0)
 	else
 		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
 		local act = cc.Sequence:create(cc.TintTo:create( 0.1,255,0,0 ),cc.TintTo:create( 0.1,255,255,255 ) )
