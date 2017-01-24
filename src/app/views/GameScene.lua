@@ -401,7 +401,7 @@ end
 
 function GameScene:showAddScore(dScore, params)
 	local str = string.format("+%d", dScore)
-	local title = display.newTTF(nil, 32,str)
+	local title = display.newTTF("fonts/pen.ttf", 32,str)
 	local uiLayer = self:getChildByTag(TAG_UI)
 	if params.pos_ then 
 		title:pos(params.pos_)
