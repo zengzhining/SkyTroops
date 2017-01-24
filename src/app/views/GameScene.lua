@@ -835,7 +835,6 @@ function GameScene:onAllArmyGone()
 		--不存在就进入下一个世界
 		GameData:getInstance():addWorld(1)
 		GameData:getInstance():resetLevel()
-		audio.stopMusic(true)
 		local world = GameData:getInstance():getWorld()
 		--如果超过就进入游戏结束场景
 		if GameData:getInstance():getWorld() > GameData:getInstance():getMaxWorld() then
@@ -846,6 +845,13 @@ function GameScene:onAllArmyGone()
 			--更新背景
 			local bg = self:getChildByTag(TAG_BG)
 			bg:fadeOut(5)
+
+			__G__MusicFadeOut(self, 5)
+
+			__G__actDelay(self, function (  )
+				audio.stopMusic(true)
+				
+			end, 4.8)
 
 			__G__actDelay(bg,function (  )
 				local str = string.format("bg/%02dBackground.png", world)
@@ -902,6 +908,15 @@ function GameScene:onCreateArmy(  )
 	if bg and bg.setSpeed then 
 		bg:setSpeed(bgSpeed)
 	end
+
+	--是boss需要切换背景音乐
+	if self:isBoss() then
+		__G__GameBgm(GameData:getInstance():getWorld(), GameData:getInstance():getLevel())
+	end
+end
+
+function GameScene:isBoss()
+	return true
 end
 
 function GameScene:getBgSpeed()
@@ -964,7 +979,7 @@ end
 
 function GameScene:startGame()
 	-- audio.stopMusic()
-	__G__GameBgm(GameData:getInstance():getWorld())
+	__G__GameBgm(GameData:getInstance():getWorld(), GameData:getInstance():getLevel())
 	self:showUIWithAnimation()
 	self:onUpdate(handler(self, self.step))
 	self:onCreateArmy()

@@ -335,8 +335,28 @@ __G__MainMusic = function( id )
 	audio.playMusic(fileName)
 end
 
-__G__GameBgm = function ( level )
-	local str = string.format("sfx/level%02d.mp3",level)
+__G__GameBgm = function ( world,level )
+	local isBoss = false
+	local index = 1
+
+	if world >= 5 then 
+		index = 3
+	elseif world >= 3 then 
+		index = 2
+	end
+
+	if level == 2 then
+		isBoss = true
+	end
+
+	if isBoss then
+		index = 4
+		if world >= 3 then 
+			index = 5
+		end
+	end
+
+	local str = string.format("sfx/level%02d.mp3",index)
 	audio.playMusic(str)
 	
 end
