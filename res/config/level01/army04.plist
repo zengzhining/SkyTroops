@@ -314,5 +314,21 @@
 		<key>y</key>
 		<real>10622.9697265625</real>
 	</dict>
+	<dict>
+		<key>id</key>
+		<real>1</real>
+		<key>x</key>
+		<real>201.743896484375</real>
+		<key>y</key>
+		<real>1439.5906982421875</real>
+	</dict>
+	<dict>
+		<key>id</key>
+		<real>1</real>
+		<key>x</key>
+		<real>512.5328369140625</real>
+		<key>y</key>
+		<real>1673.783203125</real>
+	</dict>
 </array>
 </plist>

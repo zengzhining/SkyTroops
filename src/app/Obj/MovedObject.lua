@@ -35,6 +35,10 @@ function MovedObject:setSpeedX(speedX)
 	self.speed_.x = speedX
 end
 
+function MovedObject:setSpeedY(speedY)
+	self.speed_.y = speedY
+end
+
 function MovedObject:getSpeed()
 	return self.speed_
 end
