@@ -336,6 +336,8 @@ __G__MainMusic = function( id )
 end
 
 __G__GameBgm = function ( world,level )
+	local bossTbl = { 3,3,2,3,3 }
+
 	local isBoss = false
 	local index = 1
 
@@ -345,7 +347,7 @@ __G__GameBgm = function ( world,level )
 		index = 2
 	end
 
-	if level == 2 then
+	if level == bossTbl[world] then
 		isBoss = true
 	end
 
