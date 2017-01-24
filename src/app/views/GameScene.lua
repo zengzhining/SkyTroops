@@ -389,11 +389,11 @@ function GameScene:onArmyDead( target)
 	--10的话发物品
 	if aiId == 9 then 
 		local id = math.random(1,3)
-		local randomNum = math.random(1,1000)
-		--一半的概率
-		if randomNum > 500 then 
-			return 
-		end
+		-- local randomNum = math.random(1,1000)
+		-- --一半的概率
+		-- if randomNum > 500 then 
+		-- 	return 
+		-- end
 		self:createItem(id, param.pos_)
 	elseif aiId == 7 then 
 		--发射全场的散弹
@@ -782,6 +782,20 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		bullet:setSpeed(cc.p(-speedX, -speedY))
 		gameLayer:addChild(bullet)
 		table.insert(armyBulletSet, bullet)
+	elseif typeId_ ==7 then
+		--发射一半的散弹
+		local PER_DREE = math.pi/6
+		local SPEED = 5
+		for i = 6, 12 do
+			--
+			local dgree = i * PER_DREE 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx , posy )
+			bullet:onFire()
+			bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
+			gameLayer:addChild(bullet)
+			table.insert(armyBulletSet, bullet)
+		end 
 	end
 
 end
@@ -790,24 +804,27 @@ end
 function GameScene:onEnemyFire( enemy, bulletId )
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
-	local id = enemy:getAiId()
-	if id == 5 then 
+	local aiId = enemy:getAiId()
+	if aiId == 5 then 
 		--发射散弹
 		self:fireBullet(2, enemy, bulletId)
-	elseif id == 6 then
+	elseif aiId == 6 then
 		--发射两列子弹
 		self:fireBullet(4, enemy, bulletId)
-	elseif id == 9 then 
+	elseif aiId == 9 then 
 		self:fireBullet(4, enemy, bulletId )
-	elseif id == 13 then
+	elseif aiId == 13 then
 		--发射散弹
 		self:fireBullet(2, enemy, bulletId)
-	elseif id == 14 then
+	elseif aiId == 14 then
 		--发射两列子弹
 		self:fireBullet(4, enemy, bulletId)
-	elseif id == 15 then
+	elseif aiId == 15 then
 		--发射跟随子弹
 		self:fireBullet(6, enemy, bulletId)
+	elseif aiId == 21 then
+		--大boss1,发射面向主角的散弹
+		self:fireBullet(7, enemy, bulletId)
 	else
 		--普通发射
 		self:fireBullet(1,enemy, bulletId)

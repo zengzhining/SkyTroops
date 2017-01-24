@@ -12,9 +12,9 @@ local g_lastId = 1
 
 --是否强置加入,后为强制加入的id,可用于编辑
 local FORCE_ADD = true
-local NEED_LOAD = false
-local LEVEL = 3
-local FORCE_ID = 1
+local NEED_LOAD = true
+local LEVEL = 1
+local FORCE_ID = 5
 ---------------------------------------
 
 --------------function----------------
@@ -158,8 +158,11 @@ function DesignScene:initControl()
 				self:cameraMove(-1)
 			elseif keycode == cc.KeyCode.KEY_Q then 
 				self:save()
-			elseif keycode == cc.KeyCode.KEY_SPACE or keycode == cc.KeyCode.KEY_D then
-				self:changePlaneId()
+			elseif keycode == cc.KeyCode.KEY_SPACE then
+				self:changePlaneId( 1 )
+			elseif keycode == cc.KeyCode.KEY_D then
+				self:changePlaneId( -1 )
+
 			elseif keycode == cc.KeyCode.KEY_DELETE then
 				self:deleteSelectPlane()
 			end
@@ -175,11 +178,12 @@ function DesignScene:deleteSelectPlane()
 	end
 end
 
-function DesignScene:changePlaneId()
+function DesignScene:changePlaneId( dir )
 	local idTbl = { "#RedPlane.png", "#GreyPlane.png" }
 	if selectPlane then 
 		local id = selectPlane:getId()
-		id = id + 1 > 15 and 1 or id+1
+		id = id + dir > 15 and 1 or id+dir
+		id = id + dir <= 0 and 1 or id
 		-- if id == 1 then 
 		-- 	id =  2
 		-- elseif id == 2 then

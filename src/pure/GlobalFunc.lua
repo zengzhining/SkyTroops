@@ -336,7 +336,7 @@ __G__MainMusic = function( id )
 end
 
 __G__GameBgm = function ( world,level )
-	local bossTbl = { 3,3,2,3,3 }
+	local bossTbl = { 5,3,2,3,3 }
 
 	local isBoss = false
 	local index = 1
