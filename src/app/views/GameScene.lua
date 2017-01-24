@@ -910,7 +910,7 @@ function GameScene:onCreateArmy(  )
 		local tag = item:getTag()
 		if tag == TAG_ARMY then
 			item:removeSelf()
-		else tag == TAG_BULLET then
+		elseif tag == TAG_BULLET then
 			if item:getPositionY() > display.height then
 				item:removeSelf()
 			elseif item:getPositionY() < 0 then
