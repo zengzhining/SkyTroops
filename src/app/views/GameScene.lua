@@ -531,9 +531,16 @@ end
 function GameScene:onBomb()
 	local bombNum = GameData:getInstance():getBomb()
 	if bombNum > 0 then
+		Helper.showBoomParticle(self.gameLayer_)
+
 		for c,army in pairs(armyInScreen) do
 			if not army:isDead() then
-				army:onCollisionBomb()
+				local posy = army:getPositionY()
+				local time = 1.6 * posy/ display.height
+				__G__actDelay(army, function (  )
+					army:onCollisionBomb()
+					
+				end, time)
 			end
 		end
 

@@ -283,7 +283,7 @@ function TestScene:ctor()
 
 	-- local mainPlane
 
-	-- Helper.showChangeParticle(layer, display.center)
+	Helper.showBoomParticle(layer, display.center)
 
 	--拖尾
 	-- local ms = cc.MotionStreak:create(0.5, 5, 20, display.COLOR_RED, "png/streak.png")
