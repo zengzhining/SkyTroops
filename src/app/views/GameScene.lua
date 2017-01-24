@@ -752,7 +752,25 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			gameLayer:addChild(bullet)
 			table.insert(armyBulletSet, bullet)
 		end 
+	elseif typeId_ == 6 then
+		--跟随子弹
+		--普通发射
+		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+		bullet:pos(posx, bulletY)
+		bullet:onFire()
 
+		local role = GameData:getInstance():getRole()
+		local rolex, roley = role:getPosition()
+		local dx = rolex - posx
+		local dy = roley - bulletY
+
+		local speedY = 5
+
+		local speedX = dx/dy * speedY
+
+		bullet:setSpeed(cc.p(-speedX, -speedY))
+		gameLayer:addChild(bullet)
+		table.insert(armyBulletSet, bullet)
 	end
 
 end
@@ -776,6 +794,9 @@ function GameScene:onEnemyFire( enemy, bulletId )
 	elseif id == 14 then
 		--发射两列子弹
 		self:fireBullet(4, enemy, bulletId)
+	elseif id == 15 then
+		--发射跟随子弹
+		self:fireBullet(6, enemy, bulletId)
 	else
 		--普通发射
 		self:fireBullet(1,enemy, bulletId)

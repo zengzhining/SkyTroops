@@ -6,6 +6,8 @@ function Bullet:ctor()
 	self.super.ctor(self)
 
 	self.damge_ = 1
+
+	self.ai_ = 0
 end
 
 function Bullet:setDamge( damge )
@@ -38,11 +40,28 @@ function Bullet:onCollision(army)
 	self:runAction(act)
 end
 
+function Bullet:updateLogic(dt)
+	if self.ai_ == 1 then
+		local role = GameData:getInstance():getRole()
+		local rolex = role:getPositionX()
+		local posx = self:getPositionX()
+		local dir = 1 --默认向右
+		if posx > rolex then
+			dir = -1
+		end
+
+		self:setSpeedX(dir) 
+
+	end
+	-- print("updateLogic~~~~")
+end
+
 function Bullet:step(dt)
-	local gameSpeed = GameData:getInstance():getGameSpeed()
-	local speedY = self.speed_.y * gameSpeed
-	self:posByY(speedY)
-	self:posByX(self.speed_.x * gameSpeed)
+	Bullet.super.step(self,dt)
+	-- local gameSpeed = GameData:getInstance():getGameSpeed()
+	-- local speedY = self.speed_.y * gameSpeed
+	-- self:posByY(speedY)
+	-- self:posByX(self.speed_.x * gameSpeed)
 end
 
 

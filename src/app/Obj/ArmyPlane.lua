@@ -270,6 +270,16 @@ function ArmyPlane:aiMove(dt)
 
 
 		strategy:addAiTime(dt)
+	elseif aiId == 15 then
+		--小boss 发射跟随子弹
+		local role = GameData:getInstance():getRole()
+		local rolePosX, rolePosY = role:getPosition()
+		local posx, posy = self:getPosition()
+		if strategy:canAi() then
+			strategy:resetAiTime()
+			self:fireBullet()
+		end
+		strategy:addAiTime(dt)
 	end
 end
 

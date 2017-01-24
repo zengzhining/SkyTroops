@@ -33,7 +33,7 @@ ENEMY_AI_TBL = {
 	4,2,7,
 	8,5,13,
 	9,11,1,
-	9,14,1,
+	9,14,15,
 	9,11,1,
 }
 
@@ -42,7 +42,7 @@ ENEMY_AI_TIME_TBL = {
 	2,2.5,1,
 	2,2,1,
 	2,2,1,
-	2,2,1,
+	2,2,0.5,
 	2,2,1,
 }
 
@@ -60,7 +60,7 @@ ENEMY_BULLET_TBL = {
 	1,1,1,
 	2,4,5,
 	8,9,1,
-	8,7,1,
+	8,7,2,
 	8,9,1,
 }
 
@@ -78,7 +78,7 @@ ENEMY_FLOAT_TBL = {
 	false,false,false,
 	false,false,true,
 	false,false,false,
-	false,true,false,
+	false,true,true,
 	false,true,false,
 }
 
