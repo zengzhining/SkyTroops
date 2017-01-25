@@ -433,10 +433,19 @@ function GameScene:onArmyDead( target)
 
 		local hpPer = hp/maxHp
 
+		local randomNum = math.random(1,1000)
 		if hpPer >= 0.8 then
-			id = 1
+			if randomNum > 500 then
+				id = 1
+			else
+				id = 3
+			end
 		elseif hpPer >= 0.4 then
-			id = 3
+			if randomNum > 300 then
+				id = 3
+			else
+				id = 2
+			end
 		else
 			id = 2
 		end
