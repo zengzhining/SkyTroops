@@ -57,9 +57,9 @@ end
 function ArmyPlane:onCollisionBullet(bullet)
 	local damge = bullet:getDamge()
 	local role = GameData:getInstance():getRole()
-	if not role:isDead() then 
-		damge = bullet:getDamge() * role:getLevel()
-	end
+	-- if not role:isDead() then 
+	-- 	damge = bullet:getDamge() * role:getLevel()
+	-- end
 	self:onHurt(damge)
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
@@ -209,7 +209,11 @@ function ArmyPlane:aiMove(dt)
 		
 	elseif aiId == 8 then
 		--死亡发射散弹
-		
+		--突然加速
+		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
+			self:addSpeed(cc.p(0, -5))
+			strategy:useAi()
+		end
 	elseif aiId == 9 then 
 		-- --会根据主角位置移动，如果主角到攻击范围局攻击
 		-- if strategy:canAi() then

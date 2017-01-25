@@ -224,6 +224,36 @@ end
 function HeroPlane:levelUp()
 	self:addLevel(1)
 	self:updateAvatar()
+	self:updateBullet()
+end
+
+function HeroPlane:updateBullet()
+	local id = self:getId()
+	local typeId = self:getBulletFireType()
+	local fireTbl = { 
+		{ 1,2,3 },
+		{ 1,2,4	},
+		{ 1,1,1 },
+		{ 1,1,1 },
+		{ 1,2,3 },
+		{ 1,2,4 }
+
+	 }
+	local level = self:getLevel()
+	local nextTypeId = fireTbl[id][level]
+	if nextTypeId then 
+		self:setBulletFireType(nextTypeId)
+	end
+
+	--update bullet time
+
+	if id == 3 then
+		local tbl = { 0.4, 0.2, 0.1 }
+		local nextcalmTime = tbl[level]
+		if nextcalmTime then
+			self:setBulletCalmTime(nextcalmTime)
+		end
+	end
 end
 
 --更新角色服装
