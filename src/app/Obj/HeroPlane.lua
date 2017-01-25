@@ -234,7 +234,7 @@ function HeroPlane:updateBullet()
 		{ 1,2,3 },
 		{ 1,2,4	},
 		{ 1,1,1 },
-		{ 1,1,1 },
+		{ 1,2,2 },
 		{ 1,2,3 },
 		{ 1,2,4 }
 
@@ -246,8 +246,13 @@ function HeroPlane:updateBullet()
 	end
 
 	--update bullet time
-
-	if id == 3 then
+	if id == 1 then
+		local tbl = { 0.15, 0.2, 0.25 }
+		local nextcalmTime = tbl[level]
+		if nextcalmTime then
+			self:setBulletCalmTime(nextcalmTime)
+		end
+	elseif id == 3 then
 		local tbl = { 0.4, 0.2, 0.1 }
 		local nextcalmTime = tbl[level]
 		if nextcalmTime then

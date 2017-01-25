@@ -224,6 +224,8 @@ function GameScene:step( dt )
 	if tempTime >= armtTime then
 		tempTime = 0 
 
+		local count = self.gameLayer_:getChildrenCount()
+		print("count~~~~~~", count)
 		--没有敌人时候需要进入下一个关卡生成敌人
 		if #armySet <= 0 then
 			if self.isAllDead_ == false then
@@ -944,7 +946,7 @@ function GameScene:onCreateArmy(  )
 			armyBulletSet = {}
 		end
 	end
-	
+
 	--读取plist数据创建敌人
 	local armyData = self:getArmyData()
 	for i, armyInfo in pairs(armyData) do
