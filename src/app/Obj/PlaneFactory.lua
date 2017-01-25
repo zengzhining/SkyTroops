@@ -79,6 +79,9 @@ function PlaneFactory:createRole( id_ )
 	plane:setBulletFireType(config.bulletType_)
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(config.bulletCalmTime_)
+	if IS_MAC then
+		plane:setBulletCalmTime(0.01)
+	end
 	plane:updateAvatar()
 	plane:addGasAni()
 
@@ -108,6 +111,7 @@ end
 function PlaneFactory:createItem( id_ )
 	if not id_ then id_ = 1 end
 	--1为星星
+	if_ = 2
 	local item = nil
 	if id_ == 1 then
 		item = Item.new("#chick.png")

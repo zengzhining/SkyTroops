@@ -4,6 +4,8 @@ DEBUG = 1
 
 DESIGN = false
 
+IS_MAC = false
+
 -- use framework, will disable all deprecated API, false - use legacy API
 CC_USE_FRAMEWORK = true
 

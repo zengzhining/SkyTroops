@@ -53,6 +53,18 @@ function ArmyPlane:getDamge()
 	return self.damge_
 end
 
+function ArmyPlane:hurtAni()
+	if self:isDead() then
+		self:playDeadAnimation("PlaneExplose%02d.png")
+		__G__actDelay(self,function (  )
+			self:posY(0)
+		end, 1.0)
+	else
+		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
+		local act = cc.Sequence:create(cc.TintTo:create( 0.1,255,0,0 ),cc.TintTo:create( 0.1,255,255,255 ) )
+		self:runAction(act)
+	end
+end
 
 function ArmyPlane:onCollisionBullet(bullet)
 	local damge = bullet:getDamge()
@@ -61,28 +73,12 @@ function ArmyPlane:onCollisionBullet(bullet)
 	-- 	damge = bullet:getDamge() * role:getLevel()
 	-- end
 	self:onHurt(damge)
-	if self:isDead() then
-		self:playDeadAnimation("PlaneExplose%02d.png")
-		
-	else
-		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
-		local act = cc.Sequence:create(cc.TintTo:create( 0.1,255,0,0 ),cc.TintTo:create( 0.1,255,255,255 ) )
-		self:runAction(act)
-	end
+	self:hurtAni()
 end
 
 function ArmyPlane:onCollisionBomb()
 	self:onHurt(20)
-	if self:isDead() then
-		self:playDeadAnimation("PlaneExplose%02d.png")
-		-- __G__actDelay(self, function (  )
-		-- 	self:setSpeedY(-10)
-		-- end, 1.0)
-	else
-		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
-		local act = cc.Sequence:create(cc.TintTo:create( 0.1,255,0,0 ),cc.TintTo:create( 0.1,255,255,255 ) )
-		self:runAction(act)
-	end
+	self:hurtAni()
 end
 
 function ArmyPlane:playDeadAnimation(fileFormat_)

@@ -10,6 +10,7 @@ local TAG_CONTROL_LAYER = 105
 local TAG_TITLE_LAYER = 107 --关卡文字
 local TAG_ARMY = 201
 local TAG_BULLET = 202
+local TAG_ROLE_BULLET = 203
 
 local armySet = {}
 local bulletSet = {} --主角的子弹
@@ -101,25 +102,28 @@ function GameScene:step( dt )
 
 	armyInScreen = {}
 	for k,army in pairs(armySet) do
-		local armyPosY = army:getPositionY()
-		local isOutOfWindow = ( armyPosY <= (-display.cy * 0.5) and true or false )
-		if isOutOfWindow then 
-			table.remove(armySet, k)
-			army:removeSelf()
-			break
-		end
+		repeat
+			local armyPosY = army:getPositionY()
+			local isOutOfWindow = ( armyPosY <= (-display.cy * 0.5) and true or false )
+			if isOutOfWindow then 
+				table.remove(armySet, k)
+				army:removeSelf()
+				break
+			end
 
-		local isDead = army:isDead()
-		if isDead then
-			table.remove(armySet, k)
-			army:removeSelf()
-			break
-		end
+			local isDead = army:isDead()
+			if isDead then
+				table.remove(armySet, k)
+				army:removeSelf()
+				break
+			end
 
-		if army:getPositionY() >= 0 and army:getPositionY()<= display.height + army:getViewRect().height*0.5 then
-			army.key_ = k
-			table.insert(armyInScreen, army)
-		end
+			if army:getPositionY() >= 0 and army:getPositionY()<= display.height + army:getViewRect().height*0.5 then
+				army.key_ = k
+				table.insert(armyInScreen, army)
+			end
+		until true
+		
 	end
 	--遍历敌人
 	for k, army in pairs(armyInScreen) do
@@ -147,28 +151,35 @@ function GameScene:step( dt )
 	
 	--遍历子弹处理子弹碰撞逻辑
 	for i, bullet in pairs(bulletSet) do
-		local bulletRect = bullet:getCollisionRect()
-		for k, army in pairs(armyInScreen) do
-			local armyRect = army:getCollisionRect()
-			local iscollision = cc.rectIntersectsRect(armyRect, bulletRect) 
-			if iscollision and (not army:isDead() )  then
-				army:onCollisionBullet(bullet)
-				bullet:onCollision(army)
-				self:onBulletHitArmy( bullet, army )
-				--最后再处理去除逻辑
-				table.remove(bulletSet, i)
-				if army:isDead() then
-					table.remove(armySet, army.key_)
-					break
-				end
+		repeat
+			
+			local bulletRect = bullet:getCollisionRect()
+			for k, army in pairs(armyInScreen) do
+				repeat
+					local armyRect = army:getCollisionRect()
+					local iscollision = cc.rectIntersectsRect(armyRect, bulletRect) 
+					if iscollision and (not army:isDead() )  then
+						army:onCollisionBullet(bullet)
+						bullet:onCollision(army)
+						self:onBulletHitArmy( bullet, army )
+						--最后再处理去除逻辑
+						table.remove(bulletSet, i)
+						if army:isDead() then
+							table.remove(armySet, army.key_)
+							table.remove(armyInScreen, k)
+						-- 	break
+						end
+					end
+				until true
+				
 			end
-		end
-
-		--子弹超出边界就去除掉
-		if bullet:getPositionY() >= display.height + bullet:getViewRect().height* 0.5 then 
-			table.remove(bulletSet, i)
-			bullet:removeSelf()
-		end
+			--子弹超出边界就去除掉
+			if bullet:getPositionY() >= display.height then 
+				bullet:removeSelf()
+				table.remove(bulletSet, i)
+				break
+			end
+		until true
 	end
 
 	--遍历处理敌人子弹逻辑
@@ -224,11 +235,19 @@ function GameScene:step( dt )
 	if tempTime >= armtTime then
 		tempTime = 0 
 
-		local count = self.gameLayer_:getChildrenCount()
-		print("count~~~~~~", count)
-		print("bulletSet~~~~~", #bulletSet)
+		local tbl = self.gameLayer_:getChildren()
+		local sum = 0
+		for k, item in pairs (tbl) do
+			if item:getTag() == TAG_ARMY then
+				sum = sum + 1
+				if item:getPositionY() < 0 and item:isDead() then
+					item:removeSelf()
+				end
+			end
+		end
+				
 		--没有敌人时候需要进入下一个关卡生成敌人
-		if #armySet <= 0 then
+		if sum <= 0 then
 			if self.isAllDead_ == false then
 				self:onAllArmyGone()
 				self.isAllDead_ = true
@@ -686,7 +705,7 @@ function GameScene:onFireBullet( id_ )
 		bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
 		bullet:onFire()
 		bullet:setSpeed(cc.p(0, 15))
-		gameLayer:addChild(bullet,0, TAG_BULLET)
+		gameLayer:addChild(bullet,0, TAG_ROLE_BULLET)
 		table.insert(bulletSet, bullet)
 	elseif fireId == 2 then
 		--发射两列
@@ -696,7 +715,7 @@ function GameScene:onFireBullet( id_ )
 			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, 15))
-			gameLayer:addChild(bullet,0, TAG_BULLET)
+			gameLayer:addChild(bullet,0, TAG_ROLE_BULLET)
 			table.insert(bulletSet, bullet)
 		end
 	elseif fireId == 3 then
@@ -707,7 +726,7 @@ function GameScene:onFireBullet( id_ )
 			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, 15))
-			gameLayer:addChild(bullet,0, TAG_BULLET)
+			gameLayer:addChild(bullet,0, TAG_ROLE_BULLET)
 			table.insert(bulletSet, bullet)
 		end
 	elseif fireId == 4 then
@@ -719,7 +738,7 @@ function GameScene:onFireBullet( id_ )
 			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(speedX * dir, 15))
-			gameLayer:addChild(bullet,0, TAG_BULLET)
+			gameLayer:addChild(bullet,0, TAG_ROLE_BULLET)
 			table.insert(bulletSet, bullet)
 		end
 	elseif fireId == 5 then
@@ -932,6 +951,14 @@ function GameScene:createItem( id, pos_ )
 end
 
 function GameScene:onCreateArmy(  )
+	--先去除主角发射的子弹
+	-- for i, bullet in pairs(bulletSet) do
+	-- 	local posy = bullet:getPositionY()
+	-- 	if posy > display.height then
+	-- 		table.remove(bulletSet, i  )
+	-- 	end
+	-- end
+
 	local tbl = self.gameLayer_:getChildren()
 	for k, item in pairs(tbl) do
 		local tag = item:getTag()
