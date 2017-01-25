@@ -16,33 +16,33 @@ ROLE_SCORE_TBL = {
 BULLET_DAMAGE_TBL = {
 	1,2,4,
 	2,2,2,
-	2.5,2.5,2.5,
+	2,2,2,
 }
 
 --敌人的血量
 ENEMY_HP_TBL = {
 	5,2,5,
 	5,8,300,
-	15,15,5,
-	15,15,15,
+	1000,15,5,
+	2,400,15,
 	800,15,15,
 }
 
 --敌人的AI
 ENEMY_AI_TBL = {
 	4,2,7,
-	8,5,13,
-	9,11,9,
-	9,14,15,
+	8,6,13,
+	22,11,9,
+	10,14,15,
 	21,11,1,
 }
 
 --敌人AI思考时间
 ENEMY_AI_TIME_TBL = {
-	2,2.5,1,
+	3,2.5,1,
 	2,2,1,
-	2,2,1,
-	2,2,0.5,
+	1,2,1,
+	2,0.8,0.5,
 	2,2,1,
 }
 
@@ -59,7 +59,7 @@ ENEMY_SCORE_TBL = {
 ENEMY_BULLET_TBL = {
 	1,1,1,
 	2,4,5,
-	8,9,1,
+	7,9,1,
 	8,7,2,
 	8,9,1,
 }
@@ -77,7 +77,7 @@ ENEMY_SPEED_TBL = {
 ENEMY_FLOAT_TBL = {
 	false,false,false,
 	false,false,true,
-	false,false,false,
+	true,false,false,
 	false,true,true,
 	true,true,false,
 }

@@ -124,7 +124,7 @@ function GameScene:step( dt )
 	for k,army in pairs(armySet) do
 		repeat
 			local armyPosY = army:getPositionY()
-			local isOutOfWindow = ( armyPosY <= (-display.cy * 0.5) and true or false )
+			local isOutOfWindow = ( armyPosY <= 0 and true or false )
 			if isOutOfWindow then 
 				table.remove(armySet, k)
 				army:removeSelf()
@@ -444,17 +444,23 @@ function GameScene:onArmyDead( target)
 
 	local aiId = target:getAiId()
 
+	local role = GameData:getInstance():getRole()
+	local hp = role:getHp()
+	local maxHp = role:getMaxHp()
+
+	local hpPer = hp/maxHp
+	math.randomseed(os.clock())
+	local randomNum = math.random(1,1000)
+
+	if hpPer <= 0.3 then
+		if randomNum > 700 then
+			self:createItem(2, param.pos_)
+		end
+	end
 	--10的话发物品
 	if aiId == 9 then 
 		local id = 1
 
-		local role = GameData:getInstance():getRole()
-		local hp = role:getHp()
-		local maxHp = role:getMaxHp()
-
-		local hpPer = hp/maxHp
-
-		local randomNum = math.random(1,1000)
 		if hpPer >= 0.8 then
 			if randomNum > 500 then
 				id = 1
@@ -477,7 +483,10 @@ function GameScene:onArmyDead( target)
 		self:fireBullet(5, target, target:getBulletId() )
 	elseif aiId == 8 then 
 		--发射三个的散弹
-		self:fireBullet(2, target, target:getBulletId() )
+		-- self:fireBullet(2, target, target:getBulletId() )
+	elseif aiId == 10 then
+		self:fireBullet(5, target, target:getBulletId() )
+
 	end
 end
 
@@ -873,6 +882,17 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			gameLayer:addChild(bullet, 0, TAG_BULLET)
 			table.insert(armyBulletSet, bullet)
 		end 
+	elseif typeId_ == 8 then
+		--发射三列的子弹
+		local PER_WIDTH = 30
+		for i = -1, 1, 1 do 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx + PER_WIDTH * i, bulletY)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, -5))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+			table.insert(armyBulletSet, bullet)
+		end
 	end
 
 end
@@ -902,6 +922,10 @@ function GameScene:onEnemyFire( enemy, bulletId )
 	elseif aiId == 21 then
 		--大boss1,发射面向主角的散弹
 		self:fireBullet(7, enemy, bulletId)
+	elseif aiId == 22 then
+		--大boss2,发射主角的散列散弹
+		self:fireBullet(8, enemy, bulletId)
+
 	else
 		--普通发射
 		self:fireBullet(1,enemy, bulletId)

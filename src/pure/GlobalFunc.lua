@@ -343,8 +343,10 @@ __G__GameBgm = function ( world,level )
 
 	if world >= 5 then 
 		index = 3
-	elseif world >= 3 then 
+	elseif world >= 4 then 
 		index = 2
+	else
+		index = world
 	end
 
 	if level == bossTbl[world] then

@@ -80,7 +80,7 @@ function PlaneFactory:createRole( id_ )
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(config.bulletCalmTime_)
 	if IS_MAC then
-		plane:setBulletCalmTime(0.01)
+		plane:setBulletCalmTime(0.02)
 	end
 	plane:updateAvatar()
 	plane:addGasAni()

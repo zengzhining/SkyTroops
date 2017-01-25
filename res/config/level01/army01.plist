@@ -94,9 +94,9 @@
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>332.58294677734375</real>
+		<real>376.32672119140625</real>
 		<key>y</key>
-		<real>3871.35546875</real>
+		<real>4026.5517578125</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -134,14 +134,6 @@
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>349.94384765625</real>
-		<key>y</key>
-		<real>5837.4580078125</real>
-	</dict>
-	<dict>
-		<key>id</key>
-		<real>2</real>
-		<key>x</key>
 		<real>525.721923828125</real>
 		<key>y</key>
 		<real>6492.091796875</real>
@@ -150,17 +142,17 @@
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>289.5960693359375</real>
+		<real>314.534423828125</real>
 		<key>y</key>
-		<real>6390.4921875</real>
+		<real>6098.40283203125</real>
 	</dict>
 	<dict>
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>358.541259765625</real>
+		<real>353.866455078125</real>
 		<key>y</key>
-		<real>6618.84716796875</real>
+		<real>6666.45361328125</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -326,9 +318,9 @@
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>337.89923095703125</real>
+		<real>333.66748046875</real>
 		<key>y</key>
-		<real>3516.87353515625</real>
+		<real>3675.41552734375</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -366,9 +358,9 @@
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>311.53485107421875</real>
+		<real>325.153076171875</real>
 		<key>y</key>
-		<real>5288.68798828125</real>
+		<real>5407.556640625</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -398,9 +390,9 @@
 		<key>id</key>
 		<real>1</real>
 		<key>x</key>
-		<real>342.95703125</real>
+		<real>312.845458984375</real>
 		<key>y</key>
-		<real>5512.8388671875</real>
+		<real>5639.73193359375</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -417,14 +409,6 @@
 		<real>555.40899658203125</real>
 		<key>y</key>
 		<real>5941.13916015625</real>
-	</dict>
-	<dict>
-		<key>id</key>
-		<real>1</real>
-		<key>x</key>
-		<real>291.2850341796875</real>
-		<key>y</key>
-		<real>6066.5791015625</real>
 	</dict>
 	<dict>
 		<key>id</key>

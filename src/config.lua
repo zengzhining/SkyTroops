@@ -21,7 +21,7 @@ CC_NEED_SDK = false
 CC_DEBUG_RECT = false
 
 --默认的音效大小
-DEFAULT_SOUND_VOL = 0.5
+DEFAULT_SOUND_VOL = 0.9
 --默认音乐声音大小
 DEFAULT_MUSIC_VOL = 1
 

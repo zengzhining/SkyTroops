@@ -14,9 +14,9 @@
 		<key>id</key>
 		<real>3</real>
 		<key>x</key>
-		<real>85.5291748046875</real>
+		<real>156.1126708984375</real>
 		<key>y</key>
-		<real>1724.403076171875</real>
+		<real>1715.547119140625</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -108,14 +108,6 @@
 	</dict>
 	<dict>
 		<key>id</key>
-		<real>2</real>
-		<key>x</key>
-		<real>313.685302734375</real>
-		<key>y</key>
-		<real>3354.764404296875</real>
-	</dict>
-	<dict>
-		<key>id</key>
 		<real>3</real>
 		<key>x</key>
 		<real>298.81640625</real>
@@ -198,9 +190,9 @@
 		<key>id</key>
 		<real>1</real>
 		<key>x</key>
-		<real>302.8359375</real>
+		<real>325.3331298828125</real>
 		<key>y</key>
-		<real>5537.66650390625</real>
+		<real>5516.12890625</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -238,9 +230,9 @@
 		<key>id</key>
 		<real>1</real>
 		<key>x</key>
-		<real>377.48040771484375</real>
+		<real>446.9010009765625</real>
 		<key>y</key>
-		<real>6687.1875</real>
+		<real>6758.58349609375</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -286,9 +278,9 @@
 		<key>id</key>
 		<real>3</real>
 		<key>x</key>
-		<real>458.4703369140625</real>
+		<real>512.3343505859375</real>
 		<key>y</key>
-		<real>2300.197509765625</real>
+		<real>2335.4453125</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -374,9 +366,9 @@
 		<key>id</key>
 		<real>1</real>
 		<key>x</key>
-		<real>301.082275390625</real>
+		<real>364.974365234375</real>
 		<key>y</key>
-		<real>4329.63818359375</real>
+		<real>4365.62451171875</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -390,9 +382,9 @@
 		<key>id</key>
 		<real>1</real>
 		<key>x</key>
-		<real>129.42062377929688</real>
+		<real>86.184478759765625</real>
 		<key>y</key>
-		<real>4521.314453125</real>
+		<real>4720.76171875</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -401,14 +393,6 @@
 		<real>286.9378662109375</real>
 		<key>y</key>
 		<real>4670.46533203125</real>
-	</dict>
-	<dict>
-		<key>id</key>
-		<real>1</real>
-		<key>x</key>
-		<real>511.31915283203125</real>
-		<key>y</key>
-		<real>4557.49462890625</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -468,14 +452,6 @@
 	</dict>
 	<dict>
 		<key>id</key>
-		<real>1</real>
-		<key>x</key>
-		<real>568.63507080078125</real>
-		<key>y</key>
-		<real>6706.0576171875</real>
-	</dict>
-	<dict>
-		<key>id</key>
 		<real>3</real>
 		<key>x</key>
 		<real>99.308990478515625</real>
@@ -502,9 +478,9 @@
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>296.40283203125</real>
+		<real>505.80438232421875</real>
 		<key>y</key>
-		<real>7192.54150390625</real>
+		<real>7535.4267578125</real>
 	</dict>
 	<dict>
 		<key>id</key>
@@ -518,9 +494,9 @@
 		<key>id</key>
 		<real>2</real>
 		<key>x</key>
-		<real>391.11260986328125</real>
+		<real>328.59576416015625</real>
 		<key>y</key>
-		<real>7380.82568359375</real>
+		<real>7354.890625</real>
 	</dict>
 	<dict>
 		<key>id</key>

@@ -145,6 +145,20 @@ function ArmyPlane:fireItem( id_ )
 	end
 end
 
+function ArmyPlane:fllowRole( speed )
+	if not speed then speed = 1 end
+	local role = GameData:getInstance():getRole()
+	local rolePosX, rolePosY = role:getPosition()
+	local posx, posy = self:getPosition()
+	
+
+	local dir = speed
+	if posx > rolePosX then
+		dir = -speed
+	end
+	self:posByX(dir,0)
+end
+
 function ArmyPlane:aiMove(dt)
 	--人物死亡时候没有Ai
 	if self:isDead() then return end
@@ -206,10 +220,12 @@ function ArmyPlane:aiMove(dt)
 	elseif aiId == 8 then
 		--死亡发射散弹
 		--突然加速
+		self:fllowRole()
 		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
-			self:addSpeed(cc.p(0, -5))
+			self:addSpeed(cc.p(0, -8))
 			strategy:useAi()
 		end
+
 	elseif aiId == 9 then 
 		-- --会根据主角位置移动，如果主角到攻击范围局攻击
 		-- if strategy:canAi() then
@@ -227,34 +243,18 @@ function ArmyPlane:aiMove(dt)
 		-- end
 		-- strategy:addAiTime(dt)
 	elseif aiId == 10 then
-		--发射两列子弹,看见主角才发射
-		-- if strategy:canAi() then
-		-- 	strategy:resetAiTime()
-		-- 	local role = GameData:getInstance():getRole()
-		-- 	local posx, posy = self:getPosition()
-		-- 	local rolePosX, rolePosY = role:getPosition()
-		-- 	if math.abs(rolePosX - posx) <= strategy:getAiWidth() then
-		-- 		self:fireBullet()
-		-- 	end
-		-- end
-		-- strategy:addAiTime(dt)
+		--跟随角色并且自爆
+		self:fllowRole()
+
 	elseif aiId == 13 then
 		--小boss Ai 发射子弹，同时跟着角色左右移动
-		local role = GameData:getInstance():getRole()
-		local rolePosX, rolePosY = role:getPosition()
-		local posx, posy = self:getPosition()
+		self:fllowRole()
+
+
 		if strategy:canAi() then
 			strategy:resetAiTime()
 			self:fireBullet()
 		end
-
-		local dir = 1
-		if posx > rolePosX then
-			dir = -1
-		end
-		self:posByX(dir,0)
-
-
 		strategy:addAiTime(dt)
 	elseif aiId == 14 then
 		--小boss Ai 发射子弹，同时跟着角色左右移动
@@ -286,21 +286,21 @@ function ArmyPlane:aiMove(dt)
 		strategy:addAiTime(dt)
 
 	elseif aiId == 21 then
-		--小boss 发射跟随子弹
-		local role = GameData:getInstance():getRole()
-		local rolePosX, rolePosY = role:getPosition()
-		local posx, posy = self:getPosition()
+		--大boss 发射散弹子弹
+		self:fllowRole()
+
 		if strategy:canAi() then
 			strategy:resetAiTime()
 			self:fireBullet()
 		end
-
-		local dir = 1
-		if posx > rolePosX then
-			dir = -1
+		strategy:addAiTime(dt)
+	elseif aiId == 22 then
+		--大boss 发射三列的子弹
+		self:fllowRole(0.5)
+		if strategy:canAi() then
+			strategy:resetAiTime()
+			self:fireBullet()
 		end
-		self:posByX(dir,0)
-
 		strategy:addAiTime(dt)
 	end
 end
