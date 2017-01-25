@@ -298,5 +298,29 @@
 		<key>y</key>
 		<real>9307.7900390625</real>
 	</dict>
+	<dict>
+		<key>id</key>
+		<real>9</real>
+		<key>x</key>
+		<real>498.6468505859375</real>
+		<key>y</key>
+		<real>4934.16015625</real>
+	</dict>
+	<dict>
+		<key>id</key>
+		<real>9</real>
+		<key>x</key>
+		<real>252.5760498046875</real>
+		<key>y</key>
+		<real>6305.7138671875</real>
+	</dict>
+	<dict>
+		<key>id</key>
+		<real>9</real>
+		<key>x</key>
+		<real>328.415771484375</real>
+		<key>y</key>
+		<real>8795.1728515625</real>
+	</dict>
 </array>
 </plist>
