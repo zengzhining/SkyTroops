@@ -226,6 +226,7 @@ function GameScene:step( dt )
 
 		local count = self.gameLayer_:getChildrenCount()
 		print("count~~~~~~", count)
+		print("bulletSet~~~~~", #bulletSet)
 		--没有敌人时候需要进入下一个关卡生成敌人
 		if #armySet <= 0 then
 			if self.isAllDead_ == false then
@@ -685,7 +686,7 @@ function GameScene:onFireBullet( id_ )
 		bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
 		bullet:onFire()
 		bullet:setSpeed(cc.p(0, 15))
-		gameLayer:addChild(bullet)
+		gameLayer:addChild(bullet,0, TAG_BULLET)
 		table.insert(bulletSet, bullet)
 	elseif fireId == 2 then
 		--发射两列
@@ -695,7 +696,7 @@ function GameScene:onFireBullet( id_ )
 			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, 15))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet,0, TAG_BULLET)
 			table.insert(bulletSet, bullet)
 		end
 	elseif fireId == 3 then
@@ -706,7 +707,7 @@ function GameScene:onFireBullet( id_ )
 			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(0, 15))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet,0, TAG_BULLET)
 			table.insert(bulletSet, bullet)
 		end
 	elseif fireId == 4 then
@@ -718,7 +719,7 @@ function GameScene:onFireBullet( id_ )
 			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
 			bullet:onFire()
 			bullet:setSpeed(cc.p(speedX * dir, 15))
-			gameLayer:addChild(bullet)
+			gameLayer:addChild(bullet,0, TAG_BULLET)
 			table.insert(bulletSet, bullet)
 		end
 	elseif fireId == 5 then
