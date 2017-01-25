@@ -158,7 +158,9 @@ function MovedObject:playAnimation( formatFile , fromIdx, length, repeatTime, ti
 	else
 		act = cc.RepeatForever:create(cc.Animate:create( ani ))
 	end
-				
+
+	act:setTag(213)
+	self:stopActionByTag(213)	
 	self:runAction(act)
 end
 
