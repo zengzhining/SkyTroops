@@ -189,7 +189,8 @@ function GameScene:step( dt )
 		end
 
 		--子弹超出边界就去除掉
-		if bullet:getPositionY() <= -bullet:getViewRect().height* 0.5 then 
+		if (bullet:getPositionY() <= -bullet:getViewRect().height* 0.5) or (bullet:getPositionY() >= display.height) or 
+			(bullet:getPositionX() < -bullet:getViewRect().width * 0.5) or (bullet:getPositionX() >= display.width + bullet:getViewRect().width * 0.5 ) then 
 			table.remove(armyBulletSet, i)
 			bullet:removeSelf()
 		end
@@ -222,6 +223,7 @@ function GameScene:step( dt )
 	local armtTime = self:getArmyTime()
 	if tempTime >= armtTime then
 		tempTime = 0 
+
 		--没有敌人时候需要进入下一个关卡生成敌人
 		if #armySet <= 0 then
 			if self.isAllDead_ == false then
@@ -230,6 +232,11 @@ function GameScene:step( dt )
 			end
 		end
 	end
+end
+
+--清理子弹
+function GameScene:clearBullet()
+
 end
 
 --主角获得物品的场景回调
@@ -547,13 +554,12 @@ function GameScene:onBomb()
 		Helper.showBoomParticle(self.gameLayer_)
 
 		for c,army in pairs(armyInScreen) do
-			print("army~~~~~", army)
 			if not army:isDead() then
-				-- local posy = army:getPositionY()
-				-- local time = 1.3 * posy/ display.height
-				-- __G__actDelay(army, function (  )
+				local posy = army:getPositionY()
+				local time = 1.3 * posy/ display.height
+				__G__actDelay(army, function (  )
 					army:onCollisionBomb()
-		-- 		end, time)
+				end, time)
 			end
 		end
 
@@ -853,7 +859,6 @@ end
 
 --全部敌人离开屏幕或者死掉的回调，用来判断是否进入下一个关卡
 function GameScene:onAllArmyGone()
-	print("onAllArmyGone~~~~~")
 	local world = GameData:getInstance():getWorld()
 	GameData:getInstance():addLevel(1)		
 	local level = GameData:getInstance():getLevel()
@@ -914,7 +919,6 @@ function GameScene:createItem( id, pos_ )
 end
 
 function GameScene:onCreateArmy(  )
-	print("onCreateArmy~~~~~~")
 	local tbl = self.gameLayer_:getChildren()
 	for k, item in pairs(tbl) do
 		local tag = item:getTag()
