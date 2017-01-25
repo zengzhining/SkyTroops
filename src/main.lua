@@ -15,6 +15,11 @@ local function main()
 		CC_NEED_SDK = true
 	end
 
+  if device.platform == "mac" then
+    IS_MAC = true
+  end
+
+
    --初始化SDK
    SDKManager:getInstance()
 

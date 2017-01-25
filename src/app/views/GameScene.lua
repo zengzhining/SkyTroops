@@ -11,6 +11,7 @@ local TAG_TITLE_LAYER = 107 --关卡文字
 local TAG_ARMY = 201
 local TAG_BULLET = 202
 local TAG_ROLE_BULLET = 203
+local TAG_DEBUG_TITLE = 204
 
 local armySet = {}
 local bulletSet = {} --主角的子弹
@@ -55,6 +56,25 @@ function GameScene:onCreate()
 	self:add(frontBg,10, TAG_FRONT )
 
 	self:updateHpBar()
+
+	if DEBUG >= 1 then
+		self:addDebugTitle()
+	end
+end
+
+function GameScene:addDebugTitle()
+	local title = display.newTTF("fonts/pen.ttf", 32,"sum:70")
+	title:setAnchorPoint(cc.p(0, 0.5))
+	title:pos(display.left_center)
+	self:add(title,999, TAG_DEBUG_TITLE)
+end
+
+function GameScene:updateDebugTitle(sum_)
+	local title = self:getChildByTag(TAG_DEBUG_TITLE)
+	if title then
+		local str = string.format("sum:%d", sum_)
+		title:setString(str)
+	end
 end
 
 function GameScene:initData()
@@ -111,12 +131,12 @@ function GameScene:step( dt )
 				break
 			end
 
-			local isDead = army:isDead()
-			if isDead then
-				table.remove(armySet, k)
-				army:removeSelf()
-				break
-			end
+			-- local isDead = army:isDead()
+			-- if isDead then
+			-- 	table.remove(armySet, k)
+			-- 	army:removeSelf()
+			-- 	break
+			-- end
 
 			if army:getPositionY() >= 0 and army:getPositionY()<= display.height + army:getViewRect().height*0.5 then
 				army.key_ = k
@@ -245,7 +265,8 @@ function GameScene:step( dt )
 				end
 			end
 		end
-				
+		
+		self:updateDebugTitle(sum)
 		--没有敌人时候需要进入下一个关卡生成敌人
 		if sum <= 0 then
 			if self.isAllDead_ == false then
