@@ -379,7 +379,7 @@ function GameScene:onContinueCancel()
 	--这里保存数据	
 	__G__actDelay(self,function (  )
 		self:unUpdate()
-		self:getApp():enterLoading("ResultScene", true)
+		self:getApp():enterLoading("ResultScene", "VEDIO")
 	end, 1.0)
 end
 

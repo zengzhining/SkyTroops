@@ -215,6 +215,7 @@ function SDKManager:onBannerDismiss()
 end
 
 function SDKManager:onFULLADDismiss()
+	print("onFULLADDismiss~~~~~~~~")
 	if self.fulladDismissCallback_ then 
 		self.fulladDismissCallback_()
 	end
@@ -322,11 +323,17 @@ function SDKManager:isInFullTime()
 	return false
 end
 
-function SDKManager:showFULLAD()
+function SDKManager:showFULLAD( callback_ )
 	if self:isFULLADAvailable() then
+		self:setFULLADCallback(callback_)
 		self:showAds(0)
 		self.lastShowFullTime_ = os.time()
 	else
+		if callback_ then
+			callback_()
+		else
+			
+		end
 		print("FULLAD is not available")
 	end
 end
@@ -382,18 +389,18 @@ function SDKManager:showVideo( callback )
 			self:setVedioCallback( callback )
 			return 
 		elseif sdkbox.PluginChartboost:isAvailable(SDK_CHARTBOOST_FULL_NAME) then
+			self:setFULLADCallback( callback )
 			sdkbox.PluginChartboost:show(SDK_CHARTBOOST_FULL_NAME)
-			self:setFULLADCallback( callback )
 			return 
 		end
+		
 
-		if self:isFULLADAvailable() then
-			self:setFULLADCallback( callback )
-			self:showFULLAD()
-		else
-			callback()
-			return 
-		end
+		-- if self:isFULLADAvailable() then
+			self:showFULLAD(callback)
+		-- else
+			-- callback()
+			-- return 
+		-- end
 		-- end
 	end
 

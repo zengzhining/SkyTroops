@@ -29,7 +29,7 @@ local flag = 1
 function LoadingScene:onCreate(  )
 	local root = self:getResourceNode()
 	self.time_ = 0
-	self.needAds_ = false
+	self.adsType_ = nil
 
 
 	local touchLayer = display.newLayer()
@@ -39,8 +39,8 @@ function LoadingScene:onCreate(  )
 	self:add(touchLayer)
 end
 
-function LoadingScene:setNeedAds( needAds_ )
-	self.needAds_ = needAds_
+function LoadingScene:setNeedAds( adsType_ )
+	self.adsType_ = adsType_
 end
 
 function LoadingScene:setNextScene( sceneName )
@@ -65,8 +65,10 @@ function LoadingScene:step(dt)
 			end, 1.0)
 		end
 
-		print("self.needAds_~~~~~~", self.needAds_)
-		if self.needAds_ then
+		print("self.needAds_~~~~~~", self.adsType_)
+		if self.adsType_ == "FULLAD" then
+			SDKManager:getInstance():showFULLAD(callback)
+		elseif self.adsType_ == "VEDIO" then
 			SDKManager:getInstance():showVideo(callback)
 		else		
 			callback()
