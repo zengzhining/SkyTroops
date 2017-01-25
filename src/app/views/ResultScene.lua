@@ -119,6 +119,11 @@ function ResultScene:step( dt )
 		end
 	end
 
+	if unlockId > #ROLE_SCORE_TBL then
+		pauseFlag = true
+		return 
+	end
+
 	local delScore = scoreNum-AllLevelNum+levelNum
 
 	local str = string.format("%d/%d", scoreNum, AllLevelNum)
