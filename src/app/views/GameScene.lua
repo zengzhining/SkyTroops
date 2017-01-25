@@ -403,12 +403,22 @@ function GameScene:onArmyDead( target)
 
 	--10的话发物品
 	if aiId == 9 then 
-		local id = math.random(1,3)
-		-- local randomNum = math.random(1,1000)
-		-- --一半的概率
-		-- if randomNum > 500 then 
-		-- 	return 
-		-- end
+		local id = 1
+
+		local role = GameData:getInstance():getRole()
+		local hp = role:getHp()
+		local maxHp = role:getMaxHp()
+
+		local hpPer = hp/maxHp
+
+		if hpPer >= 0.8 then
+			id = 1
+		elseif hpPer >= 0.4 then
+			id = 3
+		else
+			id = 2
+		end
+
 		self:createItem(id, param.pos_)
 	elseif aiId == 7 then 
 		--发射全场的散弹
@@ -964,7 +974,17 @@ function GameScene:onCreateArmy(  )
 end
 
 function GameScene:isBoss()
-	return true
+	local world = GameData:getInstance():getWorld()
+	local level = GameData:getInstance():getLevel()
+
+	local flag = false
+	local bossTbl = { 5,3,2,3,3 }
+
+	if level == bossTbl[world] then
+		flag = true
+	end
+
+	return flag
 end
 
 function GameScene:getBgSpeed()
