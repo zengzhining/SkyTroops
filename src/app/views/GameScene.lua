@@ -109,6 +109,13 @@ function GameScene:step( dt )
 			break
 		end
 
+		local isDead = army:isDead()
+		if isDead then
+			table.remove(armySet, k)
+			army:removeSelf()
+			break
+		end
+
 		if army:getPositionY() >= 0 and army:getPositionY()<= display.height + army:getViewRect().height*0.5 then
 			army.key_ = k
 			table.insert(armyInScreen, army)
@@ -540,12 +547,13 @@ function GameScene:onBomb()
 		Helper.showBoomParticle(self.gameLayer_)
 
 		for c,army in pairs(armyInScreen) do
+			print("army~~~~~", army)
 			if not army:isDead() then
-				local posy = army:getPositionY()
-				local time = 1.3 * posy/ display.height
-				__G__actDelay(army, function (  )
+				-- local posy = army:getPositionY()
+				-- local time = 1.3 * posy/ display.height
+				-- __G__actDelay(army, function (  )
 					army:onCollisionBomb()
-				end, time)
+		-- 		end, time)
 			end
 		end
 
@@ -845,6 +853,7 @@ end
 
 --全部敌人离开屏幕或者死掉的回调，用来判断是否进入下一个关卡
 function GameScene:onAllArmyGone()
+	print("onAllArmyGone~~~~~")
 	local world = GameData:getInstance():getWorld()
 	GameData:getInstance():addLevel(1)		
 	local level = GameData:getInstance():getLevel()
@@ -905,6 +914,7 @@ function GameScene:createItem( id, pos_ )
 end
 
 function GameScene:onCreateArmy(  )
+	print("onCreateArmy~~~~~~")
 	local tbl = self.gameLayer_:getChildren()
 	for k, item in pairs(tbl) do
 		local tag = item:getTag()
