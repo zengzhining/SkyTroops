@@ -47,9 +47,9 @@ function SDKManager:addEvent()
 	    	end
 	    elseif event == "adViewDidDismissScreen" then
 	        local name = args.name
-	    	if name == SDK_BANNER_NAME then
-	           SDKManager:getInstance():onBannerDismiss()
-	    	elseif name == SDK_FULLAD_NAME then
+	    	-- if name == SDK_BANNER_NAME then
+	           -- SDKManager:getInstance():onBannerDismiss()
+	    	if name == SDK_FULLAD_NAME then
 	           SDKManager:getInstance():onFULLADDismiss()
 	    	end
         end
