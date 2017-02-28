@@ -297,11 +297,21 @@ function TestScene:ctor()
 	-- end )
 
 --http
-	Helper.postMessageAndGetJson("http://codinggamer.net/test.php",nil, function ( data )
-		table.foreach( data, function ( k,v )
-			print(k,v)
-		end )
-	end)
+	--post Data
+	-- Helper.postMessage("http://codinggamer.net/test.php","x=100&y=1000&name='chun'&level=1")
+
+	--getJson Data
+	Helper.getJson("http://codinggamer.net/getData.php", function ( data )
+		print("data~~~~~", data)
+		print("data[1]~~~",data["1"])
+		for index, info in pairs (data) do
+			local bullet = display.newTTF(nil,nil,info.name)
+			bullet:setColor(cc.c4f(255, 0, 0, 0))
+			-- local bullet = PlaneFactory:getInstance():createItem(1)
+			bullet:pos(info.x,info.y)
+			layer:add(bullet)
+		end
+	end )
 end
 
 function TestScene:cameraMove(speed)

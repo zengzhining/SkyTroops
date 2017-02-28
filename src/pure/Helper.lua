@@ -64,6 +64,7 @@ function postMessageAndGetJson( url,data, successCallback )
     	
         if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
             local response   = xhr.response
+            print("response~~~~~~~", response)
             local output = json.decode(response,1)
 
             if successCallback then
@@ -78,6 +79,18 @@ function postMessageAndGetJson( url,data, successCallback )
 
     xhr:registerScriptHandler(onReadyStateChanged)
     xhr:send(data)
+end
+
+--单纯发送数据
+function postMessage(url,data)
+	local xhr = cc.XMLHttpRequest:new()
+    xhr:open("POST", url)
+    xhr:send(data)
+end
+
+--单纯获得数据
+function getJson(url, callback)
+	return postMessageAndGetJson( url,nil,callback )
 end
 
 
