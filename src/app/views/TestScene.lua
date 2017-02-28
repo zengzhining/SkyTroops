@@ -283,7 +283,7 @@ function TestScene:ctor()
 
 	-- local mainPlane
 
-	Helper.showBoomParticle(layer, display.center)
+	-- Helper.showBoomParticle(layer, display.center)
 
 	--拖尾
 	-- local ms = cc.MotionStreak:create(0.5, 5, 20, display.COLOR_RED, "png/streak.png")
@@ -296,7 +296,35 @@ function TestScene:ctor()
 	-- 	ms:pos(x,y)
 	-- end )
 
+--http
+	local xhr = cc.XMLHttpRequest:new()
+    xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_JSON
+    xhr:open("POST", "http://codinggamer.net/test.php")
 
+    local function onReadyStateChanged()
+        if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
+            local response   = xhr.response
+            local output = json.decode(response,1)
+            print("output~~~~", output)
+            table.foreach(output,function(i, v) 
+            	print("i~~~~~", i)
+            	table.foreach(v, function ( k,vau )
+            		print(k,vau)
+            		-- body
+            	end)
+            end)
+            
+            -- local output = json.decode(response,1)
+            -- table.foreach(output,function(i, v) print (i, v) end)
+            -- table.foreach(output.headers,print)
+        else
+            print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
+        end
+        xhr:unregisterScriptHandler()
+    end
+
+    xhr:registerScriptHandler(onReadyStateChanged)
+    xhr:send()
 end
 
 function TestScene:cameraMove(speed)
