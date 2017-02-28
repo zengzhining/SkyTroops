@@ -54,4 +54,30 @@ function showBoomParticle(layer)
 	end
 end
 
+--发送一个post
+function postMessageAndGetJson( url,data, successCallback )
+	local xhr = cc.XMLHttpRequest:new()
+    xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_JSON
+    xhr:open("POST", url)
+
+    local function onReadyStateChanged()
+    	
+        if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
+            local response   = xhr.response
+            local output = json.decode(response,1)
+
+            if successCallback then
+	    		successCallback( output )
+	    	end
+            
+        else
+            print("xhr.readyState is:", xhr.readyState, "xhr.status is: ",xhr.status)
+        end
+        xhr:unregisterScriptHandler()
+    end
+
+    xhr:registerScriptHandler(onReadyStateChanged)
+    xhr:send(data)
+end
+
 
