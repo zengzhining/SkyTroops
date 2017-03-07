@@ -13,8 +13,8 @@ local g_lastId = 1
 --是否强置加入,后为强制加入的id,可用于编辑
 local FORCE_ADD = true
 local NEED_LOAD = true
-local LEVEL = 2
-local FORCE_ID = 3
+local LEVEL = 3
+local FORCE_ID = 2
 ---------------------------------------
 
 --------------function----------------
