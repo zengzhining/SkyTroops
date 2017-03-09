@@ -14,7 +14,7 @@ local g_lastId = 1
 local FORCE_ADD = true
 local NEED_LOAD = true
 local LEVEL = 3
-local FORCE_ID = 2
+local FORCE_ID = 3
 ---------------------------------------
 
 --------------function----------------
