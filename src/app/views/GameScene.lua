@@ -432,7 +432,7 @@ function GameScene:onArmyDead( target)
 	__G__ExplosionSound()
 
 	GameData:getInstance():addKillNum(1)
-	
+
 	local score = target:getScore() 
 
 	GameData:getInstance():addScore( score ) 
@@ -965,7 +965,8 @@ function GameScene:onAllArmyGone()
 		local world = GameData:getInstance():getWorld()
 		--如果超过就进入游戏结束场景
 		if GameData:getInstance():getWorld() > GameData:getInstance():getMaxWorld() then
-			-- self:getApp()
+			GameData:getInstance():reset()
+			self:getApp():enterLoading("GameEndScene")
 		else
 			--要先展示一下文本
 			self:unUpdate()
