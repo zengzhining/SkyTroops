@@ -15,7 +15,6 @@ local ROLE_SCORE_TBL = {
 
 local pauseFlag = false
 function ResultScene:onCreate(  )
-
 	__G__LoadRes()
 	-- body
 	local root = self:getResourceNode()
@@ -63,9 +62,11 @@ function ResultScene:onCreate(  )
 	--这里更新一下总分数
 	lastAllScore = GameData:getInstance():getAllScore()
 
+
 	scoreNum = lastAllScore
 	GameData:getInstance():addAllScore(GameData:getInstance():getScore())
-	-- GameData:getInstance():addAllScore(2002)
+	-- GameData:getInstance():addAllScore(500)
+	-- GameData:getInstance():setAllScore(0)
 	GameData:getInstance():reset()
 	
 	GameData:getInstance():save()
@@ -150,7 +151,7 @@ function ResultScene:step( dt )
 		scoreNum = scoreNum + 10
 	end
 
-	if  scoreNum <= 9000 and scoreNum > AllLevelNum then 
+	if  scoreNum <= 9000 and scoreNum >= AllLevelNum then 
 
 		lastAllScore = scoreNum
 
