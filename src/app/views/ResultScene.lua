@@ -134,6 +134,14 @@ function ResultScene:step( dt )
 		return 
 	end
 
+
+	local score = GameData:getInstance():getAllScore()
+	if scoreNum >= score then
+		scoreNum=score
+	else
+		scoreNum = scoreNum + 10
+	end
+	
 	local delScore = scoreNum-AllLevelNum+levelNum
 
 	if  scoreNum > 9000 then
@@ -143,13 +151,6 @@ function ResultScene:step( dt )
 	local str = string.format("%d/%d", scoreNum, AllLevelNum)
 	self.expNum_:setString(str)
 	self.expBar_:setPercent(delScore/levelNum * 100)
-
-	local score = GameData:getInstance():getAllScore()
-	if scoreNum >= score then
-		scoreNum=score
-	else
-		scoreNum = scoreNum + 10
-	end
 
 	if  scoreNum <= 9000 and scoreNum >= AllLevelNum then 
 
