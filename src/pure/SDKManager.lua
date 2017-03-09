@@ -239,6 +239,8 @@ function SDKManager:initData()
 
 	self.fullLoad_ = false
 	self.vedioLoad_ = false
+
+	self.showAdsTime_ = 0
 end
 
 function SDKManager:setVedioCallback( callback_ )
@@ -369,7 +371,23 @@ function SDKManager:isCanPlayVedio()
 	return false
 end
 
+function SDKManager:needShowAds()
+	if self.showAdsTime_ >= 3 then
+		return true 
+	end
+	return false
+end
+
+function SDKManager:addAdsShowTime()
+	self.showAdsTime_ = self.showAdsTime_ + 1
+end
+
+function SDKManager:resetAdsShowTime()
+	self.showAdsTime_ = 0
+end
+
 function SDKManager:showVideo( callback )
+	self:addAdsShowTime()
 	if not CC_NEED_SDK then 
 		if callback then
 			callback()
@@ -377,8 +395,16 @@ function SDKManager:showVideo( callback )
 		return 
 	end
 
+	--如果没到展示广告时间
+	if not self:needShowAds() then
+		if callback then
+			callback()
+		end
+		return 
+	end
+
+	self:resetAdsShowTime()
 	local status = sdkbox.PluginAdColony:getStatus(SDK_VEDIO_NAME)
-	print("status~~~~", status)
 	--没有就播放全屏
 	if status >= 3 then
 		self:setVedioCallback( callback )
@@ -396,7 +422,7 @@ function SDKManager:showVideo( callback )
 		
 
 		-- if self:isFULLADAvailable() then
-			self:showFULLAD(callback)
+		self:showFULLAD(callback)
 		-- else
 			-- callback()
 			-- return 
