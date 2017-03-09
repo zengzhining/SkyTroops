@@ -430,6 +430,9 @@ end
 --只有敌人死亡时候才更新分数和排名
 function GameScene:onArmyDead( target)
 	__G__ExplosionSound()
+
+	GameData:getInstance():addKillNum(1)
+	
 	local score = target:getScore() 
 
 	GameData:getInstance():addScore( score ) 
@@ -1138,6 +1141,7 @@ function GameScene:startGame()
 end
 
 function GameScene:onEnter()
+	GameData:getInstance():resetGameTime()
 	-- armySet = {}
 	-- score = 0
 	self:unUpdate()

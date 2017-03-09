@@ -82,6 +82,10 @@ function GameData:initData()
 	self.score_ = 0
 	--游戏获得的总分数
 	self.allScore_ = self.allScore_ or 0
+
+	self.gameTime_ = 0
+
+	self.armyKill_ = 0
 end
 --读取和存储游戏数据
 function GameData:load()
@@ -150,6 +154,35 @@ function GameData:minBomb(num)
 end
 
 ----------------bomb---------------------------
+
+----------------Game Time --------------------
+function GameData:addGameTime(time)
+	self.gameTime_  = self.gameTime_ + time
+end
+
+function GameData:getGameTime()
+	local time = os.time()
+	return time - self.gameTime_
+end
+
+function GameData:resetGameTime()
+	self.gameTime_ = os.time()
+end
+----------------Game Time END --------------------
+
+function GameData:resetKillNum()
+	self.armyKill_ = 0
+end
+
+function GameData:addKillNum(num)
+	if not num then num = 1 end
+	self.armyKill_ = self.armyKill_ + num 
+end
+
+function GameData:getKillNum()
+	return self.armyKill_
+end
+
 
 function GameData:reset()
 	self:initData()

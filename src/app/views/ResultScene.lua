@@ -39,7 +39,16 @@ function ResultScene:onCreate(  )
 
 	local gameTimeLb = root:getChildByName("time")
 
+	local gameTime = GameData:getInstance():getGameTime()
+	local min = math.floor(gameTime/60)
+	local sec = gameTime % 60
+	local timeStr = string.format("%02d:%02d", min, sec)
+	gameTimeLb:setString(timeStr)
+
 	local enemyKillLb = root:getChildByName("killNum")
+
+	local killNum = GameData:getInstance():getKillNum()
+	enemyKillLb:setString(killNum)
 
 	local scoreLb = root:getChildByName("Score")
 	scoreLb:setString(tostring(GameData:getInstance():getScore()))
@@ -126,6 +135,10 @@ function ResultScene:step( dt )
 
 	local delScore = scoreNum-AllLevelNum+levelNum
 
+	if  scoreNum > 9000 then
+		scoreNum = 9000
+	end
+
 	local str = string.format("%d/%d", scoreNum, AllLevelNum)
 	self.expNum_:setString(str)
 	self.expBar_:setPercent(delScore/levelNum * 100)
@@ -137,7 +150,8 @@ function ResultScene:step( dt )
 		scoreNum = scoreNum + 10
 	end
 
-	if scoreNum > AllLevelNum then 
+	if  scoreNum <= 9000 and scoreNum > AllLevelNum then 
+
 		lastAllScore = scoreNum
 
 		pauseFlag = true
