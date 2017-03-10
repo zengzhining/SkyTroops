@@ -10,21 +10,5 @@
 		<key>y</key>
 		<real>1413.5078125</real>
 	</dict>
-	<dict>
-		<key>id</key>
-		<real>6</real>
-		<key>x</key>
-		<real>101.24722290039062</real>
-		<key>y</key>
-		<real>2018.015625</real>
-	</dict>
-	<dict>
-		<key>id</key>
-		<real>6</real>
-		<key>x</key>
-		<real>549.239013671875</real>
-		<key>y</key>
-		<real>2017.000244140625</real>
-	</dict>
 </array>
 </plist>
