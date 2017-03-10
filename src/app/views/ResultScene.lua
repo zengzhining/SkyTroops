@@ -6,8 +6,10 @@ local TAG_BG = 101
 local TAG_UNLOCK = 102
 
 local ROLE_SCORE_TBL = {  
-	500,500,1000,2000,5000
+	1000,3000,5000,10000,50000
  }
+
+ local MAX_SCORE = 69000
 
  local lastAllScore = 0
 
@@ -65,8 +67,8 @@ function ResultScene:onCreate(  )
 
 	scoreNum = lastAllScore
 	GameData:getInstance():addAllScore(GameData:getInstance():getScore())
-	-- GameData:getInstance():addAllScore(500)
-	-- GameData:getInstance():setAllScore(0)
+	-- GameData:getInstance():addAllScore(10000)
+	GameData:getInstance():setAllScore(0)
 	GameData:getInstance():reset()
 	
 	GameData:getInstance():save()
@@ -129,13 +131,17 @@ function ResultScene:step( dt )
 		end
 	end
 
-	if unlockId > #ROLE_SCORE_TBL then
+	if unlockId == 0 then
+		return 
+	end
+	if unlockId > #ROLE_SCORE_TBL + 1 then
 		pauseFlag = true
 		return 
 	end
 
 
 	local score = GameData:getInstance():getAllScore()
+
 	if scoreNum >= score then
 		scoreNum=score
 	else
@@ -144,15 +150,15 @@ function ResultScene:step( dt )
 	
 	local delScore = scoreNum-AllLevelNum+levelNum
 
-	if  scoreNum > 9000 then
-		scoreNum = 9000
+	if  scoreNum > MAX_SCORE then
+		scoreNum = MAX_SCORE
 	end
 
 	local str = string.format("%d/%d", scoreNum, AllLevelNum)
 	self.expNum_:setString(str)
 	self.expBar_:setPercent(delScore/levelNum * 100)
 
-	if  scoreNum <= 9000 and scoreNum >= AllLevelNum then 
+	if  scoreNum <= MAX_SCORE and scoreNum >= AllLevelNum then 
 
 		lastAllScore = scoreNum
 
