@@ -266,7 +266,10 @@ function GameScene:step( dt )
 			end
 		end
 		
-		self:updateDebugTitle(sum)
+		--debug 计数
+		if DEBUG >= 1 then
+			self:updateDebugTitle(sum)
+		end
 		--没有敌人时候需要进入下一个关卡生成敌人
 		if sum <= 0 then
 			if self.isAllDead_ == false then
