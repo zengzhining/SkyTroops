@@ -57,7 +57,7 @@ function ArmyPlane:hurtAni()
 	if self:isDead() then
 		self:playDeadAnimation("PlaneExplose%02d.png")
 		-- __G__actDelay(self,function (  )
-		-- 	self:posY(0)
+		-- 	self:posY(30)
 		-- end, 1.0)
 	else
 		-- local act = cc.Sequence:create(cc.FadeOut:create(0.1), cc.FadeIn:create(0.1))
@@ -99,7 +99,7 @@ function ArmyPlane:playDeadAnimation(fileFormat_)
 		end
 	end ),cc.Animate:create( ani ), cc.CallFunc:create( function ( target )
 		audio.setSoundsVolume(originVol)
-	end ), cc.Hide:create())
+	end ), cc.RemoveSelf:create())
 	self:runAction(act)
 end
 

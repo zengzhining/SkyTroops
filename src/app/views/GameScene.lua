@@ -121,29 +121,13 @@ function GameScene:step( dt )
 	local rolePosY = self.role_:getPositionY()
 
 	armyInScreen = {}
-	for k,army in pairs(armySet) do
-		repeat
-			local armyPosY = army:getPositionY()
-			local isOutOfWindow = ( armyPosY <= 0 and true or false )
-			if isOutOfWindow then 
-				table.remove(armySet, k)
-				army:removeSelf()
-				break
-			end
-
-			-- local isDead = army:isDead()
-			-- if isDead then
-			-- 	table.remove(armySet, k)
-			-- 	army:removeSelf()
-			-- 	break
-			-- end
-
+	local children = self.gameLayer_:getChildren()
+	for i , army in pairs (children) do
+		if army:getTag() == TAG_ARMY then
 			if army:getPositionY() >= 0 and army:getPositionY()<= display.height + army:getViewRect().height*0.5 then
-				army.key_ = k
 				table.insert(armyInScreen, army)
 			end
-		until true
-		
+		end
 	end
 	--遍历敌人
 	for k, army in pairs(armyInScreen) do
@@ -167,7 +151,6 @@ function GameScene:step( dt )
 			end
 		end
 	end
-
 	
 	--遍历子弹处理子弹碰撞逻辑
 	for i, bullet in pairs(bulletSet) do
@@ -185,7 +168,6 @@ function GameScene:step( dt )
 						--最后再处理去除逻辑
 						table.remove(bulletSet, i)
 						if army:isDead() then
-							table.remove(armySet, army.key_)
 							table.remove(armyInScreen, k)
 						-- 	break
 						end
@@ -255,17 +237,26 @@ function GameScene:step( dt )
 	if tempTime >= armtTime then
 		tempTime = 0 
 
+		--超出界面去除
 		local tbl = self.gameLayer_:getChildren()
-		local sum = 0
 		for k, item in pairs (tbl) do
 			if item:getTag() == TAG_ARMY then
-				sum = sum + 1
-				if item:getPositionY() < 0 and item:isDead() then
+				if item:getPositionY() < -100 then
 					item:removeSelf()
 				end
 			end
 		end
-		
+
+
+		local sum = 0
+		local armytbl = self.gameLayer_:getChildren()
+
+		for k, m_army in pairs (armytbl) do
+			if m_army:getTag() == TAG_ARMY then
+				sum = sum + 1
+			end
+		end
+
 		--debug 计数
 		if DEBUG >= 1 then
 			self:updateDebugTitle(sum)
@@ -1047,7 +1038,7 @@ function GameScene:onCreateArmy(  )
 		army:pos(armyPos)
 		army:setTag(TAG_ARMY)
 		self.gameLayer_:addChild(army)
-		table.insert(armySet, army)
+		-- table.insert(armySet, army)
 	end
 	--调整一下游戏背景速度
 	local bgSpeed = self:getBgSpeed()
@@ -1168,11 +1159,6 @@ function GameScene:onExit()
 	self.gameLayer_:removeKeypad()
 	self.gameLayer_:removeAccelerate()
 	self:unUpdate()
-	for k, army in pairs(armySet) do
-		if army then 
-			army:removeSelf()
-		end
-	end
 
 end
 
