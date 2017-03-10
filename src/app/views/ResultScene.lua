@@ -68,7 +68,7 @@ function ResultScene:onCreate(  )
 	scoreNum = lastAllScore
 	GameData:getInstance():addAllScore(GameData:getInstance():getScore())
 	-- GameData:getInstance():addAllScore(10000)
-	GameData:getInstance():setAllScore(0)
+	-- GameData:getInstance():setAllScore(0)
 	GameData:getInstance():reset()
 	
 	GameData:getInstance():save()
