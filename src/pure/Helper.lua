@@ -48,7 +48,7 @@ function showBoomParticle(layer)
 	for i = 1, 5 do
 		local point = cc.p(i * display.width/6, 0 )
 		local emitter = showParticle(layer, point, "Particles/boom.plist")
-		local moveUp = cc.EaseIn:create(cc.MoveBy:create(2, cc.p(0, display.height * 1.5) ) , 1.5)
+		local moveUp = cc.EaseIn:create(cc.MoveBy:create(0.3, cc.p(0, display.height * 1.5) ) , 1.5)
 		local act = cc.Sequence:create(moveUp  ,cc.RemoveSelf:create(true) )
 		emitter:runAction(act)
 	end

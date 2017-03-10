@@ -634,9 +634,9 @@ function GameScene:onBomb()
 			if not army:isDead() then
 				local posy = army:getPositionY()
 				local time = 1.3 * posy/ display.height
-				__G__actDelay(army, function (  )
+				-- __G__actDelay(army, function (  )
 					army:onCollisionBomb()
-				end, time)
+				-- end, time)
 			end
 		end
 
