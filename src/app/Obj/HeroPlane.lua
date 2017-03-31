@@ -231,7 +231,7 @@ function HeroPlane:updateBullet()
 	local id = self:getId()
 	local typeId = self:getBulletFireType()
 	local fireTbl = { 
-		{ 1,2,3 },
+		{ 1,2,2 },
 		{ 1,2,4	},
 		{ 1,1,1 },
 		{ 1,2,2 },
