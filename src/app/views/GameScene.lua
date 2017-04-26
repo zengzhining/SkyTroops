@@ -11,7 +11,10 @@ local TAG_TITLE_LAYER = 107 --关卡文字
 local TAG_ARMY = 201
 local TAG_BULLET = 202
 local TAG_ROLE_BULLET = 203
+
 local TAG_DEBUG_TITLE = 204
+local TAG_DEBUG_LEVEL = 210
+
 
 local armySet = {}
 local bulletSet = {} --主角的子弹
@@ -26,7 +29,7 @@ local ARMY_TIME = 0.6 --敌人生成时间
 local tempTime = 0
 
 local armyIndex = 1 --敌人的索引
-local ARMY_LENGTH = 10 --一次生成敌人的长度
+local ARMY_LENGTH = 9 --一次生成敌人的长度
 local fly_height = 0 --飞行的高度
 
 local hitSameArmyNum = 0 --打击到相同敌人的数目
@@ -34,6 +37,8 @@ local lastHitArmyId = 1 --上次子弹打到的敌人的id
 local commboTimes = 0
 
 local ContinueTimes = 2  -- 只能有两次继续游戏机会
+
+local DEFAULT_HIEGHT =  display.height * 1.2
 
 local scheduler = cc.Director:getInstance():getScheduler()
 
@@ -71,12 +76,23 @@ function GameScene:addDebugTitle()
 	title:setAnchorPoint(cc.p(0, 0.5))
 	title:pos(display.left_center)
 	self:add(title,999, TAG_DEBUG_TITLE)
+
+	local level = display.newTTF("fonts/pen.ttf", 32,"level:70")
+	level:setAnchorPoint(cc.p(0, 0.5))
+	level:pos(cc.p(display.left,display.cy + 100  ) )
+	self:add(level,999, TAG_DEBUG_LEVEL)
 end
 
 function GameScene:updateDebugTitle(sum_)
 	local title = self:getChildByTag(TAG_DEBUG_TITLE)
 	if title then
 		local str = string.format("sum:%d", sum_)
+		title:setString(str)
+	end
+
+	title = self:getChildByTag(TAG_DEBUG_LEVEL)
+	if title then
+		local str = string.format("level:%d", GameData:getInstance():getLevel()  )
 		title:setString(str)
 	end
 end
@@ -1055,19 +1071,38 @@ function GameScene:createArmyFromIndex( formId, toId, armyData, height_ )
 
 	local scene = self
 
+	local bottonArmyY = 0
+
 	for i = formId, toId,1 do
 		local armyInfo = armyData[i]
 
-		armyIndex = i
 		if not armyInfo then 
+			armyIndex = i
 			break
 		end
 
 		local id = armyInfo.id
 		local army = PlaneFactory:getInstance():createEnemy(id)
 
+		local posy = 0
+
+		if i == formId then
+			bottonArmyY =  armyInfo.y
+
+			--默认将敌机放在一个高度
+			posy = DEFAULT_HIEGHT
+
+		else
+			--算出距离，然后在最低点加上距离
+			local dy = math.abs(armyInfo.y - bottonArmyY) 
+			posy = DEFAULT_HIEGHT + dy
+		end
+
+		print("posy~~~~", posy)
+
 		local width = army:getViewRect().width
-		local armyPos = cc.p(armyInfo.x, armyInfo.y - height_)
+		-- local armyPos = cc.p(armyInfo.x, armyInfo.y - height_ )
+		local armyPos = cc.p(armyInfo.x, posy )
 		army:pos(armyPos)
 		army:setTag(TAG_ARMY)
 		self.gameLayer_:addChild(army,100)
@@ -1102,7 +1137,7 @@ function GameScene:onCreateArmy(  )
 
 	print("armyIndex~~~~", armyIndex, #armyData)
 
-	if armyIndex>= #armyData then return end
+	if armyIndex> #armyData then return end
 
 	local nextIndex = armyIndex + ARMY_LENGTH > #armyData and  #armyData or armyIndex + ARMY_LENGTH
 	self:createArmyFromIndex( armyIndex, nextIndex,  armyData , fly_height)
