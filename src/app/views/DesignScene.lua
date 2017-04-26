@@ -210,6 +210,13 @@ end
 
 function DesignScene:save()
 	local tbl = {}
+
+	--先对其进行排序
+	table.sort(planeSet, function ( itemA, itemB )
+		-- body
+		return itemA:getPositionY()< itemB:getPositionY()
+	end)
+
 	for c,plane in pairs(planeSet) do
 		local item = {}
 		item.id = plane:getId()
@@ -225,7 +232,7 @@ function DesignScene:save()
 		gameio.writeVectorPlistToFile(tbl, str)
 		return 
 	end
-	--默认自动增加,到后面去
+	-- --默认自动增加,到后面去
 	for i = 1, 50 do
 		local str = string.format("res/config/level%02d/army%02d.plist", LEVEL, i)
 		if not gameio.isExist(str) then 
