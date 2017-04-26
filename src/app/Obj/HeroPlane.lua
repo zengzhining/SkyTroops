@@ -172,6 +172,7 @@ function HeroPlane:updateLogic(dt)
 		local speed = cc.pMul(strength, length > 0.5 and 10 or 6)
 		self:setSpeed(speed)
 	end
+
 end
 
 --复写方法
@@ -231,7 +232,7 @@ function HeroPlane:updateBullet()
 	local id = self:getId()
 	local typeId = self:getBulletFireType()
 	local fireTbl = { 
-		{ 1,2,2 },
+		{ 1,2,3 },
 		{ 1,2,4	},
 		{ 1,1,1 },
 		{ 1,2,2 },

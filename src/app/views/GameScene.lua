@@ -25,6 +25,10 @@ local pointSet = {}  --连击显示红点
 local ARMY_TIME = 0.6 --敌人生成时间
 local tempTime = 0
 
+local armyIndex = 1 --敌人的索引
+local ARMY_LENGTH = 10 --一次生成敌人的长度
+local fly_height = 0 --飞行的高度
+
 local hitSameArmyNum = 0 --打击到相同敌人的数目
 local lastHitArmyId = 1 --上次子弹打到的敌人的id
 local commboTimes = 0
@@ -116,6 +120,8 @@ function GameScene:initData()
 end
 
 function GameScene:step( dt )
+
+	fly_height = fly_height + 1
 	--遍历处理
 	local roleRect = self.role_:getCollisionRect()
 	local rolePosY = self.role_:getPositionY()
@@ -940,16 +946,19 @@ function GameScene:getArmyData(  )
 	return armyData
 end
 
---全部敌人离开屏幕或者死掉的回调，用来判断是否进入下一个关卡
-function GameScene:onAllArmyGone()
+--创建下一个关卡的逻辑
+function GameScene:nextLevel()
 	local world = GameData:getInstance():getWorld()
-	GameData:getInstance():addLevel(1)		
 	local level = GameData:getInstance():getLevel()
+
+	armyIndex = 1 --将敌人索引置1
+	fly_height = 0 -- 将飞行高度置0
 	local str = string.format("config/level%02d/army%02d.plist", world,level)
 	local isExit = gameio.isExist(str)
 	if isExit then 
 		--存在下一个的配置就生成敌人
 		__G__actDelay(self,function (  )
+
 			self:onCreateArmy()
 		end, 2.0)
 	else
@@ -990,6 +999,20 @@ function GameScene:onAllArmyGone()
 	end
 end
 
+--全部敌人离开屏幕或者死掉的回调，用来判断是否进入下一个关卡
+function GameScene:onAllArmyGone()
+	local world = GameData:getInstance():getWorld()
+
+	--这里是否进入下一个关卡
+
+	GameData:getInstance():addLevel(1)		
+
+	self:nextLevel()
+
+
+	
+end
+
 --生成物品
 function GameScene:createItem( id, pos_ )
 	if not pos_ then pos_ = cc.p(display.cx, display.height) end
@@ -1002,20 +1025,17 @@ function GameScene:createItem( id, pos_ )
 	table.insert(itemSet, item)
 end
 
-function GameScene:onCreateArmy(  )
-	--先去除主角发射的子弹
-	-- for i, bullet in pairs(bulletSet) do
-	-- 	local posy = bullet:getPositionY()
-	-- 	if posy > display.height then
-	-- 		table.remove(bulletSet, i  )
-	-- 	end
-	-- end
 
+--移除超出屏幕的敌人
+function GameScene:removeOutWindowArmy()
 	local tbl = self.gameLayer_:getChildren()
 	for k, item in pairs(tbl) do
 		local tag = item:getTag()
 		if tag == TAG_ARMY then
-			item:removeSelf()
+			local posY = item:getPositionY()
+			if posY < -100 then
+				item:removeSelf()
+			end
 		elseif tag == TAG_BULLET then
 			if item:getPositionY() > display.height then
 				item:removeSelf()
@@ -1026,20 +1046,67 @@ function GameScene:onCreateArmy(  )
 			armyBulletSet = {}
 		end
 	end
+end
 
-	--读取plist数据创建敌人
-	local armyData = self:getArmyData()
-	for i, armyInfo in pairs(armyData) do
+function GameScene:createArmyFromIndex( formId, toId, armyData, height_ )
+	if not height_ then height_ = 0 end
+
+	print("height_~~~~", height_)
+
+	local scene = self
+
+	for i = formId, toId,1 do
+		local armyInfo = armyData[i]
+
+		armyIndex = i
+		if not armyInfo then 
+			break
+		end
+
 		local id = armyInfo.id
 		local army = PlaneFactory:getInstance():createEnemy(id)
 
 		local width = army:getViewRect().width
-		local armyPos = cc.p(armyInfo.x, armyInfo.y)
+		local armyPos = cc.p(armyInfo.x, armyInfo.y - height_)
 		army:pos(armyPos)
 		army:setTag(TAG_ARMY)
-		self.gameLayer_:addChild(army)
-		-- table.insert(armySet, army)
+		self.gameLayer_:addChild(army,100)
+
+		--最后一个消灭时候生成下一个
+		if i == toId then
+			function army:onInScreen(  )
+				scene:onCreateArmy()
+			end
+		end
 	end
+
+	--长度增加一
+	armyIndex = toId + 1
+
+end
+
+
+function GameScene:onCreateArmy(  )
+	--先去除主角发射的子弹
+	-- for i, bullet in pairs(bulletSet) do
+	-- 	local posy = bullet:getPositionY()
+	-- 	if posy > display.height then
+	-- 		table.remove(bulletSet, i  )
+	-- 	end
+	-- end
+
+	self:removeOutWindowArmy()
+
+	--读取plist数据创建敌人
+	local armyData = self:getArmyData()
+
+	print("armyIndex~~~~", armyIndex, #armyData)
+
+	if armyIndex>= #armyData then return end
+
+	local nextIndex = armyIndex + ARMY_LENGTH > #armyData and  #armyData or armyIndex + ARMY_LENGTH
+	self:createArmyFromIndex( armyIndex, nextIndex,  armyData , fly_height)
+
 	--调整一下游戏背景速度
 	local bgSpeed = self:getBgSpeed()
 	local bg = self:getChildByTag(TAG_BG)
