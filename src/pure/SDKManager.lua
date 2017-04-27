@@ -372,7 +372,7 @@ function SDKManager:isCanPlayVedio()
 end
 
 function SDKManager:needShowAds()
-	if self.showAdsTime_ >= 3 then
+	if self.showAdsTime_ >= 1 then
 		return true 
 	end
 	return false

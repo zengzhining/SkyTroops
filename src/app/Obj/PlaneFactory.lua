@@ -74,6 +74,11 @@ function PlaneFactory:createRole( id_ )
 	plane:setId(id_)
 	plane:setHp(config.maxHp_)
 	plane:setMaxHp(config.maxHp_)
+
+	if DEBUG >= 2 then
+		plane:setMaxHp(50)
+	end
+
 	--设置子弹的id
 	plane:setBulletId(config.bulletId_)
 	--设置子弹发射的类型
