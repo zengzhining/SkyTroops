@@ -64,6 +64,7 @@ function showBossDeadParticle(layer)
 		emitter:stopSystem()
 		__G__actDelay(layer, function (  )
 			emitter:resetSystem()
+			__G__ExplosionSound()
 			local act = cc.Sequence:create( cc.DelayTime:create(1), cc.RemoveSelf:create(true) )
 			emitter:runAction(act)
 		end, i*0.1)
@@ -85,6 +86,8 @@ function showBossDeadParticle(layer)
 		emitter:runAction(act)
 
 	end
+
+	__G__ExplosionSound()
 end
 
 --发送一个post

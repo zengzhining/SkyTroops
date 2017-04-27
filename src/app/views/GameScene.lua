@@ -300,6 +300,7 @@ end
 
 --主角获得物品的场景回调
 function GameScene:onRoleGetItem(item)
+	__G__pickUpItem()
 	self:updateUI()
 end
 

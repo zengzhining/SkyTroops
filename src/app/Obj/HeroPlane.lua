@@ -223,6 +223,8 @@ end
 
 --角色升级
 function HeroPlane:levelUp()
+	--播放音效
+	__G__levelUpSound()
 	self:addLevel(1)
 	self:updateAvatar()
 	self:updateBullet()

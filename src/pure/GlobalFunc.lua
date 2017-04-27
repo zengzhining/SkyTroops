@@ -326,6 +326,17 @@ __G__FireBullet = function(  )
 	audio.playSound("sfx/sound/fire2.mp3", false)
 end
 
+--升级音效
+__G__levelUpSound = function (  )
+	audio.playSound("sfx/sound/level_up.mp3", false)
+end
+
+--获得道具音效
+__G__pickUpItem = function (  )
+	audio.playSound("sfx/sound/pick_up.mp3", false)
+	
+end
+
 --背景音乐播放，1为菜单，2为游戏场景，3为结算场景
 __G__MainMusic = function( id )
 	if not id then id = 1 end
