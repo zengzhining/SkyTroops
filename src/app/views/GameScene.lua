@@ -451,6 +451,14 @@ function GameScene:onArmyDead( target)
 
 	local score = target:getScore() 
 
+	--是否是boss
+	if target:getMaxHp() >= 100 then
+		__G__actDelay(self,function (  )
+			Helper.showBossDeadParticle(self.gameLayer_)
+		end,0.6)
+
+	end
+
 	GameData:getInstance():addScore( score ) 
 	--分数改变时候更新分数
 	self:updateScore( score )

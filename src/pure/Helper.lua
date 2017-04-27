@@ -45,12 +45,45 @@ end
 
 --显示一个炸弹特效
 function showBoomParticle(layer)
-	for i = 1, 5 do
-		local point = cc.p(i * display.width/6, 0 )
-		local emitter = showParticle(layer, point, "Particles/boom.plist")
-		local moveUp = cc.EaseIn:create(cc.MoveBy:create(0.3, cc.p(0, display.height * 1.5) ) , 1.5)
-		local act = cc.Sequence:create(moveUp  ,cc.RemoveSelf:create(true) )
+	-- for i = 1, 6 do
+		local point = cc.p( display.width * 0.5, display.cy )
+		local emitter = showParticle(layer, point, "Particles/dead/sudder.plist")
+		-- local dir = i > 4 and 1 or -1
+		-- local moveUp = cc.EaseIn:create(cc.MoveBy:create(0.3, cc.p(0, dir * display.height * 1.5) ) , 1.5)
+		-- local act = cc.Sequence:create(cc.DelayTime:create(1)  ,cc.RemoveSelf:create(true) )
+		-- emitter:runAction(act)
+	-- end
+end
+
+--boss死亡时候的特效
+function showBossDeadParticle(layer)
+	local path = "Particles/dead/star.plist"
+	for i = 1, 3 do 
+		local point = cc.p( display.width/4 * i, display.cy )
+		local emitter = showParticle(layer, point,path )
+		emitter:stopSystem()
+		__G__actDelay(layer, function (  )
+			emitter:resetSystem()
+			local act = cc.Sequence:create( cc.DelayTime:create(1), cc.RemoveSelf:create(true) )
+			emitter:runAction(act)
+		end, i*0.1)
+	end
+
+	for i = 1,2 do
+		local point = cc.p( display.width/3 * i, display.cy * 1.5 )
+		local emitter = showParticle(layer, point, path)
+		-- emitter:stopSystem()
+		local act = cc.Sequence:create( cc.DelayTime:create(1), cc.RemoveSelf:create(true) )
 		emitter:runAction(act)
+	end
+
+	for i = 1,2 do
+		local point = cc.p( display.width/3 * i, display.cy * 0.5 )
+		local emitter = showParticle(layer, point, path)
+		-- emitter:stopSystem()
+		local act = cc.Sequence:create( cc.DelayTime:create(1), cc.RemoveSelf:create(true) )
+		emitter:runAction(act)
+
 	end
 end
 

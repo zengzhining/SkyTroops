@@ -92,13 +92,13 @@ function ArmyPlane:playDeadAnimation(fileFormat_)
 	local originVol = DEFAULT_SOUND_VOL
 	local act = cc.Sequence:create( cc.CallFunc:create( function ( target )
 		--播放前调整一下音效声音大小
-		audio.setSoundsVolume( originVol - 0.2)
+		-- audio.setSoundsVolume( originVol - 0.2)
 		local view = self:getParent():getParent()
 		if view and view.onArmyDead then 
 			view:onArmyDead(target)
 		end
 	end ),cc.Animate:create( ani ), cc.CallFunc:create( function ( target )
-		audio.setSoundsVolume(originVol)
+		-- audio.setSoundsVolume(originVol)
 	end ), cc.RemoveSelf:create())
 	self:runAction(act)
 end
