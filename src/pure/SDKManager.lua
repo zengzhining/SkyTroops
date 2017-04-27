@@ -5,11 +5,11 @@ local DELTA_TIME_VEDIO = 20
 local DELTA_TIME_FULL = 20
 
 function SDKManager:ctor(  )
+	self:initData()
 	if not CC_NEED_SDK then return end
 	self:initAllSDK()
 	self:addEvent()
 	self:cacheADS()
-	self:initData()
 end
 
 function SDKManager:initAllSDK()

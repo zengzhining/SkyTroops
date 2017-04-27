@@ -297,35 +297,40 @@ __G__MusicFadeOut = function(target, time)
 
 		if time_ > time then 
 			target:unUpdate()				
-			audio.setMusicVolume(originVol)
+			-- audio.setMusicVolume(originVol)
 		end
 	end )
 end
 
+__G__resetMusicVolume = function (  )
+	audio.setMusicVolume(DEFAULT_MUSIC_VOL)
+end
+
 --菜单点击音效播放
 __G__MenuClickSound = function (  )
-	audio.playSound("sfx/sound/click.wav", false)
+	audio.playSound("sfx/sound/cancel.mp3", false)
 end
 
 --菜单点击取消的音效
 __G__MenuCancelSound = function (  )
-	audio.playSound("sfx/sound/cancel.wav", false)
+	audio.playSound("sfx/sound/cancel.mp3", false)
 end
 
 --爆炸音效
 __G__ExplosionSound = function (  )
-	audio.playSound("sfx/sound/explosion.wav", false)
+	audio.playSound("sfx/sound/explosion.mp3", false)
 end
 
 --发射子弹音效
 __G__FireBullet = function(  )
-	audio.playSound("sfx/sound/fire.wav", false)
+	audio.playSound("sfx/sound/fire2.mp3", false)
 end
 
 --背景音乐播放，1为菜单，2为游戏场景，3为结算场景
 __G__MainMusic = function( id )
 	if not id then id = 1 end
 	audio.stopMusic()
+	__G__resetMusicVolume()
 	local fileName = "sfx/mainMenu.mp3"
 	if id == 2 then
 		fileName = "sfx/main.mp3"

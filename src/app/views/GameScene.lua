@@ -760,6 +760,8 @@ end
 
 --主角发射炮弹的回调函数
 function GameScene:onFireBullet( id_ )
+	__G__FireBullet()
+
 	local role = self.role_
 	local gameLayer = self.gameLayer_
 	local roleX,roleY = role:getPosition()
@@ -1004,9 +1006,9 @@ function GameScene:nextLevel()
 			__G__MusicFadeOut(self, 5)
 
 			__G__actDelay(self, function (  )
-				audio.stopMusic(true)
+				-- audio.stopMusic(true)
 				
-			end, 4.8)
+			end, 5.2)
 
 			__G__actDelay(bg,function (  )
 				local str = string.format("bg/%02dBackground.png", world)
