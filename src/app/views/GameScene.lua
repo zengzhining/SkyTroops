@@ -494,6 +494,7 @@ function GameScene:onArmyDead( target)
 		--死亡发射子弹
 		local fireType = target:getFireType()
 		self:fireBullet(fireType, target, target:getBulletId() )
+	end
 end
 
 function GameScene:showAddScore(dScore, params)
