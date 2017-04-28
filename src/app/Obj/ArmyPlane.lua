@@ -41,6 +41,10 @@ function ArmyPlane:setFloat( isFloat )
 	self.isFloat_ = isFloat
 end
 
+function ArmyPlane:isFloat()
+	return self.isFloat_
+end
+
 function ArmyPlane:onCollision( other )
 	self.isHurtRole_ = true
 end
@@ -132,6 +136,7 @@ function ArmyPlane:fireBullet()
 	local scene = self:getParent():getParent()
 	if scene and scene.onEnemyFire then 
 		local target = self
+		--根据bulletId才发射子弹类型，可以改变发射子弹显示的类型
 		scene:onEnemyFire( target, self:getBulletId())
 	end
 end
@@ -148,6 +153,8 @@ end
 function ArmyPlane:fllowRole( speed )
 	if not speed then speed = 1 end
 	local role = GameData:getInstance():getRole()
+	if not role then return end
+	
 	local rolePosX, rolePosY = role:getPosition()
 	local posx, posy = self:getPosition()
 	
@@ -258,20 +265,12 @@ function ArmyPlane:aiMove(dt)
 		strategy:addAiTime(dt)
 	elseif aiId == 14 then
 		--小boss Ai 发射子弹，同时跟着角色左右移动
-		local role = GameData:getInstance():getRole()
-		local rolePosX, rolePosY = role:getPosition()
-		local posx, posy = self:getPosition()
+		self:fllowRole()
+
 		if strategy:canAi() then
 			strategy:resetAiTime()
 			self:fireBullet()
 		end
-
-		local dir = 1
-		if posx > rolePosX then
-			dir = -1
-		end
-		self:posByX(dir,0)
-
 
 		strategy:addAiTime(dt)
 	elseif aiId == 15 then
@@ -310,6 +309,19 @@ function ArmyPlane:onInScreen()
 	
 end
 
+--漂浮的才是boss
+function ArmyPlane:isBoss()
+	return self:isFloat()
+end
+
+--刷新boss逻辑
+function ArmyPlane:updateBossLogic(dt)
+	if not self:isBoss() then return end
+
+
+
+end
+
 --刷新逻辑
 function ArmyPlane:updateLogic(dt)
 	local posy = self:getPositionY()
@@ -342,8 +354,9 @@ function ArmyPlane:step(dt)
 	ArmyPlane.super.step(self,dt)
 	if DESIGN then return end
 
-	self:aiMove(dt)
-	
+	self:updateBossLogic(dt)
+
+	self:aiMove(dt)	
 end
 
 return ArmyPlane

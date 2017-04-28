@@ -1,18 +1,15 @@
 
 local TestScene = class("TestScene", cc.load("mvc").ViewBase)
 
+local TAG_BULLET = 202
+
+
 function TestScene:ctor()
 	__G__LoadRes()
 	local layer = display.newLayer()
 	layer:onAccelerate(function(x,y,z,timeStap)
 		print("x,y,z,timeStap~~~~~~~~",x, y, z, timeStap)
 	end)
-
-	
-
-	
-
-    
 
 	--testJson
     require('cocos.cocos2d.json')
@@ -283,7 +280,13 @@ function TestScene:ctor()
 
 	-- local mainPlane
 
-	Helper.showBossDeadParticle(layer, display.center)
+	-- Helper.showBossDeadParticle(layer, display.center)
+
+	-- __G__FireBullet()
+
+	local plane = PlaneFactory:getInstance():createEnemy(11)
+	plane:pos(display.center)
+	layer:add(plane,10)
 
 	--拖尾
 	-- local ms = cc.MotionStreak:create(0.5, 5, 20, display.COLOR_RED, "png/streak.png")
@@ -301,18 +304,165 @@ function TestScene:ctor()
 	-- Helper.postMessage("http://codinggamer.net/test.php","x=100&y=1000&name='chun'&level=1")
 
 	--getJson Data
-	Helper.getJson("http://codinggamer.net/getData.php", function ( data )
-		print("data~~~~~", data)
-		print("data[1]~~~",data["1"])
-		for index, info in pairs (data) do
-			local bullet = display.newTTF(nil,nil,info.name)
-			bullet:setColor(cc.c4f(255, 0, 0, 0))
-			-- local bullet = PlaneFactory:getInstance():createItem(1)
-			bullet:pos(info.x,info.y)
-			layer:add(bullet)
-		end
-	end )
+	-- Helper.getJson("http://codinggamer.net/getData.php", function ( data )
+	-- 	print("data~~~~~", data)
+	-- 	print("data[1]~~~",data["1"])
+	-- 	for index, info in pairs (data) do
+	-- 		local bullet = display.newTTF(nil,nil,info.name)
+	-- 		bullet:setColor(cc.c4f(255, 0, 0, 0))
+	-- 		-- local bullet = PlaneFactory:getInstance():createItem(1)
+	-- 		bullet:pos(info.x,info.y)
+	-- 		layer:add(bullet)
+	-- 	end
+	-- end )
+
+	self.gameLayer_ = layer
 end
+
+function TestScene:onEnemyFire( enemy, bulletId )
+	print("onEnemyFire~~~~")
+	local gameLayer = self.gameLayer_
+	local posx,posy = enemy:getPosition()
+	local aiId = enemy:getAiId()
+	if aiId == 5 then 
+		--发射散弹
+		self:fireBullet(2, enemy, bulletId)
+	elseif aiId == 6 then
+		--发射两列子弹
+		self:fireBullet(4, enemy, bulletId)
+	elseif aiId == 9 then 
+		self:fireBullet(4, enemy, bulletId )
+	elseif aiId == 13 then
+		--发射散弹
+		self:fireBullet(2, enemy, bulletId)
+	elseif aiId == 14 then
+		--发射两列子弹
+		self:fireBullet(4, enemy, bulletId)
+	elseif aiId == 15 then
+		--发射跟随子弹
+		self:fireBullet(6, enemy, bulletId)
+	elseif aiId == 21 then
+		--大boss1,发射面向主角的散弹
+		self:fireBullet(7, enemy, bulletId)
+	elseif aiId == 22 then
+		--大boss2,发射主角的散列散弹
+		self:fireBullet(8, enemy, bulletId)
+
+	else
+		--普通发射
+		self:fireBullet(1,enemy, bulletId)
+	end
+end
+
+--发射子弹方法
+function TestScene:fireBullet( typeId_ , enemy , bulletId)
+	local gameLayer = self.gameLayer_
+	local posx,posy = enemy:getPosition()
+	local bulletY = posy - enemy:getViewRect().height *0.05
+	if typeId_ == 1 then 
+		--普通发射
+		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+		bullet:pos(posx, bulletY)
+		bullet:onFire()
+		bullet:setSpeed(cc.p(0, -5))
+		gameLayer:addChild(bullet, 0, TAG_BULLET)
+		-- table.insert(armyBulletSet, bullet)
+	elseif typeId_ == 2 then 
+		--发射散弹
+		local speedX = 3
+		for i = -1, 1,1 do
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx, bulletY)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(speedX * i, -5))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+			-- table.insert(armyBulletSet, bullet)
+		end
+	elseif typeId_ == 3 then 
+		--发射一串的子弹
+		local speedY = 10
+		local DEL_HEIGHT = 30
+		for i = 0,2,1 do
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx, bulletY - DEL_HEIGHT*i )
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, -speedY))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+			-- table.insert(armyBulletSet, bullet)
+		end
+	elseif typeId_ == 4 then 
+		--发射两列子弹
+		local PER_WIDTH = 30
+		for i = -1, 1, 2 do 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx + PER_WIDTH * i, bulletY)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, -5))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+			-- table.insert(armyBulletSet, bullet)
+		end
+	elseif typeId_ == 5 then 
+		--发射全场的子弹
+		local PER_DREE = math.pi/6
+		local SPEED = 5
+		for i = 1, 12 do
+			--
+			local dgree = i * PER_DREE 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx , posy )
+			bullet:onFire()
+			bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+			-- table.insert(armyBulletSet, bullet)
+		end 
+	elseif typeId_ == 6 then
+		--跟随子弹
+		--普通发射
+		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+		bullet:pos(posx, bulletY)
+		bullet:onFire()
+
+		local role = GameData:getInstance():getRole()
+		local rolex, roley = role:getPosition()
+		local dx = rolex - posx
+		local dy = roley - bulletY
+
+		local speedY = 5
+
+		local speedX = dx/dy * speedY
+
+		bullet:setSpeed(cc.p(-speedX, -speedY))
+		gameLayer:addChild(bullet, 0, TAG_BULLET)
+		-- table.insert(armyBulletSet, bullet)
+	elseif typeId_ ==7 then
+		--发射一半的散弹
+		local PER_DREE = math.pi/6
+		local SPEED = 5
+		for i = 6, 12 do
+			--
+			local dgree = i * PER_DREE 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx , posy )
+			bullet:onFire()
+			bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+			-- table.insert(armyBulletSet, bullet)
+		end 
+	elseif typeId_ == 8 then
+		--发射三列的子弹
+		local PER_WIDTH = 30
+		for i = -1, 1, 1 do 
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx + PER_WIDTH * i, bulletY)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, -5))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+			-- table.insert(armyBulletSet, bullet)
+		end
+	end
+
+end
+
 
 function TestScene:cameraMove(speed)
 	local camera = display.getDefaultCamera()
