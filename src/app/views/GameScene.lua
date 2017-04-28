@@ -456,7 +456,7 @@ function GameScene:onArmyDead( target)
 	if target:getMaxHp() >= 100 then
 		__G__actDelay(self,function (  )
 			Helper.showBossDeadParticle(self.gameLayer_)
-		end,0.6)
+		end,0.1)
 
 	end
 

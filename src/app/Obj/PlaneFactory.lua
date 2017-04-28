@@ -75,10 +75,7 @@ function PlaneFactory:createRole( id_ )
 	plane:setHp(config.maxHp_)
 	plane:setMaxHp(config.maxHp_)
 
-	if DEBUG >= 2 then
-		plane:setHp(50)
-		plane:setMaxHp(50)
-	end
+	
 
 	--设置子弹的id
 	plane:setBulletId(config.bulletId_)
@@ -87,6 +84,12 @@ function PlaneFactory:createRole( id_ )
 	plane:setBulletFireType(config.bulletType_)
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(config.bulletCalmTime_)
+
+	if DEBUG >= 2 then
+		plane:setHp(50)
+		plane:setMaxHp(50)		
+	end
+
 	if IS_MAC then
 		-- plane:setBulletCalmTime(0.02)
 	end

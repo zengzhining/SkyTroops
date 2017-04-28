@@ -375,6 +375,8 @@ __G__GameBgm = function ( world,level )
 			index = 5
 		end
 	end
+	--这里首先重置一下声音大小
+	__G__resetMusicVolume()
 
 	local str = string.format("sfx/level%02d.mp3",index)
 	audio.playMusic(str)
