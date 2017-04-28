@@ -21,6 +21,10 @@ function PlaneFactory:createEnemy( id_ )
 	army:setMaxHp(ENEMY_HP_TBL[id_])
 	army:setHp(ENEMY_HP_TBL[id_])
 	army:setFloat(ENEMY_FLOAT_TBL[id_])
+
+	--设置发射子弹类型
+	army:setFireType( ENEMY_FIRE_TYPE_TBL[id_] )
+	
 	if not DESIGN then
 		army:setSpeed(cc.p(0,-3))
 	end

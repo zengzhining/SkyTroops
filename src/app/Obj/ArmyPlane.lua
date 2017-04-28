@@ -35,6 +35,9 @@ function ArmyPlane:ctor(  )
 
 	--碰撞到的伤害
 	self.damge_ = 1
+
+	--发射子弹的类型
+	self.fireType_ = 1
 end
 
 function ArmyPlane:setFloat( isFloat )
@@ -129,6 +132,15 @@ function ArmyPlane:onHalfDisplayHeight()
 
 end
 
+--设置发射类型
+function ArmyPlane:setFireType( id_ )
+	self.fireType_ = id_
+end
+
+function ArmyPlane:getFireType()
+	return self.fireType_
+end
+
 --发射子弹
 function ArmyPlane:fireBullet()
 	--如果死掉时候不能发射子弹
@@ -175,15 +187,15 @@ function ArmyPlane:aiMove(dt)
 	if posy > display.height then return end 
 	local strategy = self.aiStrategy_
 	local aiId = strategy:getAiId()
-	if aiId == 1 then 
+	if aiId == AI.LINE then 
 		--匀速直线，默认就是
-	elseif aiId == 2 then
+	elseif aiId == AI.SPEED_UP then
 		--突然加速
 		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
 			self:addSpeed(cc.p(0, -5))
 			strategy:useAi()
 		end
-	elseif aiId == 3 then 
+	elseif aiId == AI.TURN_TO_ROLE then 
 		--转向主角
 		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
 			local role = GameData:getInstance():getRole()
@@ -200,102 +212,31 @@ function ArmyPlane:aiMove(dt)
 			strategy:useAi()
 		end
 	--发射子弹
-	elseif aiId == 4 then
+	elseif aiId == AI.FIRE_BULLET then
 		--才发射
 		if strategy:canAi() then
 			strategy:resetAiTime()
 			self:fireBullet()
 		end
 		strategy:addAiTime(dt)
-	elseif aiId == 5 then 
-		--发射散弹
-		if strategy:canAi() then
-			strategy:resetAiTime()
-			self:fireBullet()
-		end
-		strategy:addAiTime(dt)
-	elseif aiId == 6 then
-		--发射两列
-		if strategy:canAi() then
-			strategy:resetAiTime()
-			self:fireBullet()
-		end
-		strategy:addAiTime(dt)
-	elseif aiId == 7 then
+	elseif aiId == AI.DEAD_TO_FIRE then
 		--死亡发射爆炸弹
 		
-	elseif aiId == 8 then
-		--死亡发射散弹
-		--突然加速
+	elseif aiId == AI.SPEED_UP_FOLLOW then
+		--突然加速跟随
 		self:fllowRole()
 		if self:getPositionY() <= AI_HEIGHT and (not strategy:hasUseAi() ) then
 			self:addSpeed(cc.p(0, -8))
 			strategy:useAi()
 		end
 
-	elseif aiId == 9 then 
-		-- --会根据主角位置移动，如果主角到攻击范围局攻击
-		-- if strategy:canAi() then
-		-- 	strategy:resetAiTime()
-		-- 	local role = GameData:getInstance():getRole()
-		-- 	local posx, posy = self:getPosition()
-		-- 	local rolePosX, rolePosY = role:getPosition()
-		-- 	local dir = posx > rolePosX and -1 or 1
-		-- 	local speedX = dir * 5
-		-- 	self:setSpeedX(speedX)
-
-		-- 	if math.abs(rolePosX - posx) <= strategy:getAiWidth() and (posy > rolePosY )then
-		-- 		self:fireBullet()
-		-- 	end
-		-- end
-		-- strategy:addAiTime(dt)
-	elseif aiId == 10 then
-		--跟随角色并且自爆
+	elseif aiId == AI.FOLLOW then
 		self:fllowRole()
 
-	elseif aiId == 13 then
+	elseif aiId == AI.FOLLOW_AND_FIRE then
 		--小boss Ai 发射子弹，同时跟着角色左右移动
 		self:fllowRole()
 
-
-		if strategy:canAi() then
-			strategy:resetAiTime()
-			self:fireBullet()
-		end
-		strategy:addAiTime(dt)
-	elseif aiId == 14 then
-		--小boss Ai 发射子弹，同时跟着角色左右移动
-		self:fllowRole()
-
-		if strategy:canAi() then
-			strategy:resetAiTime()
-			self:fireBullet()
-		end
-
-		strategy:addAiTime(dt)
-	elseif aiId == 15 then
-		--小boss 发射跟随子弹
-		local role = GameData:getInstance():getRole()
-		local rolePosX, rolePosY = role:getPosition()
-		local posx, posy = self:getPosition()
-		if strategy:canAi() then
-			strategy:resetAiTime()
-			self:fireBullet()
-		end
-		strategy:addAiTime(dt)
-
-	elseif aiId == 21 then
-		--大boss 发射散弹子弹
-		self:fllowRole()
-
-		if strategy:canAi() then
-			strategy:resetAiTime()
-			self:fireBullet()
-		end
-		strategy:addAiTime(dt)
-	elseif aiId == 22 then
-		--大boss 发射三列的子弹
-		self:fllowRole(0.5)
 		if strategy:canAi() then
 			strategy:resetAiTime()
 			self:fireBullet()
@@ -317,8 +258,6 @@ end
 --刷新boss逻辑
 function ArmyPlane:updateBossLogic(dt)
 	if not self:isBoss() then return end
-
-
 
 end
 

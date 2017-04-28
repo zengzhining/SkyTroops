@@ -485,37 +485,15 @@ function GameScene:onArmyDead( target)
 			self:createItem(2, param.pos_)
 		end
 	end
-	--10的话发物品
-	if aiId == 9 then 
-		local id = 1
 
-		if hpPer >= 0.8 then
-			if randomNum > 500 then
-				id = 1
-			else
-				id = 3
-			end
-		elseif hpPer >= 0.4 then
-			if randomNum > 300 then
-				id = 3
-			else
-				id = 2
-			end
-		else
-			id = 2
-		end
+	if aiId == AI.DEAD_ITEM then 
+		local id = math.random(1,3)
 
 		self:createItem(id, param.pos_)
-	elseif aiId == 7 then 
-		--发射全场的散弹
-		self:fireBullet(5, target, target:getBulletId() )
-	elseif aiId == 8 then 
-		--发射三个的散弹
-		-- self:fireBullet(2, target, target:getBulletId() )
-	elseif aiId == 10 then
-		self:fireBullet(5, target, target:getBulletId() )
-
-	end
+	elseif aiId == AI.DEAD_TO_FIRE then 
+		--死亡发射子弹
+		local fireType = target:getFireType()
+		self:fireBullet(fireType, target, target:getBulletId() )
 end
 
 function GameScene:showAddScore(dScore, params)

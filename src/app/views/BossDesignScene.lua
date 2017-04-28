@@ -45,34 +45,38 @@ function BossDesignScene:onEnemyFire( enemy, bulletId )
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
 	local aiId = enemy:getAiId()
-	if aiId == 5 then 
-		--发射散弹
-		self:fireBullet(2, enemy, bulletId)
-	elseif aiId == 6 then
-		--发射两列子弹
-		self:fireBullet(4, enemy, bulletId)
-	elseif aiId == 9 then 
-		self:fireBullet(4, enemy, bulletId )
-	elseif aiId == 13 then
-		--发射散弹
-		self:fireBullet(2, enemy, bulletId)
-	elseif aiId == 14 then
-		--发射两列子弹
-		self:fireBullet(4, enemy, bulletId)
-	elseif aiId == 15 then
-		--发射跟随子弹
-		self:fireBullet(6, enemy, bulletId)
-	elseif aiId == 21 then
-		--大boss1,发射面向主角的散弹
-		self:fireBullet(7, enemy, bulletId)
-	elseif aiId == 22 then
-		--大boss2,发射主角的散列散弹
-		self:fireBullet(8, enemy, bulletId)
+	local fireType = enemy:getFireType()
 
-	else
-		--普通发射
-		self:fireBullet(1,enemy, bulletId)
-	end
+	self:fireBullet(fireType, enemy, bulletId)
+	
+	-- if aiId == 5 then 
+	-- 	--发射散弹
+	-- 	self:fireBullet(2, enemy, bulletId)
+	-- elseif aiId == 6 then
+	-- 	--发射两列子弹
+	-- 	self:fireBullet(4, enemy, bulletId)
+	-- elseif aiId == 9 then 
+	-- 	self:fireBullet(4, enemy, bulletId )
+	-- elseif aiId == 13 then
+	-- 	--发射散弹
+	-- 	self:fireBullet(2, enemy, bulletId)
+	-- elseif aiId == 14 then
+	-- 	--发射两列子弹
+	-- 	self:fireBullet(4, enemy, bulletId)
+	-- elseif aiId == 15 then
+	-- 	--发射跟随子弹
+	-- 	self:fireBullet(6, enemy, bulletId)
+	-- elseif aiId == 21 then
+	-- 	--大boss1,发射面向主角的散弹
+	-- 	self:fireBullet(7, enemy, bulletId)
+	-- elseif aiId == 22 then
+	-- 	--大boss2,发射主角的散列散弹
+	-- 	self:fireBullet(8, enemy, bulletId)
+
+	-- else
+	-- 	--普通发射
+	-- 	self:fireBullet(1,enemy, bulletId)
+	-- end
 end
 
 --发射子弹方法,第一个为子弹的发射类型
