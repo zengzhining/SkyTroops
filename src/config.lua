@@ -50,5 +50,5 @@ CC_DESIGN_RESOLUTION = {
     end
 }
 
-DEFAULT_SCENE = "BossDesignScene"
+DEFAULT_SCENE = "SlashScene"
 
