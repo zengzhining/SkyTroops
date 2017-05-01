@@ -42,6 +42,9 @@ function ResultScene:onCreate(  )
 
 	local gameTime = GameData:getInstance():getGameTime()
 	local min = math.floor(gameTime/60)
+
+	if min > 60 then min = 60 end
+
 	local sec = gameTime % 60
 	local timeStr = string.format("%02d:%02d", min, sec)
 	gameTimeLb:setString(timeStr)
@@ -58,6 +61,10 @@ function ResultScene:onCreate(  )
 	local expNum = root:getChildByName("ExpNum")
 	self.expBar_ = expBar
 	self.expNum_ = expNum
+
+	--最高分数
+	local highScoreLb = root:getChildByName("highNum")
+	highScoreLb:setString(GameData:getInstance():getHighScore())
 
 	pauseFlag = false
 	lastAllScore = 0

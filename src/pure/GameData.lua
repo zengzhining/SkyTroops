@@ -83,7 +83,7 @@ function GameData:initData()
 	--游戏获得的总分数
 	self.allScore_ = self.allScore_ or 0
 
-	self.gameTime_ = 0
+	self.gameTime_ = os.time()
 
 	self.armyKill_ = 0
 end
@@ -234,6 +234,14 @@ end
 
 function GameData:getScore()
 	return self.score_
+end
+
+function GameData:getHighScore()
+	local key = "high_score"
+	local score = userDefault.getIntegerForKey(key, 0)
+	score = score > self:getScore() and score or self:getScore()
+	userDefault.setIntegerForKey(key, score)
+	return score
 end
 
 ---------all Score

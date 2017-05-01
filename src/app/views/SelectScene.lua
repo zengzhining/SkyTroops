@@ -52,61 +52,61 @@ function SelectScene:onCreate()
 end
 
 --主角发射炮弹的回调函数
-function SelectScene:onFireBullet( id_ )
-	if not self:roleUnlock() then return end
-	local role = self.roleLayer_:getChildByTag(TAG_ROLE_1)
-	local gameLayer = self.roleLayer_
-	local roleX,roleY = role:getPosition()
-	local fireId = role:getBulletFireType()
+-- function SelectScene:onFireBullet( id_ )
+-- 	if not self:roleUnlock() then return end
+-- 	local role = self.roleLayer_:getChildByTag(TAG_ROLE_1)
+-- 	local gameLayer = self.roleLayer_
+-- 	local roleX,roleY = role:getPosition()
+-- 	local fireId = role:getBulletFireType()
 
-	if fireId == 1 then
-		--发射一列
-		local bullet = PlaneFactory:getInstance():createBullet(id_)
-		bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
-		bullet:setSpeed(cc.p(0, 10))
-		gameLayer:addChild(bullet)
-	elseif fireId == 2 then
-		--发射两列
-		local tbl = {-1,1}
-		for c,dir in pairs(tbl) do
-			local bullet = PlaneFactory:getInstance():createBullet(id_)
-			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
-			bullet:setSpeed(cc.p(0, 10))
-			gameLayer:addChild(bullet)
-		end
-	elseif fireId == 3 then
-		--发射三列
-		local tbl = {-1,0, 1}
-		for c,dir in pairs(tbl) do
-			local bullet = PlaneFactory:getInstance():createBullet(id_)
-			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
-			bullet:setSpeed(cc.p(0, 10))
-			gameLayer:addChild(bullet)
-		end
-	elseif fireId == 4 then
-		--散发射三列
-		local tbl = {-1,0, 1}
-		local speedX = 5
-		for c,dir in pairs(tbl) do
-			local bullet = PlaneFactory:getInstance():createBullet(id_)
-			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
-			bullet:setSpeed(cc.p(speedX * dir, 10))
-			gameLayer:addChild(bullet)
-		end
-	elseif fireId == 5 then
+-- 	if fireId == 1 then
+-- 		--发射一列
+-- 		local bullet = PlaneFactory:getInstance():createBullet(id_)
+-- 		bullet:pos(roleX, roleY + role:getViewRect().height *0.25)
+-- 		bullet:setSpeed(cc.p(0, 10))
+-- 		gameLayer:addChild(bullet)
+-- 	elseif fireId == 2 then
+-- 		--发射两列
+-- 		local tbl = {-1,1}
+-- 		for c,dir in pairs(tbl) do
+-- 			local bullet = PlaneFactory:getInstance():createBullet(id_)
+-- 			bullet:pos(roleX + 30*dir, roleY + role:getViewRect().height *0.25)
+-- 			bullet:setSpeed(cc.p(0, 10))
+-- 			gameLayer:addChild(bullet)
+-- 		end
+-- 	elseif fireId == 3 then
+-- 		--发射三列
+-- 		local tbl = {-1,0, 1}
+-- 		for c,dir in pairs(tbl) do
+-- 			local bullet = PlaneFactory:getInstance():createBullet(id_)
+-- 			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
+-- 			bullet:setSpeed(cc.p(0, 10))
+-- 			gameLayer:addChild(bullet)
+-- 		end
+-- 	elseif fireId == 4 then
+-- 		--散发射三列
+-- 		local tbl = {-1,0, 1}
+-- 		local speedX = 5
+-- 		for c,dir in pairs(tbl) do
+-- 			local bullet = PlaneFactory:getInstance():createBullet(id_)
+-- 			bullet:pos(roleX + 50*dir, roleY + role:getViewRect().height *0.25)
+-- 			bullet:setSpeed(cc.p(speedX * dir, 10))
+-- 			gameLayer:addChild(bullet)
+-- 		end
+-- 	elseif fireId == 5 then
 		
-	elseif fireId == 6 then
+-- 	elseif fireId == 6 then
 		
-	end
+-- 	end
 
-	for c,bullet in pairs (bullets) do
-		if bullet:getPositionY() > display.height*1.5 then 
-			bullet:removeSelf()
-			table.remove(bullets, c)
-		end
-	end
+-- 	for c,bullet in pairs (bullets) do
+-- 		if bullet:getPositionY() > display.height*1.5 then 
+-- 			bullet:removeSelf()
+-- 			table.remove(bullets, c)
+-- 		end
+-- 	end
 	
-end
+-- end
 
 function SelectScene:updateRole()
 	local id = self.roleId_
