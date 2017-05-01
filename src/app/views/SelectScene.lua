@@ -189,6 +189,9 @@ end
 
 
 function SelectScene:onEnter()
+	GameData:getInstance():resetLevel()
+	GameData:getInstance():resetWorld()
+
 
 end
 
