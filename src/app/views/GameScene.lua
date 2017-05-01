@@ -1015,8 +1015,9 @@ function GameScene:nextLevel()
 	local isExit = gameio.isExist(str)
 	if isExit then 
 		--存在下一个的配置就生成敌人
+		--是boss需要切换背景音乐
+		
 		__G__actDelay(self,function (  )
-
 			self:onCreateArmy()
 		end, 2.0)
 	else
@@ -1175,8 +1176,6 @@ function GameScene:onCreateArmy(  )
 	--读取plist数据创建敌人
 	local armyData = self:getArmyData()
 
-	print("armyIndex~~~~", armyIndex, #armyData)
-
 	if armyIndex> #armyData then return end
 
 	local nextIndex = armyIndex + ARMY_LENGTH > #armyData and  #armyData or armyIndex + ARMY_LENGTH
@@ -1187,11 +1186,6 @@ function GameScene:onCreateArmy(  )
 	local bg = self:getChildByTag(TAG_BG)
 	if bg and bg.setSpeed then 
 		bg:setSpeed(bgSpeed)
-	end
-
-	--是boss需要切换背景音乐
-	if self:isBoss() then
-		__G__GameBgm(GameData:getInstance():getWorld(), GameData:getInstance():getLevel())
 	end
 
 	self.isAllDead_ = false

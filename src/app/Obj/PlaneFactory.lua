@@ -29,6 +29,7 @@ function PlaneFactory:createEnemy( id_ )
 		army:setSpeed(cc.p(0,-3))
 	end
 
+	-- self:updateOriginSpeed()
 	function army:updateOriginSpeed()
 		self:setSpeed(ENEMY_SPEED_TBL[id_])
 	end
@@ -36,6 +37,9 @@ function PlaneFactory:createEnemy( id_ )
 	function army:onInScreen()
 		if not DESIGN then
 			self:updateOriginSpeed()
+			if self:isBoss() then
+				__G__GameBgm(GameData:getInstance():getWorld(), GameData:getInstance():getLevel())
+			end
 		end
 	end
 	return army
@@ -93,17 +97,18 @@ function PlaneFactory:createRole( id_ )
 	--设置子弹冷却时间
 	plane:setBulletCalmTime(config.bulletCalmTime_)
 
+	plane:updateAvatar()
+	plane:addGasAni()
 	if DEBUG >= 2 then
 		plane:setHp(50)
 		-- plane:setHp(5)
-		plane:setMaxHp(50)		
+		plane:setMaxHp(50)	
+		plane:levelUp()	
 	end
 
 	if IS_MAC then
 		-- plane:setBulletCalmTime(0.02)
 	end
-	plane:updateAvatar()
-	plane:addGasAni()
 
 	return plane
 end
