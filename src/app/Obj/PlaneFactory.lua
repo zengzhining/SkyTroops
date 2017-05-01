@@ -95,6 +95,7 @@ function PlaneFactory:createRole( id_ )
 
 	if DEBUG >= 2 then
 		plane:setHp(50)
+		-- plane:setHp(5)
 		plane:setMaxHp(50)		
 	end
 

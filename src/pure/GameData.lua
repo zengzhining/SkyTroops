@@ -4,7 +4,7 @@ local MAX_RANK = 100
 local BG_SPEED = 10
 
 local DEFAULT_ROLE = 1
-local DEFAULT_LEVEL = 1
+local DEFAULT_LEVEL = 5
 
 local DEFAULT_WORLD = 1
 
@@ -73,7 +73,7 @@ function GameData:initData()
 	self.level_ = DEFAULT_LEVEL
 
 	--世界数目
-	self.worldNum_ = DEFAULT_WORLD
+	self.worldNum_ = self.worldNum_ or DEFAULT_WORLD
 
 	--全局的主角
 	self.role_ = nil

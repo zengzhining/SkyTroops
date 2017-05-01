@@ -78,12 +78,12 @@ end
 function ResultScene:onRetry(  )
 	local callback = function ()
 		__G__actDelay(self, function()
-				self:getApp():enterLoading("SelectScene" )
+				self:getApp():enterLoading("GameScene" )
 		end, 0.2)
 	end
 
 	--重置游戏数据
-	GameData:getInstance():reset()
+	-- GameData:getInstance():reset()
 
 	__G__MenuCancelSound()
 	callback()
@@ -91,6 +91,8 @@ end
 
 function ResultScene:onMenu()
 	__G__MenuCancelSound()
+
+	GameData:getInstance():resetWorld()
 	__G__actDelay(self, function()
 			self:getApp():enterLoading("MainMenu")
 	end, 0.2)
