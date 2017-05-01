@@ -29,9 +29,13 @@ function PlaneFactory:createEnemy( id_ )
 		army:setSpeed(cc.p(0,-3))
 	end
 
+	function army:updateOriginSpeed()
+		self:setSpeed(ENEMY_SPEED_TBL[id_])
+	end
+
 	function army:onInScreen()
 		if not DESIGN then
-			army:setSpeed(ENEMY_SPEED_TBL[id_])
+			self:updateOriginSpeed()
 		end
 	end
 	return army

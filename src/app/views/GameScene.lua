@@ -453,12 +453,12 @@ function GameScene:onArmyDead( target)
 	local score = target:getScore() 
 
 	--是否是boss
-	if target:getMaxHp() >= 100 then
-		__G__actDelay(self,function (  )
-			Helper.showBossDeadParticle(self.gameLayer_)
-		end,0.1)
+	-- if target:getMaxHp() >= 100 then
+	-- 	__G__actDelay(self,function (  )
+	-- 		Helper.showBossDeadParticle(self.gameLayer_)
+	-- 	end,0.1)
 
-	end
+	-- end
 
 	GameData:getInstance():addScore( score ) 
 	--分数改变时候更新分数
@@ -902,6 +902,51 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 			gameLayer:addChild(bullet, 0, TAG_BULLET)
 			table.insert(armyBulletSet, bullet)
 		end
+	elseif typeId_ == 9 then
+		--连续发射
+		--普通发射
+		local function fireOneBullet()
+			if enemy:isDead() then return end
+
+			local posx,posy = enemy:getPosition()
+
+			local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+			bullet:pos(posx, bulletY)
+			bullet:onFire()
+			bullet:setSpeed(cc.p(0, -5))
+			gameLayer:addChild(bullet, 0, TAG_BULLET)
+		end
+
+		for i = 1,6 do
+			__G__actDelay(enemy, function (  )
+				fireOneBullet()
+			end, i*0.3)
+		end
+	elseif typeId_ == 10 then
+		local function fireOneBullet()
+			if enemy:isDead() then return end
+
+			local posx,posy = enemy:getPosition()
+
+			local PER_DREE = math.pi/6
+			local SPEED = 5
+			for i = 7, 11 do
+				--
+				local dgree = i * PER_DREE 
+				local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+				bullet:pos(posx , posy )
+				bullet:onFire()
+				bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
+				gameLayer:addChild(bullet, 0, TAG_BULLET)
+				table.insert(armyBulletSet, bullet)
+			end 
+		end
+
+		for i = 1,5 do
+			__G__actDelay(enemy, function (  )
+				fireOneBullet()
+			end, i*0.3)
+		end
 	end
 
 end
@@ -911,34 +956,41 @@ function GameScene:onEnemyFire( enemy, bulletId )
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
 	local aiId = enemy:getAiId()
-	if aiId == 5 then 
-		--发射散弹
-		self:fireBullet(2, enemy, bulletId)
-	elseif aiId == 6 then
-		--发射两列子弹
-		self:fireBullet(4, enemy, bulletId)
-	elseif aiId == 9 then 
-		self:fireBullet(4, enemy, bulletId )
-	elseif aiId == 13 then
-		--发射散弹
-		self:fireBullet(2, enemy, bulletId)
-	elseif aiId == 14 then
-		--发射两列子弹
-		self:fireBullet(4, enemy, bulletId)
-	elseif aiId == 15 then
-		--发射跟随子弹
-		self:fireBullet(6, enemy, bulletId)
-	elseif aiId == 21 then
-		--大boss1,发射面向主角的散弹
-		self:fireBullet(7, enemy, bulletId)
-	elseif aiId == 22 then
-		--大boss2,发射主角的散列散弹
-		self:fireBullet(8, enemy, bulletId)
+	local fireType = enemy:getFireType()
 
-	else
-		--普通发射
-		self:fireBullet(1,enemy, bulletId)
-	end
+	self:fireBullet(fireType, enemy, bulletId)
+
+	-- local gameLayer = self.gameLayer_
+	-- local posx,posy = enemy:getPosition()
+	-- local aiId = enemy:getAiId()
+	-- if aiId == 5 then 
+	-- 	--发射散弹
+	-- 	self:fireBullet(2, enemy, bulletId)
+	-- elseif aiId == 6 then
+	-- 	--发射两列子弹
+	-- 	self:fireBullet(4, enemy, bulletId)
+	-- elseif aiId == 9 then 
+	-- 	self:fireBullet(4, enemy, bulletId )
+	-- elseif aiId == 13 then
+	-- 	--发射散弹
+	-- 	self:fireBullet(2, enemy, bulletId)
+	-- elseif aiId == 14 then
+	-- 	--发射两列子弹
+	-- 	self:fireBullet(4, enemy, bulletId)
+	-- elseif aiId == 15 then
+	-- 	--发射跟随子弹
+	-- 	self:fireBullet(6, enemy, bulletId)
+	-- elseif aiId == 21 then
+	-- 	--大boss1,发射面向主角的散弹
+	-- 	self:fireBullet(7, enemy, bulletId)
+	-- elseif aiId == 22 then
+	-- 	--大boss2,发射主角的散列散弹
+	-- 	self:fireBullet(8, enemy, bulletId)
+
+	-- else
+	-- 	--普通发射
+	-- 	self:fireBullet(1,enemy, bulletId)
+	-- end
 		
 
 end
@@ -1057,7 +1109,6 @@ end
 function GameScene:createArmyFromIndex( formId, toId, armyData, height_ )
 	if not height_ then height_ = 0 end
 
-	print("height_~~~~", height_)
 
 	local scene = self
 
@@ -1088,8 +1139,6 @@ function GameScene:createArmyFromIndex( formId, toId, armyData, height_ )
 			posy = DEFAULT_HIEGHT + dy
 		end
 
-		print("posy~~~~", posy)
-
 		local width = army:getViewRect().width
 		-- local armyPos = cc.p(armyInfo.x, armyInfo.y - height_ )
 		local armyPos = cc.p(armyInfo.x, posy )
@@ -1100,6 +1149,7 @@ function GameScene:createArmyFromIndex( formId, toId, armyData, height_ )
 		--最后一个消灭时候生成下一个
 		if i == toId then
 			function army:onInScreen(  )
+				self:updateOriginSpeed()
 				scene:onCreateArmy()
 			end
 		end

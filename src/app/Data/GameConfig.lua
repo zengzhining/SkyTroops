@@ -1,6 +1,6 @@
 --主角机体
 PLANE_CONFIG = { 
-	{maxHp_ = 10, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.15},
+	{maxHp_ = 10, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.1},
 	{maxHp_ = 15, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
 	{maxHp_ = 8, bulletId_ = 3, bulletType_ = 1, bulletCalmTime_ = 0.4}, --升级时间
 	{maxHp_ = 10, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.1},
@@ -87,7 +87,7 @@ BULLET_DAMAGE_TBL = {
 --敌人的血量
 ENEMY_HP_TBL = {
 	5,2,5,
-	3,8,60,
+	8,8,120,
 	200,15,5,
 	2,120,15,
 	100,15,15,
@@ -101,9 +101,9 @@ BOSS_FIRE_TBL = {
 --敌人AI思考时间
 ENEMY_AI_TIME_TBL = {
 	3,2.5,1,
+	1,2,2,
 	2,2,2,
-	2,2,2,
-	2,3,2,
+	3,3,2,
 	2,2,2,
 }
 
@@ -120,8 +120,8 @@ ENEMY_SCORE_TBL = {
 
 --敌人的速度
 ENEMY_SPEED_TBL = {
-	cc.p( 0,-1.5 ),cc.p( 0,-5 ),cc.p( 0,-2 ),
-	cc.p( 0,-2 ),cc.p( 0,-2 ),cc.p( 0,-2 ),
+	cc.p( 0,-4 ),cc.p( 0,-7 ),cc.p( 0,-5 ),
+	cc.p( 0,-10 ),cc.p( 0,-2 ),cc.p( 0,-2 ),
 	cc.p( 0,-2 ),cc.p( 0,-2 ),cc.p( 0,-2 ),
 	cc.p( 0,-2 ),cc.p( 0,-2 ),cc.p( 0,-2 ),
 	cc.p( 0,-2 ),cc.p( 0,-2 ),cc.p( 0,-2 ),

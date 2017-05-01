@@ -2,7 +2,7 @@
 -- 0 - disable debug info, 1 - less debug info, 2 - verbose debug info
 DEBUG = 2
 
-DESIGN = false
+DESIGN = true
 
 IS_MAC = false
 
@@ -50,5 +50,9 @@ CC_DESIGN_RESOLUTION = {
     end
 }
 
-DEFAULT_SCENE = "SlashScene"
+DEFAULT_SCENE = "GameScene"
+
+if DEFAULT_SCENE == "GameScene" then
+    DESIGN = false    
+end
 
