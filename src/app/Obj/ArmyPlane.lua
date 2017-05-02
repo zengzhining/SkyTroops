@@ -143,7 +143,6 @@ end
 
 --发射子弹
 function ArmyPlane:fireBullet()
-	print("fireBullet~~~~~")
 	--如果死掉时候不能发射子弹
 	if self:isDead() then return end
 	local scene = self:getParent():getParent()

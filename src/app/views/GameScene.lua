@@ -740,6 +740,7 @@ end
 
 --主角发射炮弹的回调函数
 function GameScene:onFireBullet( id_ )
+
 	__G__FireBullet()
 
 	local role = self.role_
@@ -807,7 +808,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
 		bullet:pos(posx, bulletY)
 		bullet:onFire()
-		bullet:setSpeed(cc.p(0, -5))
+		bullet:setSpeed(cc.p(0, -10))
 		gameLayer:addChild(bullet, 0, TAG_BULLET)
 		table.insert(armyBulletSet, bullet)
 	elseif typeId_ == 2 then 
