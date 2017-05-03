@@ -37,9 +37,7 @@ function PlaneFactory:createEnemy( id_ )
 	function army:onInScreen()
 		if not DESIGN then
 			self:updateOriginSpeed()
-			if self:isBoss() then
-				__G__GameBgm(GameData:getInstance():getWorld(), GameData:getInstance():getLevel())
-			end
+			
 		end
 	end
 	return army

@@ -1017,6 +1017,9 @@ function GameScene:nextLevel()
 	if isExit then 
 		--存在下一个的配置就生成敌人
 		--是boss需要切换背景音乐
+		if self:isBossLevel() then
+			__G__GameBgm(GameData:getInstance():getWorld(), GameData:getInstance():getLevel())
+		end
 		
 		__G__actDelay(self,function (  )
 			self:onCreateArmy()
@@ -1192,7 +1195,7 @@ function GameScene:onCreateArmy(  )
 	self.isAllDead_ = false
 end
 
-function GameScene:isBoss()
+function GameScene:isBossLevel()
 	local world = GameData:getInstance():getWorld()
 	local level = GameData:getInstance():getLevel()
 
