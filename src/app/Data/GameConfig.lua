@@ -70,7 +70,7 @@ ENEMY_FIRE_TYPE_TBL = {
 
 --敌人对应的子弹
 ENEMY_BULLET_TBL = {
-	1,1,8,
+	8,1,8,
 	2,4,5,
 	7,9,1,
 	8,7,2,
