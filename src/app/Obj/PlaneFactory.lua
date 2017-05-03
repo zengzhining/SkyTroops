@@ -37,7 +37,6 @@ function PlaneFactory:createEnemy( id_ )
 	function army:onInScreen()
 		if not DESIGN then
 			self:updateOriginSpeed()
-			
 		end
 	end
 	return army
