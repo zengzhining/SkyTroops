@@ -1,6 +1,6 @@
 --主角机体
 PLANE_CONFIG = { 
-	{maxHp_ = 10, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.1},
+	{maxHp_ = 10, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = __G__isAndroid and 0.12 or 0.1},
 	{maxHp_ = 15, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.2},
 	{maxHp_ = 8, bulletId_ = 3, bulletType_ = 1, bulletCalmTime_ = 0.4}, --升级时间
 	{maxHp_ = 10, bulletId_ = 1, bulletType_ = 1, bulletCalmTime_ = 0.1},

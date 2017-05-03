@@ -1,6 +1,5 @@
 
 --全局函数
-
 __G__createCutLayer = function ( fileName )
 	local layer = display.newLayer(cc.c4b(0, 0, 0, 255*0.8))
 
