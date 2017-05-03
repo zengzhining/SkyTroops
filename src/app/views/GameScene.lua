@@ -803,6 +803,7 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 	local gameLayer = self.gameLayer_
 	local posx,posy = enemy:getPosition()
 	local bulletY = posy - enemy:getViewRect().height *0.05
+
 	if typeId_ == 1 then 
 		--普通发射
 		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
@@ -871,11 +872,16 @@ function GameScene:fireBullet( typeId_ , enemy , bulletId)
 		local dx = rolex - posx
 		local dy = roley - bulletY
 
-		local speedY = 5
+		local ALL_SPEED = 5
 
-		local speedX = dx/dy * speedY
 
-		bullet:setSpeed(cc.p(-speedX, -speedY))
+		local dis = math.sqrt( dx*dx + dy*dy )
+
+		local speedY = ALL_SPEED/dis * dy
+
+		local speedX = ALL_SPEED/dis * dx
+
+		bullet:setSpeed(cc.p(speedX, speedY))
 		gameLayer:addChild(bullet, 0, TAG_BULLET)
 		table.insert(armyBulletSet, bullet)
 	elseif typeId_ ==7 then
