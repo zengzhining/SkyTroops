@@ -9,7 +9,7 @@ function BossDesignScene:ctor()
 	local layer = display.newLayer()
 	self:add(layer)
 
-	local plane = PlaneFactory:getInstance():createEnemy(11)
+	local plane = PlaneFactory:getInstance():createEnemy(1)
 	plane:pos(display.cx,display.cy * 1.7)
 	layer:add(plane,10)
 
@@ -85,14 +85,14 @@ function BossDesignScene:fireBullet( typeId_ , enemy , bulletId)
 	local posx,posy = enemy:getPosition()
 	local bulletY = posy - enemy:getViewRect().height *0.05
 
-	typeId_ = 9
+	typeId_ = 6
 
 	if typeId_ == 1 then 
 		--普通发射
 		local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
 		bullet:pos(posx, bulletY)
 		bullet:onFire()
-		bullet:setSpeed(cc.p(0, -5))
+		bullet:setSpeed(cc.p(0, -10))
 		gameLayer:addChild(bullet, 0, TAG_BULLET)
 		-- table.insert(armyBulletSet, bullet)
 	elseif typeId_ == 2 then 
@@ -155,11 +155,16 @@ function BossDesignScene:fireBullet( typeId_ , enemy , bulletId)
 		local dx = rolex - posx
 		local dy = roley - bulletY
 
-		local speedY = 5
+		local ALL_SPEED = 5
 
-		local speedX = dx/dy * speedY
 
-		bullet:setSpeed(cc.p(-speedX, -speedY))
+		local dis = math.sqrt( dx*dx + dy*dy )
+
+		local speedY = ALL_SPEED/dis * dy
+
+		local speedX = ALL_SPEED/dis * dx
+
+		bullet:setSpeed(cc.p(speedX, speedY))
 		gameLayer:addChild(bullet, 0, TAG_BULLET)
 		-- table.insert(armyBulletSet, bullet)
 	elseif typeId_ ==7 then
@@ -203,6 +208,31 @@ function BossDesignScene:fireBullet( typeId_ , enemy , bulletId)
 		end
 
 		for i = 1,6 do
+			__G__actDelay(enemy, function (  )
+				fireOneBullet()
+			end, i*0.3)
+		end
+	elseif typeId_ == 10 then
+		local function fireOneBullet()
+			if enemy:isDead() then return end
+
+			local posx,posy = enemy:getPosition()
+
+			local PER_DREE = math.pi/6
+			local SPEED = 5
+			for i = 7, 11 do
+				--
+				local dgree = i * PER_DREE 
+				local bullet = PlaneFactory:getInstance():createEmenyBullet(bulletId)
+				bullet:pos(posx , posy )
+				bullet:onFire()
+				bullet:setSpeed(cc.p( SPEED* math.cos(dgree), SPEED * math.sin(dgree) ))
+				gameLayer:addChild(bullet, 0, TAG_BULLET)
+				-- table.insert(armyBulletSet, bullet)
+			end 
+		end
+
+		for i = 1,5 do
 			__G__actDelay(enemy, function (  )
 				fireOneBullet()
 			end, i*0.3)

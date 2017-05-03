@@ -214,9 +214,14 @@ function ArmyPlane:aiMove(dt)
 	--发射子弹
 	elseif aiId == AI.FIRE_BULLET then
 		--才发射
+		local role = GameData:getInstance():getRole()
+		local posy = self:getPositionY()
+		local roleY = role:getPositionY()
 		if strategy:canAi() then
 			strategy:resetAiTime()
-			self:fireBullet()
+			if posy > roleY then
+				self:fireBullet()
+			end
 		end
 		strategy:addAiTime(dt)
 	elseif aiId == AI.DEAD_TO_FIRE then
