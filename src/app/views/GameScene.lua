@@ -450,7 +450,7 @@ function GameScene:onContinueCancel()
 	--这里保存数据	
 	__G__actDelay(self,function (  )
 		self:unUpdate()
-		self:getApp():enterLoading("ResultScene", "VEDIO")
+		self:getApp():enterLoading("ResultScene", "FULLAD")
 	end, 1.0)
 end
 
@@ -1305,7 +1305,7 @@ function GameScene:showAdsLayer()
 	local yesLb = cc.MenuItemLabel:create(label)
     yesLb:onClicked(function()
         -- os.exit(0)
-        SDKManager:getInstance():showFULLAD(function (  )
+        SDKManager:getInstance():showVideo(function (  )
         	local role = GameData:getInstance():getRole()
         	if role then
         		role:levelUp()
@@ -1314,7 +1314,13 @@ function GameScene:showAdsLayer()
         		GameData:getInstance():addBomb(bombNum)
         	end
 
-			self:updateUI()
+        	__G__actDelay(self,function (  )
+				self:updateUI()
+        		
+        	end,0.2)
+
+			layer:removeSelf()
+
 
         end)
     end)
