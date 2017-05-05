@@ -45,8 +45,8 @@
     }, 
     "ios": {
         "GoogleAnalytics": {
-            "track_init_screen": false, 
-            "trackingCode": "UA-62417901-1"
+            "track_init_screen": true, 
+            "trackingCode": "UA-86337536-2"
         }, 
         "Review": {
             "LaunchLimit": 3, 
@@ -62,60 +62,29 @@
             "ads": {
                 "gameover": {
                     "type": "interstitial", 
-                    "id": "ca-app-pub-5499568013368923/7629059893"
-                }, 
-                "admob": {
-                    "width": 300, 
-                    "type": "banner", 
-                    "id": "ca-app-pub-5499568013368923/4675593491", 
-                    "alignment": "bottom", 
-                    "height": 50
+                    "id": "ca-app-pub-5712473471888946/8527738511"
                 }
             }
-        }, 
-        "Vungle": {
-            "debug": true, 
-            "id": "5535dc14a104ddf07600001c", 
-            "ads": {
-                "reward": {
-                    "sound": false, 
-                    "backbutton": false, 
-                    "incentivized": true
-                }, 
-                "video": {
-                    "sound": true, 
-                    "backbutton": true
-                }
-            }
-        }, 
+        },
         "Chartboost": {
             "ads": {
                 "Default": {
                     "type": "interstitial"
                 }, 
-                "Level Complete": {
-                    "type": "rewarded_video"
-                }, 
-                "MoreApp": {
-                    "type": "more_app"
+                "level": {
+                    "type": "interstitial"
                 }
             }, 
-            "id": "4f21c409cd1cb2fb7000001b", 
-            "signature": "92e2de2fd7070327bdeb54c15a5295309c6fcd2d"
+            "id": "590ad8b904b0165ae5b90e6b", 
+            "signature": "a927a06a376fa6801f29a4b42e7cc9b448c5d48f"
         }, 
         "AdColony": {
             "debug": true, 
-            "id": "appbdee68ae27024084bb334a", 
+            "id": "app22a0643f86d94bdabc", 
             "ads": {
-                "v4vc": {
-                    "v4vc": true, 
-                    "pre_popup": true, 
-                    "zone": "vzf8e4e97704c4445c87504e", 
-                    "post_popup": true
-                }, 
                 "video": {
                     "v4vc": false, 
-                    "zone": "vzf8fb4670a60e4a139d01b5"
+                    "zone": "vz64ef56db198c4e7eaf"
                 }
             }
         }
