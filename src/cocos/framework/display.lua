@@ -162,6 +162,8 @@ if type(CC_DESIGN_RESOLUTION) == "table" then
 end
 
 display.COLOR_WHITE = cc.c3b(255, 255, 255)
+display.COLOR_DARK = cc.c4b(0,0,0,150)
+
 display.COLOR_BLACK = cc.c3b(0, 0, 0)
 display.COLOR_RED   = cc.c3b(255, 0, 0)
 display.COLOR_GREEN = cc.c3b(0, 255, 0)

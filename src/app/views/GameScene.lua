@@ -1270,9 +1270,19 @@ function GameScene:onEnter()
 	bg:opacity(0)
 	bg:fadeIn(2)
 	__G__actDelay(self,function (  )
+		self:showAdsLayer()
 		self:startGame()
 	end, 2)
+end
 
+function GameScene:showAdsLayer()
+	local layer = display.newLayer(display.COLOR_DARK)
+	__G__actDelay(self,function (  )
+		layer:removeSelf()
+	end,5)
+
+	
+	self:add(layer,999)
 end
 
 function GameScene:onExit()
