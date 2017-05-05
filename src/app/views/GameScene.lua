@@ -734,7 +734,7 @@ function GameScene:initObj()
 	local id = GameData:getInstance():getRoleId()
 	local plane = PlaneFactory:getInstance():createRole(id)
 	local width = plane:getViewRect().width
-	plane:pos(display.cx, display.height /2 )
+	plane:pos(display.cx, display.height /2 - 200 )
 	gameLayer:addChild(plane)
 	self.role_ = plane
 	GameData:getInstance():setRole(plane)
@@ -1091,10 +1091,6 @@ function GameScene:removeOutWindowArmy()
 			end
 		end
 	end
-
-	print("removeOutWindowArmy~~~~", #tbl)
-
-
 end
 
 function GameScene:createArmyFromIndex( formId, toId, armyData, height_ )
@@ -1271,17 +1267,85 @@ function GameScene:onEnter()
 	bg:fadeIn(2)
 	__G__actDelay(self,function (  )
 		self:showAdsLayer()
+		
+	end,1)
+	__G__actDelay(self,function (  )
 		self:startGame()
-	end, 2)
+	end, 6)
 end
 
 function GameScene:showAdsLayer()
 	local layer = display.newLayer(display.COLOR_DARK)
-	__G__actDelay(self,function (  )
+	__G__actDelay(layer,function (  )
 		layer:removeSelf()
 	end,5)
 
-	
+	local title = display.newTTF(nil,40,"watch vedio to power up ?")
+	title:pos(display.cx, display.cy + 200 )
+	layer:add(title)
+
+	local timeLb = display.newTTF(nil,30,"5")
+	timeLb:pos(display.cx, display.cy + 100  )
+	timeLb:setColor(cc.c4f(255, 0, 0, 0))
+	layer:add(timeLb)
+
+	local time = 5
+
+	timeLb:runAction(cc.RepeatForever:create(cc.Sequence:create( 
+    	cc.DelayTime:create(1),
+    	cc.CallFunc:create(function (  )
+    		time = time - 1 >= 0 and time - 1 or 0
+    		timeLb:setString(time)
+    	end)
+	 )))
+
+
+    local label = cc.Label:createWithSystemFont("Yes", "sans", 32)
+
+	local yesLb = cc.MenuItemLabel:create(label)
+    yesLb:onClicked(function()
+        -- os.exit(0)
+        SDKManager:getInstance():showFULLAD(function (  )
+        	local role = GameData:getInstance():getRole()
+        	if role then
+        		role:levelUp()
+
+        		local bombNum = 3
+        		GameData:getInstance():addBomb(bombNum)
+        	end
+
+			self:updateUI()
+
+        end)
+    end)
+
+
+    yesLb:posX(-100)
+
+    label = cc.Label:createWithSystemFont("No", "sans", 32)
+
+    local noLb = cc.MenuItemLabel:create(label)
+    noLb:onClicked(function()
+        layer:removeSelf()
+    end)
+
+
+    noLb:posX(100)
+
+    -- title:hide()
+    yesLb:hide()
+    noLb:hide()
+
+    local tbl = {yesLb, noLb }
+
+    for i , obj in pairs (tbl) do
+    	obj:setScale(0.01)
+    	obj:runAction(cc.Sequence:create( cc.DelayTime:create(i*0.1), cc.Show:create(), cc.ScaleTo:create(0.2, 1) ))
+    end
+    -- local size = label:getContentSize()
+    local menu = cc.Menu:create(yesLb,noLb)
+    -- menu:setPosition(display.right - size.width / 2 - 16, display.bottom + size.height / 2 + 16)
+    layer:addChild(menu)
 	self:add(layer,999)
 end
 
