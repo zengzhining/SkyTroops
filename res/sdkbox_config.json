@@ -49,16 +49,16 @@
             "trackingCode": "UA-86337536-2"
         }, 
         "Review": {
-            "LaunchLimit": 3, 
-            "DayForReminding": 1, 
-            "tryPromptWhenInit": true, 
+            "LaunchLimit": 0, 
+            "DayForReminding": 0, 
+            "tryPromptWhenInit": false, 
             "AppID": "587767923", 
             "DayLimit": 0, 
-            "LaunchForReminding": 2, 
+            "LaunchForReminding": 0, 
             "UserEventLimit": 0
         }, 
         "AdMob": {
-            "test": true, 
+            "test": false, 
             "ads": {
                 "gameover": {
                     "type": "interstitial", 
@@ -79,7 +79,7 @@
             "signature": "a927a06a376fa6801f29a4b42e7cc9b448c5d48f"
         }, 
         "AdColony": {
-            "debug": true, 
+            "debug": false, 
             "id": "app22a0643f86d94bdabc", 
             "ads": {
                 "video": {

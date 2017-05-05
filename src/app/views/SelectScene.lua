@@ -23,7 +23,7 @@ function SelectScene:onCreate()
 			__G__MenuCancelSound()
 			GameData:getInstance():setRoleId(self.roleId_)
 			__G__actDelay(self, function (  )
-				self:getApp():enterLoading("GameScene", "FULLAD")
+				self:getApp():enterLoading("GameScene")
 			end, 1)
 		end
 	end)

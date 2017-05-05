@@ -1230,7 +1230,7 @@ function GameScene:onRestart()
 	display.resume()
 	__G__MenuCancelSound()
 	GameData:getInstance():reset()
-	self:getApp():enterLoading("SelectScene")
+	self:getApp():enterLoading("SelectScene", "FULLAD")
 
 end
 
